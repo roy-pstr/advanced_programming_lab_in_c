@@ -7,11 +7,6 @@
 
 #define STRINGS_ARE_EQUAL( Str1, Str2 ) ( strcmp( (Str1), (Str2) ) == 0 )
 
-int charToInt(char input)
-{
-	return input - '0';
-}
-
 void printCommand(Command *cmd) //debugging
 {
 	printf("---printing command---\n");
@@ -20,9 +15,9 @@ void printCommand(Command *cmd) //debugging
 	printf("arg2: %d\n", cmd->arg2);
 }
 
-bool endOfString(char *str, int i)
+bool isDigit(char c)
 {
-	return str[i] == '\0';
+	return (c >= '0' && c <= '9');
 }
 
 void upperCase(char *str)
@@ -35,35 +30,50 @@ void upperCase(char *str)
 	}
 }
 
-void getCommand(char *input_string, Command *user_command)
+int charToInt(char input)
 {
-	int i = 0;
-	while(input_string[i] != ' ' && !endOfString(input_string, i))
-	{
-		user_command->command_name[i] = input_string[i];
-		i++;
-	}
-	user_command->command_name[i] = '\0';
-	upperCase(user_command->command_name);
-		
-	if (endOfString(input_string, i))
-		return;
-
-	i++;
-	user_command->arg1 = charToInt(input_string[i]);
-	
-	i++;
-	if (endOfString(input_string, i))
-		return;
-
-	i++;
-	user_command->arg2 = charToInt(input_string[i]);
+	return input - '0';
 }
 
-void readUserCommandFromInput( Command *user_command) {
-	char input_string[MAX_COMMAND_LEN];
-	gets(input_string);
-	getCommand(input_string, user_command);
+int strToInt(char *input)
+{
+	int output = 0, i = 0;
+	for (int i = 0; isDigit(input[i]); i++)
+		output = output * 10 + charToInt(input[i]);
+
+	return output;
+}
+
+Command transformUserInputToCommandStruct(char *input_string)
+{
+	Command user_command;
+	int i = 0;
+	while (*input_string != ' ' && *input_string != '\0')
+	{
+		user_command.command_name[i] = *input_string;
+		input_string++;
+		i++;
+	}
+	user_command.command_name[i] = '\0';
+	upperCase(user_command.command_name);
+
+	if (*input_string == '\0')
+		return user_command;
+	
+	input_string++;
+	user_command.arg1 = strToInt(input_string);
+
+	while (*input_string != ' ')
+	{
+		if (input_string == '\0')
+			return user_command;
+		input_string++;
+	}
+
+	input_string++;
+	user_command.arg2 = strToInt(input_string);
+
+	return user_command;
 }
 
 void executeAddEnd(Command *user_command, Int **head)
@@ -118,6 +128,17 @@ void executePrint(Int **head)
 	printList(*head);
 }
 
+
+Command waitUntilUserInputCommand() {
+	char input_string[MAX_COMMAND_LEN];
+	Command user_command;
+
+	gets(input_string);
+	user_command = transformUserInputToCommandStruct(input_string);
+
+	return user_command;
+}
+
 bool executeUserCommand(Command *user_command, Int **head)
 {
 	bool exit_program = false;
@@ -143,7 +164,7 @@ bool executeUserCommand(Command *user_command, Int **head)
 		exit_program = true;
 
 	else
-		printf("FUCK!! Default! shouldn't be here!!!\nTry again...\n"); //debugging
+		printf("Invalid command entered. Try again...\n"); //debugging
 
 	return exit_program;
 }

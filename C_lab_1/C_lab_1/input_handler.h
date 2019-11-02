@@ -12,9 +12,7 @@ typedef struct command
 	int arg2;
 }Command;
 
-void getCommand(char *input_string, Command *user_command);
-
-void readUserCommandFromInput(Command * user_command);
+Command waitUntilUserInputCommand();
 
 bool executeUserCommand(Command *user_command, Int **head);
 

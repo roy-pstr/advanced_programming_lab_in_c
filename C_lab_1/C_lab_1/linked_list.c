@@ -62,6 +62,7 @@ void deleteFirst(Int **head)
 {
 	Int *first_element = *head;
 	*head = first_element->next;
+	printf("freeing %d\n", first_element->value); //debugging!!!
 	free(first_element);
 }
 
@@ -89,6 +90,7 @@ int deleteItem(Int **head, int index)
 		return ERROR_CODE;
 
 	Int *next_element = item_to_delete->next;
+	printf("freeing %d\n", item_to_delete->value); //debugging!!!
 	free(item_to_delete);
 
 	prev_element->next = next_element;

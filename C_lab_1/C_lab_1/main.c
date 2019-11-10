@@ -5,25 +5,22 @@
 #include "input_handler.h"
 #include "linked_list.h"
 
-#define EXIT_PROGRAM true
-
 int main()
 {
 	Int *head = NULL;
-	bool read_commands_from_user = true;
 
-	while (read_commands_from_user)
+	bool exit_program = false;
+	while (!exit_program)
 	{
-		
-		Command user_command = waitUntilUserInputCommand();
+		char input_string[MAX_COMMAND_LEN];
+		Command user_command;
 
-		bool return_status = executeUserCommand(&user_command, &head);
+		gets(input_string);
+		getCommand(input_string, &user_command);
 
-		if (return_status == EXIT_PROGRAM) {
-			destroyList(head);
-			read_commands_from_user = false;
-		}
+		exit_program = executeOneCommand(&user_command, &head);
 	}
 
-	return SUCCESS_CODE;
+	List_destroyList(head);
+	return 0;
 }

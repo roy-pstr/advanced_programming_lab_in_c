@@ -12,14 +12,14 @@ typedef struct integer
 	struct integer *next;
 }Int;
 
-void addItem(Int **head, int value, int index);
+void List_addItem(Int **head, int value, int index);
 
-int findIndex(Int *head, int value);
+int List_findIndex(Int *head, int value);
 
-int deleteItem(Int **head, int index);
+int List_deleteItem(Int **head, int index);
 
-void destroyList(Int *head);
+void List_destroyList(Int *head);
 
-void printList(Int *head);
+void List_printList(Int *head);
 
 #endif

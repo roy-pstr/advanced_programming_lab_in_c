@@ -43,7 +43,7 @@ void addMiddle(Int *head, Int *new_element, int index)
 	new_element->next = next_element;
 }
 
-void addItem(Int **head, int value, int index)
+void List_addItem(Int **head, int value, int index)
 {
 	Int *new_element = (Int*)malloc(sizeof(Int));
 	new_element->value = value;
@@ -62,11 +62,10 @@ void deleteFirst(Int **head)
 {
 	Int *first_element = *head;
 	*head = first_element->next;
-	printf("freeing %d\n", first_element->value); //debugging!!!
 	free(first_element);
 }
 
-int deleteItem(Int **head, int index)
+int List_deleteItem(Int **head, int index)
 {
 	if (index == 0)
 	{
@@ -90,14 +89,13 @@ int deleteItem(Int **head, int index)
 		return ERROR_CODE;
 
 	Int *next_element = item_to_delete->next;
-	printf("freeing %d\n", item_to_delete->value); //debugging!!!
 	free(item_to_delete);
 
 	prev_element->next = next_element;
 	return SUCCESS_CODE;
 }
 
-int findIndex(Int *head, int value)
+int List_findIndex(Int *head, int value)
 {
 	int index = 0;
 	Int *iterator = head;
@@ -114,7 +112,7 @@ int findIndex(Int *head, int value)
 	return NONE_INDEX;
 }
 
-void destroyList(Int *head)
+void List_destroyList(Int *head)
 {
 	Int *current = head;
 	Int *next = NULL;
@@ -122,13 +120,12 @@ void destroyList(Int *head)
 	while (current != NULL)
 	{
 		next = current->next;
-		printf("freeing %d\n", current->value); //debugging!!!
 		free(current);
 		current = next;
 	}
 }
 
-void printList(Int *head)
+void List_printList(Int *head)
 {
 	printf("[");
 	Int *current = head;

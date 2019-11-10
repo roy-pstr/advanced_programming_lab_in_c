@@ -12,8 +12,8 @@ typedef struct command
 	int arg2;
 }Command;
 
-Command waitUntilUserInputCommand();
+void getCommand(char *input_string, Command *user_command);
 
-bool executeUserCommand(Command *user_command, Int **head);
+bool executeOneCommand(Command *user_command, Int **head);
 
 #endif

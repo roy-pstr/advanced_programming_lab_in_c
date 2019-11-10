@@ -7,17 +7,12 @@
 
 #define STRINGS_ARE_EQUAL( Str1, Str2 ) ( strcmp( (Str1), (Str2) ) == 0 )
 
-void printCommand(Command *cmd) //debugging
+void printCommand(Command *cmd)
 {
 	printf("---printing command---\n");
 	printf("name: %s\n", cmd->command_name);
 	printf("arg1: %d\n", cmd->arg1);
 	printf("arg2: %d\n", cmd->arg2);
-}
-
-bool isDigit(char c)
-{
-	return (c >= '0' && c <= '9');
 }
 
 void upperCase(char *str)
@@ -30,80 +25,52 @@ void upperCase(char *str)
 	}
 }
 
-int charToInt(char input)
+void getCommand(char *input_string, Command *user_command)
 {
-	return input - '0';
-}
+	char *token = strtok(input_string, " ");
+	strcpy(user_command->command_name, token);
+	upperCase(user_command->command_name);
 
-int strToInt(char *input)
-{
-	int output = 0, i = 0;
-	for (int i = 0; isDigit(input[i]); i++)
-		output = output * 10 + charToInt(input[i]);
-
-	return output;
-}
-
-Command transformUserInputToCommandStruct(char *input_string)
-{
-	Command user_command;
-	int i = 0;
-	while (*input_string != ' ' && *input_string != '\0')
+	for (int i = 0; i < 2; i++)
 	{
-		user_command.command_name[i] = *input_string;
-		input_string++;
-		i++;
+		token = strtok(NULL, " ");
+		if (NULL == token)	return;
+
+		if (i==0)
+			user_command->arg1 = atoi(token);
+		else
+			user_command->arg2 = atoi(token);
 	}
-	user_command.command_name[i] = '\0';
-	upperCase(user_command.command_name);
-
-	if (*input_string == '\0')
-		return user_command;
-	
-	input_string++;
-	user_command.arg1 = strToInt(input_string);
-
-	while (*input_string != ' ')
-	{
-		if (input_string == '\0')
-			return user_command;
-		input_string++;
-	}
-
-	input_string++;
-	user_command.arg2 = strToInt(input_string);
-
-	return user_command;
 }
 
 void executeAddEnd(Command *user_command, Int **head)
 {
-	addItem(head, user_command->arg1, LAST_INDEX);
+	List_addItem(head, user_command->arg1, LAST_INDEX);
 }
 
 void executeAddStart(Command *user_command, Int **head)
 {
-	addItem(head, user_command->arg1, 0);
+	List_addItem(head, user_command->arg1, 0);
 }
 
 bool executeAddAfter(Command *user_command, Int **head)
 {
 	bool exit_program = false;
-	int previous_item_index = findIndex(*head, user_command->arg2);
+	int previous_item_index = List_findIndex(*head, user_command->arg2);
 	if (previous_item_index == NONE_INDEX)
 	{
 		printf("Sorry, can't find %d in the list. Exiting...\n", user_command->arg2);
 		exit_program = true;
 	}
 	else
-		addItem(head, user_command->arg1, previous_item_index+1);
+		List_addItem(head, user_command->arg1, previous_item_index+1);
 
 	return exit_program;
 }
 
 void executeIndex(Command *user_command, Int **head)
 {
-	int index = findIndex(*head, user_command->arg1);
+	int index = List_findIndex(*head, user_command->arg1);
 	if (index == NONE_INDEX)
 		printf("-1\n");
 	else
@@ -113,7 +80,7 @@ void executeIndex(Command *user_command, Int **head)
 bool executeDel(Command *user_command, Int **head)
 {
 	bool exit_program = false;
-	int retval = deleteItem(head, user_command->arg1);
+	int retval = List_deleteItem(head, user_command->arg1);
 	if (retval == ERROR_CODE)
 	{
 		printf("Index is too large. Exiting...\n");
@@ -125,21 +92,10 @@ bool executeDel(Command *user_command, Int **head)
 
 void executePrint(Int **head)
 {
-	printList(*head);
+	List_printList(*head);
 }
 
-
-Command waitUntilUserInputCommand() {
-	char input_string[MAX_COMMAND_LEN];
-	Command user_command;
-
-	gets(input_string);
-	user_command = transformUserInputToCommandStruct(input_string);
-
-	return user_command;
-}
-
-bool executeUserCommand(Command *user_command, Int **head)
+bool executeOneCommand(Command *user_command, Int **head)
 {
 	bool exit_program = false;
 	if (STRINGS_ARE_EQUAL(user_command->command_name, "ADD_END"))
@@ -164,7 +120,7 @@ bool executeUserCommand(Command *user_command, Int **head)
 		exit_program = true;
 
 	else
-		printf("Invalid command entered. Try again...\n"); //debugging
+		printf("Invalid command entered. Try again...\n");
 
 	return exit_program;
 }

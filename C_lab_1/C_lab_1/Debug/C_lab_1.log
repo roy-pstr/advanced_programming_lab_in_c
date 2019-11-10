@@ -1,3 +1,1 @@
-﻿  input_handler.c
-c:\users\roypa\onedrive\documents\github\advanced_programming_lab_in_c\c_lab_1\c_lab_1\input_handler.c(136): warning C4013: 'gets' undefined; assuming extern returning int
-  C_lab_1.vcxproj -> C:\Users\roypa\OneDrive\Documents\GitHub\advanced_programming_lab_in_c\C_lab_1\Debug\C_lab_1.exe
+﻿  main.c

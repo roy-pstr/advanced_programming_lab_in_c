@@ -44,7 +44,7 @@ int strToInt(char *input)
 	return output;
 }
 
-Command transformUserInputToCommandStruct(char *input_string)
+Command strToCommand(char *input_string)
 {
 	Command user_command;
 	int i = 0;
@@ -129,12 +129,13 @@ void executePrint(Int **head)
 }
 
 
-Command waitUntilUserInputCommand() {
+Command readNextCommand() {
+
 	char input_string[MAX_COMMAND_LEN];
 	Command user_command;
 
 	gets(input_string);
-	user_command = transformUserInputToCommandStruct(input_string);
+	user_command = strToCommand(input_string);
 
 	return user_command;
 }

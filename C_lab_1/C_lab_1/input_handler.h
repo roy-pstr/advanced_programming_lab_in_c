@@ -12,7 +12,7 @@ typedef struct command
 	int arg2;
 }Command;
 
-Command waitUntilUserInputCommand();
+Command readNextCommand();
 
 bool executeUserCommand(Command *user_command, Int **head);
 

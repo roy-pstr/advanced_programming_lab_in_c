@@ -25,12 +25,7 @@ void upperCase(char *str)
 	}
 }
 
-void readNextCommand(Command *user_command) 
-{
-	char input_string[MAX_COMMAND_LEN];
-	gets(input_string);
-	getCommand(input_string, user_command);
-}
+
 
 void getCommand(char *input_string, Command *user_command)
 {
@@ -100,6 +95,13 @@ bool executeDel(Command *user_command, Int **head)
 void executePrint(Int **head)
 {
 	List_printList(*head);
+}
+
+void readNextCommand(Command *user_command)
+{
+	char input_string[MAX_COMMAND_LEN];
+	gets(input_string);
+	getCommand(input_string, user_command);
 }
 
 bool executeUserCommand(Command *user_command, Int **head)

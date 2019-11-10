@@ -12,7 +12,7 @@ typedef struct command
 	int arg2;
 }Command;
 
-Command readNextCommand();
+void readNextCommand(Command *user_command);
 
 bool executeUserCommand(Command *user_command, Int **head);
 

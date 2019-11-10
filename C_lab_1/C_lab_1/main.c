@@ -5,8 +5,6 @@
 #include "input_handler.h"
 #include "linked_list.h"
 
-#define READ_NEXT_COMMAND 
-
 int main()
 {
 	Int *head = NULL;
@@ -14,9 +12,11 @@ int main()
 
 	while (!exit_program)
 	{
-		Command user_command = readNextCommand();
+		Command user_command;
+		readNextCommand(&user_command);
 		exit_program = executeUserCommand(&user_command, &head);
 	}
-	destroyList(head);
-	return SUCCESS_CODE;
+	List_destroyList(head);
+	return 0;
 }
+

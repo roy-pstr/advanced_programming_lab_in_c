@@ -12,8 +12,10 @@ typedef struct command
 	int arg2;
 }Command;
 
+void strToCommand(char *input_string, Command *user_command);
+
 void readNextCommand(Command *user_command);
 
-bool executeUserCommand(Command *user_command, Int **head);
+bool executeOneCommand(Command *user_command, Int **head);
 
 #endif

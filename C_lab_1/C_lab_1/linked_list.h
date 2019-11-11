@@ -1,10 +1,7 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-#define SUCCESS_CODE 0
-#define ERROR_CODE  -1
-#define LAST_INDEX  -1
-#define NONE_INDEX  -2
+#define INDEX_NOT_EXISTS -1
 
 typedef struct integer
 {
@@ -12,7 +9,9 @@ typedef struct integer
 	struct integer *next;
 }Int;
 
-void List_addItem(Int **head, int value, int index);
+void List_addItemByIndex(Int **head, int value, int index);
+
+void List_addEnd(Int **head, int value);
 
 int List_findIndex(Int *head, int value);
 

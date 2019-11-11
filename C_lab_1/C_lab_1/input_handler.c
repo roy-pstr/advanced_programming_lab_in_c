@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "utils.h"
 #include "linked_list.h"
 #include "input_handler.h"
 
@@ -25,9 +26,15 @@ void upperCase(char *str)
 	}
 }
 
+void readNextCommand(Command *user_command)
+{
+	char input_string[MAX_COMMAND_LEN];
+	gets(input_string);
 
+	strToCommand(input_string, user_command);
+}
 
-void getCommand(char *input_string, Command *user_command)
+void strToCommand(char *input_string, Command *user_command)
 {
 	char *token = strtok(input_string, " ");
 	strcpy(user_command->command_name, token);
@@ -38,7 +45,7 @@ void getCommand(char *input_string, Command *user_command)
 		token = strtok(NULL, " ");
 		if (NULL == token)	return;
 
-		if (i == 0)
+		if (i==0)
 			user_command->arg1 = atoi(token);
 		else
 			user_command->arg2 = atoi(token);
@@ -47,25 +54,25 @@ void getCommand(char *input_string, Command *user_command)
 
 void executeAddEnd(Command *user_command, Int **head)
 {
-	List_addItem(head, user_command->arg1, LAST_INDEX);
+	List_addEnd(head, user_command->arg1);
 }
 
 void executeAddStart(Command *user_command, Int **head)
 {
-	List_addItem(head, user_command->arg1, 0);
+	List_addItemByIndex(head, user_command->arg1, 0);
 }
 
 bool executeAddAfter(Command *user_command, Int **head)
 {
 	bool exit_program = false;
 	int previous_item_index = List_findIndex(*head, user_command->arg2);
-	if (previous_item_index == NONE_INDEX)
+	if (previous_item_index == INDEX_NOT_EXISTS)
 	{
 		printf("Sorry, can't find %d in the list. Exiting...\n", user_command->arg2);
 		exit_program = true;
 	}
 	else
-		List_addItem(head, user_command->arg1, previous_item_index + 1);
+		List_addItemByIndex(head, user_command->arg1, previous_item_index+1);
 
 	return exit_program;
 }
@@ -73,7 +80,7 @@ bool executeAddAfter(Command *user_command, Int **head)
 void executeIndex(Command *user_command, Int **head)
 {
 	int index = List_findIndex(*head, user_command->arg1);
-	if (index == NONE_INDEX)
+	if (index == INDEX_NOT_EXISTS)
 		printf("-1\n");
 	else
 		printf("%d\n", index);
@@ -97,14 +104,7 @@ void executePrint(Int **head)
 	List_printList(*head);
 }
 
-void readNextCommand(Command *user_command)
-{
-	char input_string[MAX_COMMAND_LEN];
-	gets(input_string);
-	getCommand(input_string, user_command);
-}
-
-bool executeUserCommand(Command *user_command, Int **head)
+bool executeOneCommand(Command *user_command, Int **head)
 {
 	bool exit_program = false;
 	if (STRINGS_ARE_EQUAL(user_command->command_name, "ADD_END"))

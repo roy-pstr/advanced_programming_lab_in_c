@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "utils.h"
 #include "linked_list.h"
 
 Int *findLastElement(Int **head)
@@ -19,8 +20,11 @@ void addStart(Int **head, Int *new_element)
 	new_element->next = first_element;
 }
 
-void addEnd(Int **head, Int *new_element)
+void List_addEnd(Int **head, int value)
 {
+	Int *new_element = (Int*)malloc(sizeof(Int));
+	new_element->value = value;
+
 	if (NULL == *head)
 	{
 		addStart(head, new_element);
@@ -43,16 +47,13 @@ void addMiddle(Int *head, Int *new_element, int index)
 	new_element->next = next_element;
 }
 
-void List_addItem(Int **head, int value, int index)
+void List_addItemByIndex(Int **head, int value, int index)
 {
 	Int *new_element = (Int*)malloc(sizeof(Int));
 	new_element->value = value;
 
 	if (index == 0)
 		addStart(head, new_element);
-
-	else if (index == LAST_INDEX)
-		addEnd(head, new_element);
 
 	else
 		addMiddle(*head, new_element, index);
@@ -109,7 +110,7 @@ int List_findIndex(Int *head, int value)
 		index++;
 	}
 	
-	return NONE_INDEX;
+	return INDEX_NOT_EXISTS;
 }
 
 void List_destroyList(Int *head)

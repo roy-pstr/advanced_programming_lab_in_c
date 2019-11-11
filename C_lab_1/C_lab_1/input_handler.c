@@ -26,14 +26,6 @@ void upperCase(char *str)
 	}
 }
 
-void readNextCommand(Command *user_command)
-{
-	char input_string[MAX_COMMAND_LEN];
-	gets(input_string);
-
-	strToCommand(input_string, user_command);
-}
-
 void strToCommand(char *input_string, Command *user_command)
 {
 	char *token = strtok(input_string, " ");
@@ -132,4 +124,12 @@ bool executeOneCommand(Command *user_command, Int **head)
 		printf("Invalid command entered. Try again...\n");
 
 	return exit_program;
+}
+
+void readNextCommand(Command *user_command)
+{
+	char input_string[MAX_COMMAND_LEN];
+	gets(input_string);
+
+	strToCommand(input_string, user_command);
 }

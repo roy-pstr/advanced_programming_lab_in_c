@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#include "utils.h"
 #include "linked_list.h"
 #include "input_handler.h"
-
 
 int main()
 {
@@ -19,5 +19,5 @@ int main()
 	}
 
 	List_destroyList(head);
-	return 0;
+	return SUCCESS_CODE;
 }

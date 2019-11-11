@@ -1,8 +1,6 @@
 #ifndef INPUT_HANDLER_H
 #define INPUT_HANDLER_H
 
-#include "linked_list.h"
-
 #define MAX_COMMAND_LEN 100
 
 typedef struct command
@@ -11,8 +9,6 @@ typedef struct command
 	int arg1;
 	int arg2;
 }Command;
-
-void strToCommand(char *input_string, Command *user_command);
 
 void readNextCommand(Command *user_command);
 

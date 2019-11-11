@@ -3,9 +3,9 @@
 #include "utils.h"
 #include "linked_list.h"
 
-Int *findLastElement(Int **head)
+Int *findLastElement(Int *head)
 {
-	Int *last_element = *head;
+	Int *last_element = head;
 
 	while (last_element->next != NULL)
 		last_element = last_element->next;
@@ -31,7 +31,7 @@ void List_addEnd(Int **head, int value)
 		return;
 	}
 
-	Int *last_element = findLastElement(head);
+	Int *last_element = findLastElement(*head);
 	last_element->next = new_element;
 	new_element->next = NULL;
 }

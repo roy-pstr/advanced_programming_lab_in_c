@@ -18,10 +18,10 @@
     <ClCompile Include="linked_list.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="input_handler.c">
+    <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.c">
+    <ClCompile Include="user_command.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,10 +29,10 @@
     <ClInclude Include="linked_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="input_handler.h">
+    <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
+    <ClInclude Include="user_command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

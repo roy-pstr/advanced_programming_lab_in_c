@@ -2,11 +2,11 @@
 #include <stdbool.h>
 
 #include "linked_list.h"
-#include "input_handler.h"
+#include "user_command.h"
 
 int main()
 {
-	Int *head = NULL;
+	Node *head = NULL;
 
 	bool exit_program = false;
 	while (!exit_program)

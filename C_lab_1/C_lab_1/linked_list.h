@@ -3,22 +3,22 @@
 
 #define INDEX_NOT_EXISTS -1
 
-typedef struct integer
+typedef struct node_st
 {
 	int value;
-	struct integer *next;
-}Int;
+	struct node_st *next;
+}Node;
 
-void List_addItemByIndex(Int **head, int value, int index);
+void List_addItemByIndex(Node **head, int value, int index);
 
-void List_addEnd(Int **head, int value);
+void List_addEnd(Node **head, int value);
 
-int List_findIndex(Int *head, int value);
+int List_findIndex(Node *head, int value);
 
-int List_deleteItem(Int **head, int index);
+int List_deleteItem(Node **head, int index);
 
-void List_destroyList(Int *head);
+void List_destroyList(Node *head);
 
-void List_printList(Int *head);
+void List_printList(Node *head);
 
 #endif

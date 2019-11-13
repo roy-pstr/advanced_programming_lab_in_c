@@ -1,9 +1,11 @@
 #ifndef INPUT_HANDLER_H
+
+#include "utils.h"
+#include "linked_list.h"
+
 #define INPUT_HANDLER_H
 
-#define MAX_COMMAND_LEN 100
-
-typedef struct command
+typedef struct command_st
 {
 	char command_name[MAX_COMMAND_LEN];
 	int arg1;

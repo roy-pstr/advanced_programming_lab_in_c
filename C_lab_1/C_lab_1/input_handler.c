@@ -1,13 +1,11 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "utils.h"
-#include "linked_list.h"
 #include "input_handler.h"
 
 #define STRINGS_ARE_EQUAL( Str1, Str2 ) ( strcmp( (Str1), (Str2) ) == 0 )
 
+/*debug function*/
 void printCommand(Command *cmd)
 {
 	printf("---printing command---\n");

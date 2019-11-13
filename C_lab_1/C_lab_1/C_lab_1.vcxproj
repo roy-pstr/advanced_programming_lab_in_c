@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="input_handler.h" />
     <ClInclude Include="linked_list.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

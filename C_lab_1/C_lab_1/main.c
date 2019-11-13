@@ -1,8 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 
-#include "utils.h"
 #include "linked_list.h"
 #include "input_handler.h"
 
@@ -19,5 +17,5 @@ int main()
 	}
 
 	List_destroyList(head);
-	return SUCCESS_CODE;
+	return 0;
 }

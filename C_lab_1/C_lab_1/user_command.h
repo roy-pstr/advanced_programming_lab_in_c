@@ -1,5 +1,5 @@
-#ifndef INPUT_HANDLER_H
-#define INPUT_HANDLER_H
+#ifndef USER_COMMAND_H
+#define USER_COMMAND_H
 
 #include <stdbool.h>
 #include "utils.h"

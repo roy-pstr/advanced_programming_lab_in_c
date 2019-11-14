@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib>
 #include <stdbool.h>
 
 #include "linked_list.h"

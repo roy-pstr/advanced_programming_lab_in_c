@@ -21,3 +21,9 @@ C_lab_1/.vs/C_lab_1/v15/Browse.VC.opendb
 C_lab_1/.vs/C_lab_1/v15/Browse.VC.db
 C_lab_1/.vs/C_lab_1/v15/.suo
 *.obj
+*.ipch
+*.opendb
+*.db
+C_lab_2/.vs/
+C_lab_2/x64/
+

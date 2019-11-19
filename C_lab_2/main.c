@@ -2,7 +2,7 @@
 
 int main(int argc, char **argv)
 {
-	testBasicCases();
+	runLineHandlerTests();
 
 	//checkArgv();
 	//parseFlags();

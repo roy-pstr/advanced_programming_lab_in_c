@@ -6,7 +6,7 @@
 
 #define TEST_LINE_MAX_LEN 80
 
-void testBasicCases()
+void runLineHandlerTests()
 {
 	const char test_string[][TEST_LINE_MAX_LEN] = {
 	   "Every sunday at 4:00 PM,",

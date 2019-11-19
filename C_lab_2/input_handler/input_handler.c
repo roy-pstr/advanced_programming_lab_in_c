@@ -1,22 +1,29 @@
+#include <stdio.h>
 #include <stdbool.h>
-#include "line_handler.h"
+#include "input_handler.h"
 
-bool isStringInLine(const char *str, const char *line)
-{
-	const char *str_iterator = str;
+#define MAX_LINE_LENGTH 100
 
-	while (*line != '\0') {
-		const char *line_iterator = line;
-		while (*line_iterator == *str_iterator) {
-			str_iterator++;
-			line_iterator++;
-			if (*str_iterator == '\0') {
-				return true;
-			}
-		}
-		str_iterator = str;
-		line++;
-	}
-	
-	return false;
+void getNextLineFromSTD(char *line) {
+	gets(line);
 }
+
+void getNextLineFromFile(FILE *fp, char *line) {
+	if (fp != NULL) {
+		fgets(line, MAX_LINE_LENGTH, fp);
+	}
+}
+
+void getNextLine(bool read_from_file, FILE *fp, char *line) {
+	if (read_from_file) {
+		getNextLineFromFile(fp, line);
+	}
+	else {
+		getNextLineFromSTD(line);
+	}
+}
+
+
+//bool isStringEmpty(char *str) {
+//	return (str[0] == '\0');
+//}

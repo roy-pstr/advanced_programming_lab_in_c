@@ -8,7 +8,7 @@ typedef struct Flag_st {
 	int counter;
 }Flag;
 
-bool is_flag(Flag *flg){
+bool isFlagOn(Flag *flg){
 	return (flg->is_on);
 }
 

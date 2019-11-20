@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
 #include "params_parser.h"
 #include "flags.h"
 #include "utils.h"

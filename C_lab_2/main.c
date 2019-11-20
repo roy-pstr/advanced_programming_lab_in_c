@@ -1,9 +1,11 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 #include "line_handler_tests.h"
 #include "line_handler.h"
 #include "input_handler.h"
 #include "params_parser.h"
+#include "utils.h"
 
 int main(int argc, char **argv)
 {
@@ -18,12 +20,13 @@ int main(int argc, char **argv)
 
 	//Argument handling:
 	//checkArgv();
-	//parseFlags();
+	parseParams(argc, argv, &params);
 	
 	//Handle file
+	strcpy(params.filename, "");
 	is_file = isFileInUse(&params);
 	if (is_file) {
-		openFile(fp, params.file_in);
+		openFile(fp, params.filename);
 	}
 
 	//Handle lines

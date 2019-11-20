@@ -19,6 +19,6 @@ typedef struct Params_st
 	Flag E;
 
 }Params;
-
+void parseParams(int argc, char **argv, Params *params);
 #endif
 

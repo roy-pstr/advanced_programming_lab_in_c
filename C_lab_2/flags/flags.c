@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "flags.h"
 
 void onFlag(Flag *flag)

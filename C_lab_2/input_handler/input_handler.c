@@ -15,7 +15,7 @@ void getNextLineFromSTD(char **line) {
 
 void getNextLineFromFile(FILE *fp, char **line) {
 	if (fp != NULL) {
-		fgets(line, MAX_LINE_LENGTH, fp);
+		fgets(*line, MAX_LINE_LENGTH, fp);
 	}
 }
 
@@ -29,7 +29,7 @@ void getNextLine(bool read_from_file, FILE *fp, char **line) {
 }
 
 bool isFileInUse(Params *params) {
-	return (isStringEmpty(params->file_in));
+	return (isStringEmpty(params->filename));
 }
 
 void openFile(FILE* fp, const char *file_path) {

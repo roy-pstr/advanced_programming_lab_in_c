@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "input_handler.h"
 
-#define MAX_LINE_LENGTH 100
+#define MAX_LINE_LENGTH 1000
 
 void getNextLineFromSTD(char *line) {
 	gets(line);

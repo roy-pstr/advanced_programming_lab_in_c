@@ -23,7 +23,6 @@ int main(int argc, char **argv)
 	parseParams(argc, argv, &params);
 	
 	//Handle file
-	strcpy(params.filename, "");
 	is_file = isFileInUse(&params);
 	if (is_file) {
 		openFile(fp, params.filename);

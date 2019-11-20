@@ -29,7 +29,7 @@ void getNextLine(bool read_from_file, FILE *fp, char **line) {
 }
 
 bool isFileInUse(Params *params) {
-	return (isStringEmpty(params->filename));
+	return (params->filename!=NULL);
 }
 
 void openFile(FILE* fp, const char *file_path) {

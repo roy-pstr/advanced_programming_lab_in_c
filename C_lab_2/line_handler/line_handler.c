@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include "line_handler.h"
 
 bool isStringInLine(const char *str, const char *line)
@@ -21,3 +22,6 @@ bool isStringInLine(const char *str, const char *line)
 	return false;
 }
 
+void handleLine(char *line, Params *params) {
+	printf("[%s]", line);
+}

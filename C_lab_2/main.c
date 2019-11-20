@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "line_handler_tests.h"
 #include "line_handler.h"
+#include "input_handler.h"
 #include "params_parser.h"
 
 int main(int argc, char **argv)
@@ -13,26 +14,27 @@ int main(int argc, char **argv)
 
 	//Tests:
 	runLineHandlerTests();
-	runInputHandlerTest();
+	//runInputHandlerTest();
 
 	//Argument handling:
 	//checkArgv();
 	//parseFlags();
 	
 	//Handle file
-	is_file = isFileInUse(params);
-	if ()
-	getNextLine(is_file, fp, line);
-	while (line != NULL) {
-		handleLine(line, &params); //printing function.
+	is_file = isFileInUse(&params);
+	if (is_file) {
+		openFile(fp, params.file_in);
 	}
+
+	//Handle lines
+	getNextLine(is_file, fp, &line);
+	while (!isStringEmpty(line)) {
+		handleLine(line, &params); //printing function.
+		getNextLine(is_file, fp, &line);
+	}
+	if (*line) {
+		free(*line);
+	}
+	return 0;
 }
 
-//void getLinesAndPrint() {
-//
-//	while (line = getNextLine()) {
-//		if (isStrInLine()) {
-//			print()
-//		}
-//	}
-//}

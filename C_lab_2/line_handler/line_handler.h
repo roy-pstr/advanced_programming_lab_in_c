@@ -4,5 +4,5 @@
 
 bool isStringInLine(const char *str, const char *line);
 
-void handleLine(char *line, Params params);
+void handleLine(char *line, Params *params);
 #endif

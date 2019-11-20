@@ -23,3 +23,4 @@ typedef struct Params_st
 void initializeParams(Params *flags);
 
 #endif
+

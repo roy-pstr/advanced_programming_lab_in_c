@@ -20,3 +20,4 @@ bool isStringInLine(const char *str, const char *line)
 
 	return false;
 }
+

@@ -23,7 +23,6 @@ int main(int argc, char **argv)
 	parseParams(argc, argv, &params);
 	
 	//Handle file
-	strcpy(params.filename, "");
 	is_file = isFileInUse(&params);
 	if (is_file) {
 		openFile(fp, params.filename);
@@ -35,8 +34,8 @@ int main(int argc, char **argv)
 		handleLine(line, &params); //printing function.
 		getNextLine(is_file, fp, &line);
 	}
-	if (*line) {
-		free(*line);
+	if (line) {
+		free(line);
 	}
 	return 0;
 }

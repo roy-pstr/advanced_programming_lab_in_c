@@ -34,8 +34,8 @@ int main(int argc, char **argv)
 		handleLine(line, &params); //printing function.
 		getNextLine(is_file, fp, &line);
 	}
-	if (*line) {
-		free(*line);
+	if (line) {
+		free(line);
 	}
 	return 0;
 }

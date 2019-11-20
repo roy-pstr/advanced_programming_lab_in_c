@@ -51,6 +51,9 @@
     <ClCompile Include="utils\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utils\utils_tests.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="char_comprasion\char_comprasion.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\utils_tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

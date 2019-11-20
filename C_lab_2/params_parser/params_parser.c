@@ -23,7 +23,7 @@ void initializeParams(Params *params)
 void parseParams(int argc, char **argv, Params *params)
 {
 	initializeParams(params);
-	bool has_filename = false;
+	bool has_filename = true;
 	for (int i = 1; i < argc - 2; i++) {
 		{
 			if (STRINGS_ARE_EQUAL(argv[i], "-A")) {
@@ -57,12 +57,12 @@ void parseParams(int argc, char **argv, Params *params)
 				has_filename = true;
 			}
 		}
-		if (has_filename){
-			params->filename = argv[argc - 1];
-			params->sub_str = argv[argc - 2];
-		}
-		else{
-			params->sub_str = argv[argc - 1];
-		}
+	}
+	if (has_filename){
+		params->filename = argv[argc - 1];
+		params->sub_str = argv[argc - 2];
+	}
+	else{
+		params->sub_str = argv[argc - 1];
 	}
 }

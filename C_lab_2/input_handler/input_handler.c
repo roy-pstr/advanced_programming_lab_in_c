@@ -7,24 +7,27 @@
 
 #define MAX_LINE_LENGTH 1000 //TBR
 
-void getNextLineFromSTD(char **line) {
+bool getNextLineFromSTD(char **line) {
 	*line = (char *)realloc(*line, MAX_LINE_LENGTH * sizeof(char));
 	assert((*line != NULL));
-	fgets(*line, sizeof(*line), stdin);
+	fgets(*line, MAX_LINE_LENGTH, stdin);
+	return (*line!='\n');
 }
 
-void getNextLineFromFile(FILE *fp, char **line) {
-	if (fp != NULL) {
-		fgets(*line, MAX_LINE_LENGTH, fp);
-	}
+bool getNextLineFromFile(FILE *fp, char **line) {
+	assert(fp != NULL);
+	*line = (char *)realloc(*line, MAX_LINE_LENGTH * sizeof(char));
+	assert(*line != NULL);
+	*line = fgets(*line, MAX_LINE_LENGTH, fp);
+	return (*line != NULL);
 }
 
-void getNextLine(bool read_from_file, FILE *fp, char **line) {
+bool getNextLine(bool read_from_file, FILE *fp, char **line) {
 	if (read_from_file) {
-		getNextLineFromFile(fp, line);
+		return getNextLineFromFile(fp, line);
 	}
 	else {
-		getNextLineFromSTD(line);
+		return getNextLineFromSTD(line);
 	}
 }
 
@@ -32,7 +35,7 @@ bool isFileInUse(Params *params) {
 	return (params->filename!=NULL);
 }
 
-void openFile(FILE* fp, const char *file_path) {
-	fp = fopen(file_path, "r");
-	assert((fp != NULL)); //Can not open file
+void openFile(FILE** fp, const char *file_path) {
+	*fp = fopen(file_path, "r");
+	assert((*fp != NULL)); 
 }

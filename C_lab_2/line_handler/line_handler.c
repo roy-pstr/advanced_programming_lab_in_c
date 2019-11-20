@@ -23,5 +23,8 @@ bool isStringInLine(const char *str, const char *line)
 }
 
 void handleLine(char *line, Params *params) {
-	printf("[%s]", line);
+	if (isStringInLine(params->sub_str, line)) {
+		printf("[%s]", line);
+	}
+	
 }

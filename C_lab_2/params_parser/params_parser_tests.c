@@ -1,4 +1,5 @@
 #include "params_parser_tests.h"
+#include "utils.h"
 
 bool isFlagsEquals(Flag flag1, Flag flag2)
 {
@@ -19,6 +20,6 @@ bool isParamsEqual(Params *params1, Params *params2)
 		(isFlagsEquals(params1->v, params2->v)) &&
 		(isFlagsEquals(params1->x, params2->x)) &&
 		(isFlagsEquals(params1->E, params2->E))
-		)
+		);
 }
 

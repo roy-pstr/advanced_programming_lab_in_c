@@ -8,13 +8,14 @@ typedef struct Flag_st {
 	int counter;
 }Flag;
 
-bool isFlagOn(Flag *flg){
-	return (flg->is_on);
-}
+bool isFlagOn(Flag *flag);
 
-void update_counter(Flag *flg, int value) {
+void onFlag(Flag *flag);
 
-}
+void offFlag(Flag *flag);
 
+void initializeFlag(Flag *flag);
+
+void addCounter(Flag *flag, int value);
 
 #endif

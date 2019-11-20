@@ -20,7 +20,5 @@ typedef struct Params_st
 
 }Params;
 
-void initializeParams(Params *flags);
-
 #endif
 

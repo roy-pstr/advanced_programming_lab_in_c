@@ -8,7 +8,7 @@
 typedef struct Params_st
 {
 	char *sub_str;
-	char *file_in;
+	char *filename;
 	Flag A;
 	Flag b;
 	Flag c;

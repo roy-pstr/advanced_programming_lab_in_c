@@ -19,7 +19,9 @@ int main(int argc, char **argv)
 	//checkArgv();
 	//parseFlags();
 	
-	
+	//Handle file
+	is_file = isFileInUse(params);
+	if ()
 	getNextLine(is_file, fp, line);
 	while (line != NULL) {
 		handleLine(line, &params); //printing function.

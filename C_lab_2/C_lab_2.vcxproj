@@ -70,16 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)utils;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)utils;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)utils;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)utils;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,6 +137,7 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="params_parser\params_parser.c" />
     <ClCompile Include="params_parser\params_parser_tests.c" />
+    <ClCompile Include="utils\utils.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="char_comprasion\char_comprasion.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="line_handler\line_handler_tests.h" />
     <ClInclude Include="params_parser\params_parser.h" />
     <ClInclude Include="params_parser\params_parser_tests.h" />
+    <ClInclude Include="utils\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

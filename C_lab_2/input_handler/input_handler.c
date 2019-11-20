@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "input_handler.h"
+#include "utils.h"
 
 #define MAX_LINE_LENGTH 1000
 
@@ -21,6 +22,10 @@ void getNextLine(bool read_from_file, FILE *fp, char *line) {
 	else {
 		getNextLineFromSTD(line);
 	}
+}
+
+bool isFileInUse(Params *params) {
+	return (isStringEmpty(params->file_in));
 }
 
 

@@ -6,6 +6,8 @@
 #include "input_handler.h"
 #include "params_parser.h"
 #include "utils.h"
+#include "utils_tests.h"
+
 
 int main(int argc, char **argv)
 {

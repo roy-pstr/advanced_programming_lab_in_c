@@ -32,7 +32,7 @@ void parseParams(int argc, char **argv, Params *params)
 		if (STRINGS_ARE_EQUAL(argv[i], "-A")) {
 			onFlag(&params->A);
 			i++;
-			assert(!isDigits(argv[i]));
+			assert(isDigits(argv[i]));
 			addCounter(&params->A, atoi(argv[i]));
 		}
 		else if (STRINGS_ARE_EQUAL(argv[i], "-b")) {
@@ -62,7 +62,7 @@ void parseParams(int argc, char **argv, Params *params)
 			printf("Debugging: sub_str is %s\n", params->sub_str);
 		}
 		else {
-			assert(i != argc - 1); //We assume filename is last arg
+			assert(i == argc - 1); //We assume filename is last arg
 			params->filename = argv[i];
 			printf("Debugging: filename is %s\n", params->filename);
 		}

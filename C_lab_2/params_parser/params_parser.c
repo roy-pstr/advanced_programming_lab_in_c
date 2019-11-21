@@ -48,23 +48,21 @@ void parseParams(int argc, char **argv, Params *params)
 			onFlag(&params->n);
 		}
 		else if (STRINGS_ARE_EQUAL(argv[i], "-v")) {
-			onFlag(&params->n);
+			onFlag(&params->v);
 		}
 		else if (STRINGS_ARE_EQUAL(argv[i], "-x")) {
-			onFlag(&params->n);
+			onFlag(&params->x);
 		}
 		else if (STRINGS_ARE_EQUAL(argv[i], "-E")) {
-			onFlag(&params->n);
+			onFlag(&params->E);
 		}
 		else if (!found_substr) {
 			params->sub_str = argv[i];
 			found_substr = true;
-			printf("Debugging: sub_str is %s\n", params->sub_str);
 		}
 		else {
 			assert(i == argc - 1); //We assume filename is last arg
 			params->filename = argv[i];
-			printf("Debugging: filename is %s\n", params->filename);
 		}
 	}
 }

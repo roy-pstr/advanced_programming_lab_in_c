@@ -1,10 +1,13 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "line_handler_tests.h"
 #include "line_handler.h"
 #include "input_handler.h"
+#include "input_handler_tests.h"
 #include "params_parser.h"
+#include "params_parser_tests.h"
 #include "utils.h"
 #include "utils_tests.h"
 
@@ -18,7 +21,10 @@ int main(int argc, char **argv)
 
 	//Tests:
 	runLineHandlerTests();
-	//runInputHandlerTest();
+	runInputHandlerTests();
+	runUtilstests();
+	runParamsParserTests();
+	return(5);
 
 	//Argument handling:
 	//checkArgv();

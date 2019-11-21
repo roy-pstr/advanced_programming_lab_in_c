@@ -21,6 +21,7 @@ typedef struct Params_st
 }Params;
 
 bool paramsHasFile(Params *params);
+void initializeParams(Params *params);
 void parseParams(int argc, char **argv, Params *params);
 
 #endif

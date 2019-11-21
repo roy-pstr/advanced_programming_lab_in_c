@@ -10,6 +10,7 @@
 #include "params_parser_tests.h"
 #include "utils.h"
 #include "utils_tests.h"
+#include "flags.h"
 
 
 int main(int argc, char **argv)
@@ -37,8 +38,8 @@ int main(int argc, char **argv)
 	}
 
 	//Handle lines
-	while (getNextLine(is_file, fp, &line)) {
-		handleLine(line, &params); //printing function.
+	while (getNextLine(is_file, fp)) {
+		handleLine(line, &params); //printing/counting function.
 	}
 	if (line) {
 		free(line);
@@ -46,6 +47,10 @@ int main(int argc, char **argv)
 	if (is_file) {
 		fclose(fp);
 	}
+	if (isFlagOn(&params.c)) {
+		printf("%d",&params.c, 1);
+	}
+
 	return 0;
 }
 

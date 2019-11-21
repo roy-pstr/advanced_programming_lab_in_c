@@ -1,29 +1,56 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 #include "line_handler.h"
+#include "flags.h"
 
-bool isStringInLine(const char *str, const char *line)
+bool isStringInLine(Params *params, const char *line)
 {
-	const char *str_iterator = str;
-
+	const char *sub_str = params->sub_str;
+	const char *str_iterator = sub_str;
+	bool invert_res = isFlagOn(&params->v);
 	while (*line != '\0') {
 		const char *line_iterator = line;
 		while (*line_iterator == *str_iterator) {
 			str_iterator++;
 			line_iterator++;
 			if (*str_iterator == '\0') {
-				return true;
+				return (true ^ invert_res);
 			}
 		}
-		str_iterator = str;
+		str_iterator = sub_str;
 		line++;
 	}
 
-	return false;
+	return (false ^ invert_res);
 }
 
-void handleLine(char *line, Params *params) {
-	if (isStringInLine(params->sub_str, line)) {
+void handleLine(Params *params, const char *line) {
+	if (isFlagOn(&params->n)) {
+		addCounter(&params->n, 1); //check if starting from 0 or 1.
+	}
+	if (isFlagOn(&params->b)) {
+		addCounter(&params->b, strlen(line)); //consider changing addCounter
+	}
+
+	if (isStringInLine(params->sub_str, line)){
+		if (isFlagOn(&params->c)) {
+			addCounter(&params->c, 1);
+			return;
+		}
+		if (isFlagOn(&params->b)) {
+			printf("%d:", params->b.counter);
+		}
+		if (isFlagOn(&params->n)) {
+			printf("%d", params->n.counter);
+			if (0) {				//TBR: if it is a -A line
+				printf("-");
+			}
+			else {
+				printf(":");
+			}
+		}
+
 		printf("[%s]", line);
 	}
 	

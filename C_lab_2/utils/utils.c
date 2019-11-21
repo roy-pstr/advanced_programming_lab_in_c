@@ -11,6 +11,7 @@ bool isDigits(char *str)
 	{
 		if (!(*str >= '0' && *str <= '9'))
 			return false;
+		str++;
 	}
 	return true;
 }

@@ -2,8 +2,8 @@
 #define PARAMS_PARSER_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include "flags.h"
-
 
 typedef struct Params_st
 {
@@ -19,6 +19,9 @@ typedef struct Params_st
 	Flag E;
 
 }Params;
+
+bool paramsHasFile(Params *params);
 void parseParams(int argc, char **argv, Params *params);
+
 #endif
 

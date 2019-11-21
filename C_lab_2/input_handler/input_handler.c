@@ -5,6 +5,13 @@
 #include "input_handler.h"
 #include "utils.h"
 
+/*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+/*Comments for Paster:
+ * Look at this shit: https://moodle.tau.ac.il/mod/forum/discuss.php?d=15198
+ * We have new function called paramsHasFile(Params *params)
+ */
+ /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
+
 #define MAX_LINE_LENGTH 1000 //TBR
 
 void getNextLineFromSTD(char **line) {

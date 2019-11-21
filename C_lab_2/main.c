@@ -25,17 +25,18 @@ int main(int argc, char **argv)
 	//Handle file
 	is_file = isFileInUse(&params);
 	if (is_file) {
-		openFile(fp, params.filename);
+		openFile(&fp, params.filename);
 	}
 
 	//Handle lines
-	getNextLine(is_file, fp, &line);
-	while (!isStringEmpty(line)) {
+	while (getNextLine(is_file, fp, &line)) {
 		handleLine(line, &params); //printing function.
-		getNextLine(is_file, fp, &line);
 	}
 	if (line) {
 		free(line);
+	}
+	if (is_file) {
+		fclose(fp);
 	}
 	return 0;
 }

@@ -2,7 +2,7 @@
 #define LINE_HANDLER_H
 #include "params_parser.h"
 
-bool isLineMatches(Params *params, const char *line);
+bool isLineMatch(Params *params, const char *line);
 
 void handleLine(Params *params, const char *line);
 #endif

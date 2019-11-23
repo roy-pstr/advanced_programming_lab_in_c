@@ -20,17 +20,17 @@ void runLineHandlerTests()
 	   "tthis is an important line!"
 	};
 
-	assert(isLineMatches("4:0", test_string[0]));
-	assert(isLineMatches(",", test_string[0]));
-	assert(isLineMatches("C relm", test_string[1]));
-	assert(isLineMatches(".", test_string[1]));
-	assert(isLineMatches(" StaffCryptographyEngineer ", test_string[2]));
-	assert(!isLineMatches("chrome", test_string[2]));
-	assert(isLineMatches("tested", test_string[3]));
-	assert(isLineMatches("don't", test_string[4]));
-	assert(!isLineMatches("dont", test_string[4]));
-	assert(isLineMatches("I'm not afraid", test_string[5]));
-	assert(isLineMatches("to copy from my friend", test_string[5]));
-	assert(isLineMatches("I sometimes have bad jokes.", test_string[6]));
-	assert(isLineMatches("this", test_string[7]));
+	assert(isLineMatch("4:0", test_string[0]));
+	assert(isLineMatch(",", test_string[0]));
+	assert(isLineMatch("C relm", test_string[1]));
+	assert(isLineMatch(".", test_string[1]));
+	assert(isLineMatch(" StaffCryptographyEngineer ", test_string[2]));
+	assert(!isLineMatch("chrome", test_string[2]));
+	assert(isLineMatch("tested", test_string[3]));
+	assert(isLineMatch("don't", test_string[4]));
+	assert(!isLineMatch("dont", test_string[4]));
+	assert(isLineMatch("I'm not afraid", test_string[5]));
+	assert(isLineMatch("to copy from my friend", test_string[5]));
+	assert(isLineMatch("I sometimes have bad jokes.", test_string[6]));
+	assert(isLineMatch("this", test_string[7]));
 }

@@ -4,7 +4,7 @@
 #include "line_handler.h"
 #include "flags.h"
 
-bool isStringInLine(Params *params, const char *line)
+bool isStringMatch(Params *params, const char *line)
 {
 	const char *sub_str = params->sub_str;
 	const char *str_iterator = sub_str;
@@ -33,7 +33,7 @@ void handleLine(Params *params, const char *line) {
 		addCounter(&params->b, strlen(line)); //consider changing addCounter
 	}
 
-	if (isStringInLine(params->sub_str, line)){
+	if (isStringMatch(params->sub_str, line)){
 		if (isFlagOn(&params->c)) {
 			addCounter(&params->c, 1);
 			return;

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "line_handler_tests.h"
 #include "line_handler.h"
+#include "params_parser.h"
 
 #define TEST_LINE_MAX_LEN 80
 
@@ -19,18 +20,33 @@ void runLineHandlerTests()
 	   "I sometimes have bad jokes.",
 	   "tthis is an important line!"
 	};
+	Params params;
+	initializeParams(&params);
 
-	assert(isLineMatch("4:0", test_string[0]));
-	assert(isLineMatch(",", test_string[0]));
-	assert(isLineMatch("C relm", test_string[1]));
-	assert(isLineMatch(".", test_string[1]));
-	assert(isLineMatch(" StaffCryptographyEngineer ", test_string[2]));
-	assert(!isLineMatch("chrome", test_string[2]));
-	assert(isLineMatch("tested", test_string[3]));
-	assert(isLineMatch("don't", test_string[4]));
-	assert(!isLineMatch("dont", test_string[4]));
-	assert(isLineMatch("I'm not afraid", test_string[5]));
-	assert(isLineMatch("to copy from my friend", test_string[5]));
-	assert(isLineMatch("I sometimes have bad jokes.", test_string[6]));
-	assert(isLineMatch("this", test_string[7]));
+	params.sub_str = "4:0";
+	assert(isLineMatch(&params, test_string[0]));
+	params.sub_str = ",";
+	assert(isLineMatch(&params, test_string[0]));
+	params.sub_str = "C relm";
+	assert(isLineMatch(&params, test_string[1]));
+	params.sub_str = ".";
+	assert(isLineMatch(&params, test_string[1]));
+	params.sub_str = " StaffCryptographyEngineer ";
+	assert(isLineMatch(&params, test_string[2]));
+	params.sub_str = "chrome";
+	assert(!isLineMatch(&params, test_string[2]));
+	params.sub_str = "tested";
+	assert(isLineMatch(&params, test_string[3]));
+	params.sub_str = "don't";
+	assert(isLineMatch(&params, test_string[4]));
+	params.sub_str = "dont";
+	assert(!isLineMatch(&params, test_string[4]));
+	params.sub_str = "I'm not afraid";
+	assert(isLineMatch(&params, test_string[5]));
+	params.sub_str = "to copy from my friend";
+	assert(isLineMatch(&params, test_string[5]));
+	params.sub_str = "I sometimes have bad jokes.";
+	assert(isLineMatch(&params, test_string[6]));
+	params.sub_str = "this";
+	assert(isLineMatch(&params, test_string[7]));
 }

@@ -12,6 +12,7 @@
 #include "utils_tests.h"
 #include "flags.h"
 
+#define DEBUGGING_EXIT 0
 
 int main(int argc, char **argv)
 {
@@ -25,7 +26,8 @@ int main(int argc, char **argv)
 	runInputHandlerTests();
 	runUtilstests();
 	runParamsParserTests();
-	return(5);
+
+	return DEBUGGING_EXIT;
 
 	//Argument handling:
 	//checkArgv();
@@ -38,8 +40,8 @@ int main(int argc, char **argv)
 	}
 
 	//Handle lines
-	while (getNextLine(is_file, fp)) {
-		handleLine(line, &params); //printing/counting function.
+	while (getNextLine(is_file, fp, &line)) {
+		handleLine(&params, line); //printing/counting function.
 	}
 	if (line) {
 		free(line);

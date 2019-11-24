@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 		fclose(fp);
 	}
 	if (isFlagOn(&params.c)) {
-		printf("%d",&params.c, 1);
+		printf("%d",params.c.counter);
 	}
 
 	return 0;

@@ -11,7 +11,7 @@ bool isLineMatch(Params *params, const char *line)
 	bool invert_res = isFlagOn(&params->v);
 	while (*line != '\0') {
 		const char *line_iterator = line;
-		while (*line_iterator == *str_iterator) {
+		while (charsAreEqual(params, *line_iterator, *str_iterator)) {
 			str_iterator++;
 			line_iterator++;
 			if (*str_iterator == '\0') {

@@ -8,7 +8,6 @@
 
 #define TEST_LINE_MAX_LEN 80
 
-
 void runBasicTest()
 {
 	const char test_string[][TEST_LINE_MAX_LEN] = {
@@ -53,19 +52,18 @@ void runBasicTest()
 	assert(isLineMatch(&params, test_string[7]));
 }
 
-
 void runTestWIthV_Arg()
 {
 	const char test_string[][TEST_LINE_MAX_LEN] = {
    "Every sunday at 4:00 PM,",
    "we dive into the C relm.",
    "Mozilla is seeking StaffCryptographyEngineer \
-	   to develop featurs for Chrome",
-	   "You believe that test doesn't exist unless it is tested",
-	   "and that tests don't exist unless they are tested.",
-	   "I'm not afraid to copy from my friend.",
-	   "I sometimes have bad jokes.",
-	   "tthis is an important line!"
+	to develop featurs for Chrome",
+	"You believe that test doesn't exist unless it is tested",
+	"and that tests don't exist unless they are tested.",
+	"I'm not afraid to copy from my friend.",
+	"I sometimes have bad jokes.",
+	"tthis is an important line!"
 	};
 	Params params;
 	initializeParams(&params);

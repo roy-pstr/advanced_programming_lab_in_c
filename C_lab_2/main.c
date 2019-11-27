@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <sys/types.h>
 #include <string.h>
 #include <stdlib.h>
 #include "line_handler_tests.h"
@@ -16,11 +17,6 @@
 
 int main(int argc, char **argv)
 {
-	char *line = NULL;
-	bool is_file_in_use = false;
-	FILE *fp = NULL;
-	Params params;
-
 	//Tests:
 	runLineHandlerTests();
 	runInputHandlerTests();
@@ -30,28 +26,33 @@ int main(int argc, char **argv)
 	//return DEBUGGING_EXIT;
 
 	//Argument handling:
+	Params params;
 	parseParams(argc, argv, &params);
 	
 	//Handle file:
+	bool is_file_in_use = false;
+	FILE *stream = NULL;
 	is_file_in_use = paramsHasFile(&params);
 	if (is_file_in_use) {
-		openFile(&fp, params.filename);
+		openFile(&stream, params.filename);
+	}
+	else {
+		stream = stdin;
 	}
 
 	//Handle lines:
-	while (getNextLine(is_file_in_use, fp, &line)) {
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t nread;
+	while ((nread = getline(&line, &len, stream))!=-1) {
 		handleLine(&params, line);
-		//printf("[debuggin getline: %s]\n", line); //debugging
-		
 	}
 	if (NULL != line) {
-		//printf("[free line]\n");
 		free(line);
-		//printf("[debuggin line after free: %s]\n", line); //debugging
 	}
 	//Close file:
 	if (is_file_in_use) {
-		fclose(fp);
+		fclose(stream);
 	}
 	if (isFlagOn(&params.c)) {
 		printf("%d", params.c.counter);

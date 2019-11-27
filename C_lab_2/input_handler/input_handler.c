@@ -18,7 +18,7 @@ bool getNextLineFromSTD(char **line) {
 	*line = (char *)realloc(*line, MAX_LINE_LENGTH * sizeof(char));
 	assert((*line != NULL));
 	fgets(*line, MAX_LINE_LENGTH, stdin);
-	return (*line!='\n');
+	return (*line[0]!='\n');
 }
 
 bool getNextLineFromFile(FILE *fp, char **line) {
@@ -31,15 +31,13 @@ bool getNextLineFromFile(FILE *fp, char **line) {
 
 bool getNextLine(bool read_from_file, FILE *fp, char **line) {
 	if (read_from_file) {
+		//return get_line();
 		return getNextLineFromFile(fp, line);
 	}
 	else {
+		//return get_line();
 		return getNextLineFromSTD(line);
 	}
-}
-
-bool isFileInUse(Params *params) {
-	return (params->filename!=NULL);
 }
 
 void openFile(FILE** fp, const char *file_path) {

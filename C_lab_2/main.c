@@ -32,26 +32,27 @@ int main(int argc, char **argv)
 	//Argument handling:
 	parseParams(argc, argv, &params);
 	
-	//Handle file
-	is_file_in_use = isFileInUse(&params);
+	//Handle file:
+	is_file_in_use = paramsHasFile(&params);
 	if (is_file_in_use) {
 		openFile(&fp, params.filename);
 	}
 
-	//Handle lines
+	//Handle lines:
 	while (getNextLine(is_file_in_use, fp, &line)) {
-		handleLine(&params, line); //printing/counting function.
+		handleLine(&params, line);
 	}
 	if (line) {
 		free(line);
 	}
+
+	//Close file:
 	if (is_file_in_use) {
 		fclose(fp);
 	}
 	if (isFlagOn(&params.c)) {
-		printf("%d",params.c.counter);
+		printf("%d", params.c.counter);
 	}
-
 	return 0;
 }
 

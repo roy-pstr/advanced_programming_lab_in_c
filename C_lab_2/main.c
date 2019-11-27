@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 {
 	char *line = NULL;
 	bool is_file_in_use = false;
-	FILE *fp = NULL;
+	FILE *stream = NULL;
 	Params params;
 
 	//Tests:
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	runUtilstests();
 	runParamsParserTests();
 
-	return DEBUGGING_EXIT;
+	//return DEBUGGING_EXIT;
 
 	//Argument handling:
 	parseParams(argc, argv, &params);
@@ -35,11 +35,14 @@ int main(int argc, char **argv)
 	//Handle file:
 	is_file_in_use = paramsHasFile(&params);
 	if (is_file_in_use) {
-		openFile(&fp, params.filename);
+		openFile(&stream, params.filename);
 	}
-
+	else {
+		stream = stdin;
+	}
 	//Handle lines:
-	while (getNextLine(is_file_in_use, fp, &line)) {
+	size_t len = 0;
+	while (getline(&line,&len,stream)!=-1) {
 		handleLine(&params, line);
 	}
 	if (line) {
@@ -48,7 +51,7 @@ int main(int argc, char **argv)
 
 	//Close file:
 	if (is_file_in_use) {
-		fclose(fp);
+		fclose(stream);
 	}
 	if (isFlagOn(&params.c)) {
 		printf("%d", params.c.counter);

@@ -41,11 +41,14 @@ int main(int argc, char **argv)
 	//Handle lines:
 	while (getNextLine(is_file_in_use, fp, &line)) {
 		handleLine(&params, line);
+		//printf("[debuggin getline: %s]\n", line); //debugging
+		
 	}
-	if (line) {
+	if (NULL != line) {
+		//printf("[free line]\n");
 		free(line);
+		//printf("[debuggin line after free: %s]\n", line); //debugging
 	}
-
 	//Close file:
 	if (is_file_in_use) {
 		fclose(fp);

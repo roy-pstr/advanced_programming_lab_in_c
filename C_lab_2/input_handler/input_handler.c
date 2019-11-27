@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <sys/types.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
 #include "input_handler.h"
 #include "utils.h"
+//#define _GNU_SOURCE
 #define LINUX_FLAG //debug
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 /*Comments for Paster:
@@ -29,10 +31,13 @@ bool getNextLineFromFile(FILE *fp, char **line) {
 }
 
 bool getNextLine(bool read_from_file, FILE *fp, char **line) {
-	size_t *n = NULL;
+	
 	if (read_from_file) {
 #ifdef LINUX_FLAG
-		return (getline(line, n, fp) != -1);
+		size_t len = 0;
+		ssize_t nread;
+		nread = getline(line, &len, fp);
+		return (nread!=-1);
 #endif
 #ifndef LINUX_FLAG
 		return getNextLineFromFile(fp, line);
@@ -40,7 +45,10 @@ bool getNextLine(bool read_from_file, FILE *fp, char **line) {
 	}
 	else {
 #ifdef LINUX_FLAG
-		return (getline(line, n, stdin) != -1);
+		size_t len = 0;
+		ssize_t nread;
+		nread = getline(line, &len, stdin);
+		return (nread != -1);
 #endif
 #ifndef LINUX_FLAG
 		return getNextLineFromSTD(line);

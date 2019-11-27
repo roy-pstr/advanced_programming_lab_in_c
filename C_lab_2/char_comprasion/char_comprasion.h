@@ -3,8 +3,6 @@
 #include <stdbool.h>
 #include "params_parser.h"
 
-
 bool charsAreEqual(Params *params, char line_char, char substr_char);
-
 
 #endif

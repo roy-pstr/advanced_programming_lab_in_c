@@ -17,7 +17,7 @@
 int main(int argc, char **argv)
 {
 	char *line = NULL;
-	bool is_file = false;
+	bool is_file_in_use = false;
 	FILE *fp = NULL;
 	Params params;
 
@@ -30,23 +30,22 @@ int main(int argc, char **argv)
 	return DEBUGGING_EXIT;
 
 	//Argument handling:
-	//checkArgv();
 	parseParams(argc, argv, &params);
 	
 	//Handle file
-	is_file = isFileInUse(&params);
-	if (is_file) {
+	is_file_in_use = isFileInUse(&params);
+	if (is_file_in_use) {
 		openFile(&fp, params.filename);
 	}
 
 	//Handle lines
-	while (getNextLine(is_file, fp, &line)) {
+	while (getNextLine(is_file_in_use, fp, &line)) {
 		handleLine(&params, line); //printing/counting function.
 	}
 	if (line) {
 		free(line);
 	}
-	if (is_file) {
+	if (is_file_in_use) {
 		fclose(fp);
 	}
 	if (isFlagOn(&params.c)) {

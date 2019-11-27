@@ -4,25 +4,30 @@
 #include "line_handler.h"
 #include "flags.h"
 
-bool isLineMatch(Params *params, const char *line)
+bool isSubstrInLine(Params *params, const char *line)
 {
 	const char *sub_str = params->sub_str;
 	const char *str_iterator = sub_str;
-	bool invert_res = isFlagOn(&params->v);
 	while (*line != '\0') {
 		const char *line_iterator = line;
 		while (charsAreEqual(params, *line_iterator, *str_iterator)) {
 			str_iterator++;
 			line_iterator++;
 			if (*str_iterator == '\0') {
-				return (true ^ invert_res);
+				return (true);
 			}
 		}
 		str_iterator = sub_str;
 		line++;
 	}
 
-	return (false ^ invert_res);
+	return (false);
+}
+
+bool isLineMatch(Params *params, const char *line) {
+	bool invert_result = isFlagOn(&params->v);
+	return (isSubstrInLine(params, line)^ invert_result);
+
 }
 
 void handleLine(Params *params, const char *line) {
@@ -51,7 +56,7 @@ void handleLine(Params *params, const char *line) {
 			}
 		}
 
-		printf("[%s]", line);
+		printf("%s", line); 
 	}
 	
 }

@@ -5,7 +5,5 @@
 
 bool getNextLine(bool read_from_file, FILE *fp, char **line);
 
-bool isFileInUse(Params *params);
-
 void openFile(FILE** fp, const char *file_path);
 #endif

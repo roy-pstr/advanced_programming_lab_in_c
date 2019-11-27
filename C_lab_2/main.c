@@ -1,6 +1,5 @@
 #include <stdbool.h>
 #include <stdio.h>
-#include <sys/types.h>
 #include <string.h>
 #include <stdlib.h>
 #include "line_handler_tests.h"
@@ -17,6 +16,11 @@
 
 int main(int argc, char **argv)
 {
+	char *line = NULL;
+	bool is_file_in_use = false;
+	FILE *stream = NULL;
+	Params params;
+
 	//Tests:
 	runLineHandlerTests();
 	runInputHandlerTests();
@@ -26,12 +30,9 @@ int main(int argc, char **argv)
 	//return DEBUGGING_EXIT;
 
 	//Argument handling:
-	Params params;
 	parseParams(argc, argv, &params);
 	
 	//Handle file:
-	bool is_file_in_use = false;
-	FILE *stream = NULL;
 	is_file_in_use = paramsHasFile(&params);
 	if (is_file_in_use) {
 		openFile(&stream, params.filename);
@@ -39,17 +40,15 @@ int main(int argc, char **argv)
 	else {
 		stream = stdin;
 	}
-
 	//Handle lines:
-	char *line = NULL;
 	size_t len = 0;
-	ssize_t nread;
-	while ((nread = getline(&line, &len, stream))!=-1) {
+	while (getline(&line,&len,stream)!=-1) {
 		handleLine(&params, line);
 	}
-	if (NULL != line) {
+	if (line) {
 		free(line);
 	}
+
 	//Close file:
 	if (is_file_in_use) {
 		fclose(stream);

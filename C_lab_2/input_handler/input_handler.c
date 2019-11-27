@@ -4,11 +4,10 @@
 #include <assert.h>
 #include "input_handler.h"
 #include "utils.h"
-
+#define LINUX_FLAG //debug
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 /*Comments for Paster:
  * Look at this shit: https://moodle.tau.ac.il/mod/forum/discuss.php?d=15198
- * We have new function called paramsHasFile(Params *params)
  */
  /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
 
@@ -30,13 +29,22 @@ bool getNextLineFromFile(FILE *fp, char **line) {
 }
 
 bool getNextLine(bool read_from_file, FILE *fp, char **line) {
+	size_t *n = NULL;
 	if (read_from_file) {
-		//return get_line();
+#ifdef LINUX_FLAG
+		return (getline(line, n, fp) != -1);
+#endif
+#ifndef LINUX_FLAG
 		return getNextLineFromFile(fp, line);
+#endif
 	}
 	else {
-		//return get_line();
+#ifdef LINUX_FLAG
+		return (getline(line, n, stdin) != -1);
+#endif
+#ifndef LINUX_FLAG
 		return getNextLineFromSTD(line);
+#endif
 	}
 }
 

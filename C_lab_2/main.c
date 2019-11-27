@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	runUtilstests();
 	runParamsParserTests();
 
-	return DEBUGGING_EXIT;
+	//return DEBUGGING_EXIT;
 
 	//Argument handling:
 	parseParams(argc, argv, &params);

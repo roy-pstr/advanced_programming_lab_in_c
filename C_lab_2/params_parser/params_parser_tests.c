@@ -87,8 +87,8 @@ void ParamsParserTest1()
 	Params params;
 	parseParams(argc, argv, &params);
 
-	printParams(&params);
-	printParams(&expected_params);
+	//printParams(&params);
+	//printParams(&expected_params);
 
 	assert(areParamsEqual(&params, &expected_params));
 }
@@ -107,8 +107,8 @@ void ParamsParserTest2()
 
 	Params params;
 	parseParams(argc, argv, &params);
-	printParams(&params);
-	printParams(&expected_params);
+	/*printParams(&params);
+	printParams(&expected_params);*/
 	assert(areParamsEqual(&params, &expected_params));
 }
 
@@ -125,8 +125,8 @@ void ParamsParserTest3()
 
 	Params params;
 	parseParams(argc, argv, &params);
-	printParams(&params);
-	printParams(&expected_params);
+	/*printParams(&params);
+	printParams(&expected_params);*/
 	assert(areParamsEqual(&params, &expected_params));
 }
 

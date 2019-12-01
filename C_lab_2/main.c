@@ -12,27 +12,23 @@
 #include "utils_tests.h"
 #include "flags.h"
 
-#define DEBUGGING_EXIT 0
-
 int main(int argc, char **argv)
 {
-	char *line = NULL;
-	bool is_file_in_use = false;
-	FILE *stream = NULL;
-	Params params;
-
 	//Tests:
 	runLineHandlerTests();
 	runInputHandlerTests();
 	runUtilstests();
 	runParamsParserTests();
 
-	//return DEBUGGING_EXIT;
+	//return 0;
 
-	//Argument handling:
+	//Arguments handling:
+	Params params;
 	parseParams(argc, argv, &params);
 	
 	//Handle file:
+	FILE *stream = NULL;
+	bool is_file_in_use = false;
 	is_file_in_use = paramsHasFile(&params);
 	if (is_file_in_use) {
 		openFile(&stream, params.filename);
@@ -40,7 +36,9 @@ int main(int argc, char **argv)
 	else {
 		stream = stdin;
 	}
+
 	//Handle lines:
+	char *line = NULL;
 	size_t len = 0;
 	while (getline(&line,&len,stream)!=-1) {
 		handleLine(&params, line);

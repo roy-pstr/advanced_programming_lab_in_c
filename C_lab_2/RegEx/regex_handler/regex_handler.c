@@ -61,45 +61,13 @@ void printRegexStr(const rChar *re_char) {
 	}
 }
 
-/* putting value in rChar */
-void allocString(char **str_ptr, int len) {
-	if (NULL == (*str_ptr = (char*)malloc(len))) {
-		printf("allocation memory for string - failed!");
-		exit(-1);
-	}
-}
-void putChar(rChar *re_char, const char c) {
-	re_char->dataType = CHAR;
-	re_char->data.c = c;
-}
-void putPoint(rChar *re_char) {
-	re_char->dataType = POINT;
-	re_char->data.p = true;
-}
-void putRange(rChar *re_char, const char start, const char end) {
-	re_char->dataType = RANGE;
-	re_char->data.rng.start = start;
-	re_char->data.rng.end = end;
-}
-void putOr(rChar *re_char, const char *left, int left_len, const char *right, int right_len) {
-	re_char->dataType = OR;
-	/*allocString(&re_char->data.or.left, left_len);
-	allocString(&re_char->data.or.right, right_len);*/
-	/*strcpy_s(re_char->data.or.left, left_len, left);
-	strcpy_s(re_char->data.or.right, right_len, right);*/
-	re_char->data.or.left = left;
-	re_char->data.or.left_len = left_len;
-	re_char->data.or.right = right;
-	re_char->data.or.right_len = right_len;
-}
-
-/* free allocated memory in rChar */
-void freerChar(rChar *re_char) {
-	if (re_char->dataType == OR) {
-		free(re_char->data.or.left);
-		free(re_char->data.or.right);
-	}
-}
+///* free allocated memory in rChar */
+//void freerChar(rChar *re_char) {
+//	if (re_char->dataType == OR) {
+//		free(re_char->data.or.left);
+//		free(re_char->data.or.right);
+//	}
+//}
 
 /* misc */
 enum rCharTypes checkType(const char str_ptr) {
@@ -146,27 +114,59 @@ void parseOr(const char *or_str, char **left, int *left_len, char **right, int *
 }
 //void parseRange(char *range_str, rRange *re_range) {}
 //void parsePoint(char *point_str, rPoint *re_point) {}
-void parseStrToRegex(char *str, rChar *regex) {
+
+/* putting value in rChar */
+void allocString(char **str_ptr, int len) {
+	if (NULL == (*str_ptr = (char*)malloc(len))) {
+		printf("allocation memory for string - failed!");
+		exit(-1);
+	}
+}
+void putChar(rChar *re_char, const char c) {
+	re_char->dataType = CHAR;
+	re_char->data.c = c;
+}
+void putPoint(rChar *re_char) {
+	re_char->dataType = POINT;
+	re_char->data.p = true;
+}
+void putRange(rChar *re_char, const char start, const char end) {
+	re_char->dataType = RANGE;
+	re_char->data.rng.start = start;
+	re_char->data.rng.end = end;
+}
+void putOr(rChar *re_char, const char *left, int left_len, const char *right, int right_len) {
+	re_char->dataType = OR;
+	/*allocString(&re_char->data.or.left, left_len);
+	allocString(&re_char->data.or.right, right_len);*/
+	/*strcpy_s(re_char->data.or.left, left_len, left);
+	strcpy_s(re_char->data.or.right, right_len, right);*/
+	re_char->data. or .left = left;
+	re_char->data. or .left_len = left_len;
+	re_char->data. or .right = right;
+	re_char->data. or .right_len = right_len;
+}
+void putRegex(rChar * re_str, char * str) {
 	char *left=NULL, *right = NULL, *end, *start;
 	int left_len=0, right_len=0;
 
 	while (*str != '\0') {
 		switch (checkType(*str)) {
 		case CHAR:
-			putChar(regex, *str);
+			putChar(re_str, *str);
 			break;
 		case POINT:
-			putPoint(regex);
+			putPoint(re_str);
 			break;
 		case OR:
 			parseOr(str, &left, &left_len, &right, &right_len);
-			putOr(regex, left, left_len, right, right_len);
+			putOr(re_str, left, left_len, right, right_len);
 			str += left_len+ right_len +2; //jump to )
 			break;
 		case RANGE:
 			start = str + 1;
 			end = str + 3;
-			putRange(regex, *start, *end);
+			putRange(re_str, *start, *end);
 			str += 4; //jump to ]
 			break;
 		default:
@@ -174,7 +174,50 @@ void parseStrToRegex(char *str, rChar *regex) {
 			break;
 		}
 		str++;
-		regex++;
+		re_str++;
+	}
+	putChar(re_str, '\0');
+}
+
+/* comprasion */
+bool isrOrEqual(rChar * left, rChar * right) {
+	return (strncmp(left->data.or.left, right->data. or .left, left->data. or .left_len)==0) && (strncmp(left->data. or .right, right->data. or .right, left->data. or .right_len)==0);
+}
+bool isrRangeEqual(rChar * left, rChar * right) {
+	return ((left->data.rng.start == right->data.rng.start) && (left->data.rng.end == right->data.rng.end));
+}
+bool isrCharEqual(rChar * left, rChar * right) {
+	if (left->dataType != right->dataType) {
+		return false;
+	}
+
+	switch (left->dataType) {
+	case CHAR:
+		return (left->data.c == right->data.c);
+	case POINT:
+		return true;
+	case OR:
+		return isrOrEqual(left, right);
+	case RANGE:
+		return isrRangeEqual(left, right);
+	default:
+		assert(false);
+		return false;
 	}
 }
 
+/*naive!*/
+bool isRegexStrEqual(rChar * left, rChar * right) {
+	while (isrCharEqual(left, right)) {
+		if (left->dataType == CHAR && left->data.c == '\0') {
+			if (right->dataType == CHAR && right->data.c == '\0') {
+				return true;
+			}
+			return false;
+		}
+		left++;
+		right++;
+	}
+	assert(false);
+	return false;
+}

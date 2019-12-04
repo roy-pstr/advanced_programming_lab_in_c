@@ -1,24 +1,53 @@
 #include <stdio.h>
 #include "regex_handler/regex_handler.h"
-
+#include <assert.h>
 #define MAX_TEST_STRING_LEN 256 
 
+bool parsingTest() {
+	rChar regex[50], ref_regex[50];
+	char regex_test_str[MAX_TEST_STRING_LEN] = "[0-9]; .; char; (str1|str2);\n";
+	putRange(&ref_regex[0], '0', '9');
+	putChar(&ref_regex[1], ';');
+	putChar(&ref_regex[2], ' ');
+	putPoint(&ref_regex[3]);
+	putChar(&ref_regex[4], ';');
+	putChar(&ref_regex[5], ' ');
+	putChar(&ref_regex[6], 'c');
+	putChar(&ref_regex[7], 'h');
+	putChar(&ref_regex[8], 'a');
+	putChar(&ref_regex[9], 'r');
+	putChar(&ref_regex[10], ';');
+	putChar(&ref_regex[11], ' ');
+	putOr(&ref_regex[12], "str1", 4,"str2",4);
+	putChar(&ref_regex[13], ';');
+	putChar(&ref_regex[14], '\n');
+	putChar(&ref_regex[15], '\0');
+	putRegex(&regex[0], &regex_test_str[0]);
+
+	return isRegexStrEqual(regex, ref_regex);
+}
 int main() {
+
+	assert(parsingTest());
+
 	/* naive tests */
 	printf("naive tests:\n");
 	rChar re_char;
 	putChar(&re_char, 'r');
+	//putRegex(&re_char, "r");
 	printrChar(&re_char);
 	printf("\n");
 	putPoint(&re_char);
+	//putRegex(&re_char, ".");
 	printrChar(&re_char);
 	printf("\n");
 	putRange(&re_char, 'a', 'z');
+	//putRegex(&re_char, "[a-z]");
 	printrChar(&re_char);
 	printf("\n");
 	putOr(&re_char, "str1", 4, "str2", 4);
+	//putRegex(&re_char, "(str1|str2)");
 	printrChar(&re_char);
-	//freerChar(&re_char);
 
 	/* regex string tests */
 	printf("\n\nregex string tests:\n");
@@ -35,7 +64,7 @@ int main() {
 	/* regex parsing tests */
 	rChar regex[100];
 	char regex_test_str[MAX_TEST_STRING_LEN] = "A regex range: [0-9]; regex point: .; regex char: those are just regular char; regex or: (str1|str2);\n";
-	parseStrToRegex(&regex_test_str[0], &regex[0]);
+	putRegex( &regex[0], &regex_test_str[0]);
 	printrChar(&regex[15]);
 	printf("\n");
 	printRegexStr(&regex[0]);

@@ -2,10 +2,22 @@
 #define REGEX_HANDLER_H
 #include <stdbool.h>
 
-#define OR_SEPARATOR '|'
-#define RANGE_SEPARATOR '-'
-#define POINT_CHAR '.'
+/*
+		Regex handler
 
+	Assumptions:
+		- no backslash for now...
+		- for now avoided the need fro malloc!
+
+	Done:
+		- Putting functions
+		- Printing functions
+		- Parsing functions
+		- Comprasion functions
+
+	To do:
+		- Regex str to String functions (malloc strings??)  - do we need it?
+*/
 
 enum rCharTypes {
 	CHAR,
@@ -39,17 +51,19 @@ typedef struct rChar_st {
 }rChar;
 
 void printrChar(const rChar *re_char);
-
 void printRegexStr(const rChar * re_char);
 
-/* putting value in rChar */
 void putChar(rChar *re_char, const char c);
 void putPoint(rChar *re_char);
 void putRange(rChar *re_char, const char start, const char end);
 void putOr(rChar *re_char, const char *left, int left_len, const char *right, int right_len);
+void putRegex(rChar * re_str, char * str);
 
-void freerChar(rChar *re_char);
+bool isrCharEqual(rChar * left, rChar * right);
+bool isRegexStrEqual(rChar * left, rChar * right);
 
-void parseStrToRegex(char * str, rChar * re_str);
+//void freerChar(rChar *re_char);
+
+
 
 #endif

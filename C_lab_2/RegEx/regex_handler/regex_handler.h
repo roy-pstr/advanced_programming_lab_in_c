@@ -5,10 +5,6 @@
 /*
 		Regex handler
 
-	Assumptions:
-		- no backslash for now...
-		- for now avoided the need fro malloc!
-
 	Done:
 		- Putting functions
 		- Printing functions
@@ -17,6 +13,7 @@
 
 	To do:
 		- Regex str to String functions (malloc strings??)  - do we need it?
+		- Support the backslash thing!
 */
 
 enum rCharTypes {

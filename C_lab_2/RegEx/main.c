@@ -42,5 +42,9 @@ int main() {
 
 	printf("\n");
 	printf("well done.");
+
+	printf("\n\n!!! The console output above should match the reference below !!!\n\n");
+	char console_output[MAX_TEST_STRING_LEN] = "naive tests:\nr\n.\n[a-z]\n(str1|str2)\n\nregex string tests:\nab\n[0-9]\nA regex range: [0-9]; regex point: .; regex char: those are just regular char; regex or: (str1|str2);\n\nwell done.";
+	printf("%s", console_output);
 	return 0;
 }

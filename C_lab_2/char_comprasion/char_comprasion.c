@@ -1,5 +1,6 @@
 #include "char_comprasion.h"
 #include "flags.h"
+#include "../RegEx/regex_handler/regex_handler.h"
 
 void upperCase(char *p_char)
 {

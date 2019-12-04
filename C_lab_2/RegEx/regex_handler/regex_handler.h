@@ -16,7 +16,9 @@ enum rCharTypes {
 
 typedef struct rOr_st {
 	char *left;
+	int left_len;
 	char *right;
+	int right_len;
 } rOr;
 
 typedef struct rRange_st {
@@ -38,6 +40,8 @@ typedef struct rChar_st {
 
 void printrChar(const rChar *re_char);
 
+void printRegexStr(const rChar * re_char);
+
 /* putting value in rChar */
 void putChar(rChar *re_char, const char c);
 void putPoint(rChar *re_char);
@@ -45,5 +49,7 @@ void putRange(rChar *re_char, const char start, const char end);
 void putOr(rChar *re_char, const char *left, int left_len, const char *right, int right_len);
 
 void freerChar(rChar *re_char);
+
+void parseStrToRegex(char * str, rChar * re_str);
 
 #endif

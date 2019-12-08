@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "utils_tests.h"
 #include "flags.h"
+#include "regex_handler_tests.h"
 
 int main(int argc, char **argv)
 {
@@ -19,8 +20,9 @@ int main(int argc, char **argv)
 	runInputHandlerTests();
 	runUtilstests();
 	runParamsParserTests();
+	runRegexHandlerTests();
 
-	//return 0;
+	return 555;
 
 	//Arguments handling:
 	Params params;

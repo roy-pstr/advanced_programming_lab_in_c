@@ -1,13 +1,13 @@
 #include <stddef.h>
 #include "utils.h"
 
-bool isStringEmpty(char *str) {
+bool isStringEmpty(const char *str) {
 	return (str[0] == '\0');
 }
-bool isStringNewLine(char *str) {
+bool isStringNewLine(const char *str) {
 	return (str[0] == '\n');
 }
-bool isDigits(char *str)
+bool isDigits(const char *str)
 {
 	while (*str != '\0')
 	{

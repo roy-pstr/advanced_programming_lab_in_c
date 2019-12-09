@@ -101,7 +101,6 @@ void runTestWithEscapes(const char test_string[][TEST_LINE_MAX_LEN])
 	assert(isLineMatch(&params, regex_str, test_string[7]));
 }
 
-
 void runLineHandlerTests()
 {
 	const char test_string[][TEST_LINE_MAX_LEN] = {

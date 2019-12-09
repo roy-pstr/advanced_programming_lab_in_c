@@ -99,7 +99,8 @@ void runRegexHandlerTests() {
 
 	/* regex parsing tests */
 	rChar regex[100];
-	char regex_test_str[MAX_TEST_STRING_LEN] = "A regex range: [0-9]; regex point: .; regex char: those are just regular char; regex or: (str1|str2);\n";
+	char regex_test_str[MAX_TEST_STRING_LEN] = "A regex range: [0-9]; regex point: .; \
+regex char: those are just regular char; regex or: (str1|str2);\n";
 	putRegex(&regex[0], &regex_test_str[0]);
 	printrChar(&regex[15]);
 	printf("\n");
@@ -109,6 +110,8 @@ void runRegexHandlerTests() {
 	printf("well done.");
 
 	printf("\n\n!!! The console output above should match the reference below !!!\n\n");
-	char console_output[MAX_TEST_STRING_LEN] = "naive tests:\nr\n.\n[a-z]\n(str1|str2)\n\nregex string tests:\nab\n[0-9]\nA regex range: [0-9]; regex point: .; regex char: those are just regular char; regex or: (str1|str2);\n\nwell done.";
+	char console_output[MAX_TEST_STRING_LEN] = "naive tests:\nr\n.\n[a-z]\n(str1|str2)\n\n\
+regex string tests:\nab\n[0-9]\nA regex range: [0-9]; regex point: .; regex char: those are\
+ just regular char; regex or: (str1|str2);\n\nwell done.";
 	printf("%s", console_output);
 }

@@ -24,16 +24,16 @@ To Do:
 */
 int main(int argc, char **argv)
 {
-	//Tests:
-	runLineHandlerTests();
-	runInputHandlerTests();
-	runUtilstests();
-	runParamsParserTests();
-	runRegexHandlerTests();
+	////Tests:
+	//runLineHandlerTests();
+	//runInputHandlerTests();
+	//runUtilstests();
+	//runParamsParserTests();
+	//runRegexHandlerTests();
 
-	return 555;
+	//return 555;
 
-	//Arguments handling:
+	////Arguments handling:
 	Params params;
 	parseParams(argc, argv, &params);
 	if (isFlagOn(&params.i)) {

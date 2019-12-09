@@ -4,6 +4,7 @@
 #include "regex_handler.h"
 #include "line_handler.h"
 #include "flags.h"
+#include "utils.h"
 #include "char_comprasion.h"
 
 bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_ptr)
@@ -14,7 +15,7 @@ bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_p
 		if (endOfRegexStr(regex_string)) {
 			return true;
 		}
-		if (regexCharMatch(*regex_string, mid_line_ptr, &chars_proceed_in_line)) {
+		if (regexCharMatch(params, *regex_string, mid_line_ptr, &chars_proceed_in_line)) {
 			regex_string++;
 			mid_line_ptr += chars_proceed_in_line;
 		}
@@ -34,46 +35,21 @@ bool isSubstrInLine(Params *params, rChar *regex_string, const char *line)
 	return false;
 }
 
-	//	while (charsAreEqual(params, *line_iterator, *str_iterator)) {
-	//		str_iterator++;
-	//		line_iterator++;
-	//		if (*str_iterator == '\0') {
-	//			return (true);
-	//		}
-	//	}
-	//	str_iterator = sub_str;
-	//	line++;
-	//}
-
-	//return (false);
-	//}
-
-//bool isSubstrInLine_OLD(Params *params, const char *line)
-//{
-//	const char *sub_str = params->sub_str;
-//	const char *str_iterator = sub_str;
-//	while (*line != '\0') {
-//		const char *line_iterator = line;
-//		while (charsAreEqual(params, *line_iterator, *str_iterator)) {
-//			str_iterator++;
-//			line_iterator++;
-//			if (*str_iterator == '\0') {
-//				return (true);
-//			}
-//		}
-//		str_iterator = sub_str;
-//		line++;
-//	}
-//
-//	return (false);
-//}
-
-bool isLineMatch(Params *params, rChar *regex_string, const char *line) {
+bool isLineMatch(Params *params, rChar *regex_string, const char *line)
+{
 	bool invert_result = isFlagOn(&params->v);
 	return (isSubstrInLine(params, regex_string,line) ^ invert_result);
 }
 
-void handleLine(Params *params, rChar *regex_string, const char *line) {
+void handleLine(Params *params, rChar *regex_string, const char *line)
+{
+	char *line_copy = (char*)malloc((1 + strlen(line)) * sizeof(char));
+	strcpy(line_copy, line);
+
+	if (isFlagOn(&params->i)) {
+		upperCaseString(line_copy);
+	}
+
 	if (isFlagOn(&params->n)) {
 		addCounter(&params->n, 1); //check if starting from 0 or 1.
 	}
@@ -81,7 +57,10 @@ void handleLine(Params *params, rChar *regex_string, const char *line) {
 		addCounter(&params->b, strlen(line)); //consider changing addCounter
 	}
 
-	if (isLineMatch(params, regex_string, line)){
+	bool got_match = isLineMatch(params, regex_string, line_copy);
+	free(line_copy);
+	if (got_match)
+	{
 		if (isFlagOn(&params->c)) {
 			addCounter(&params->c, 1);
 			return;
@@ -101,5 +80,4 @@ void handleLine(Params *params, rChar *regex_string, const char *line) {
 
 		printf("%s", line); 
 	}
-	
 }

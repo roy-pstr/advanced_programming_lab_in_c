@@ -17,9 +17,9 @@
 /*
 To Do:
 -	change params name to user_arg_params or something eq.
--	consider changing some regex names
+-	consider changing some regex names (e.g put<->set)
 -	change line hander functions:
-		- make line a struct with relevant parameters
+		- make line a struct with correct parameters
 		- consider not to pass params as an argument
 */
 int main(int argc, char **argv)
@@ -36,9 +36,13 @@ int main(int argc, char **argv)
 	//Arguments handling:
 	Params params;
 	parseParams(argc, argv, &params);
+	if (isFlagOn(&params.i)) {
+		upperCaseString(params.sub_str);
+	}
 	rChar *regex_string = (rChar*)(malloc(1 + strlen(params.sub_str) * sizeof(rChar)));
+	putRegex(regex_string, params.sub_str);
 
-	
+
 	//Handle file:
 	FILE *stream = NULL;
 	bool is_file_in_use = false;

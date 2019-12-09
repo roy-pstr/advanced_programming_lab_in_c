@@ -5,7 +5,8 @@
 #include "regex_handler.h"
 #include "params_parser.h"
 
-bool regexCharMatch(rChar regex_string, char *mid_line_ptr, int *chars_proceed_in_line);
+bool regexCharMatch(Params* params, rChar regex_string, char *mid_line_ptr, int *chars_proceed_in_line);
+
 bool charsAreEqual(Params *params, char line_char, char substr_char);
 
 

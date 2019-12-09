@@ -62,4 +62,5 @@ void putRegex(rChar * re_str, char * str);
 bool isrCharEqual(rChar * left, rChar * right);
 bool isRegexStrEqual(rChar * left, rChar * right);
 
+
 #endif

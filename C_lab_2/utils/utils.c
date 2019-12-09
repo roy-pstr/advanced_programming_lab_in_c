@@ -1,6 +1,22 @@
 #include <stddef.h>
 #include "utils.h"
 
+ void upperCaseChar(char *p_char)
+{
+	if (*p_char >= 'a' && *p_char <= 'z') {
+		*p_char -= ' ';
+	}
+}
+
+ void upperCaseString(char *str)
+ {
+	 while (*str != '\0'){
+		 upperCaseChar(str);
+		 str++;
+	 }
+ }
+
+
 bool isStringEmpty(const char *str) {
 	return (str[0] == '\0');
 }

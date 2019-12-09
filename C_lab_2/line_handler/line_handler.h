@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "params_parser.h"
+#include "regex_handler.h"
 
 typedef struct line_st
 {
@@ -14,7 +15,8 @@ typedef struct line_st
 	*/
 }Line;
 
-bool isLineMatch(Params *params, const char *line);
+bool isLineMatch(Params *params, rChar *regex_string, const char *line);
 
-void handleLine(Params *params, const char *line);
+void handleLine(Params *params, rChar *regex_string, const char *line);
+
 #endif

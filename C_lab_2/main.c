@@ -11,8 +11,17 @@
 #include "utils.h"
 #include "utils_tests.h"
 #include "flags.h"
+#include "regex_handler.h"
 #include "regex_handler_tests.h"
 
+/*
+To Do:
+-	change params name to user_arg_params or something eq.
+-	consider changing some regex names
+-	change line hander functions:
+		- make line a struct with relevant parameters
+		- consider not to pass params as an argument
+*/
 int main(int argc, char **argv)
 {
 	//Tests:
@@ -27,6 +36,8 @@ int main(int argc, char **argv)
 	//Arguments handling:
 	Params params;
 	parseParams(argc, argv, &params);
+	rChar *regex_string = (rChar*)(malloc(1 + strlen(params.sub_str) * sizeof(rChar)));
+
 	
 	//Handle file:
 	FILE *stream = NULL;
@@ -43,12 +54,13 @@ int main(int argc, char **argv)
 	char *line = NULL;
 	size_t len = 0;
 	while (getline(&line,&len,stream)!=-1) {
-		handleLine(&params, line);
+		handleLine(&params, regex_string, line);
 	}
 	if (line) {
 		free(line);
 	}
 
+	free(regex_string);
 	//Close file:
 	if (is_file_in_use) {
 		fclose(stream);

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/types.h>
 #include "line_handler_tests.h"
 #include "line_handler.h"
 #include "input_handler.h"
@@ -39,7 +40,7 @@ int main(int argc, char **argv)
 	if (isFlagOn(&params.i)) {
 		upperCaseString(params.sub_str);
 	}
-	rChar *regex_string = (rChar*)(malloc(1 + strlen(params.sub_str) * sizeof(rChar)));
+	rChar *regex_string = (rChar*)(malloc((1 + strlen(params.sub_str)) * sizeof(rChar)));
 	putRegex(regex_string, params.sub_str);
 
 
@@ -57,6 +58,8 @@ int main(int argc, char **argv)
 	//Handle lines:
 	char *line = NULL;
 	size_t len = 0;
+	//ssize_t nread;
+	//while ((nread=getline(&line,&len,stream))!=-1) {
 	while (getline(&line,&len,stream)!=-1) {
 		handleLine(&params, regex_string, line);
 	}
@@ -70,7 +73,7 @@ int main(int argc, char **argv)
 		fclose(stream);
 	}
 	if (isFlagOn(&params.c)) {
-		printf("%d", params.c.counter);
+		printf("%d\n", params.c.counter);
 	}
 	return 0;
 }

@@ -49,7 +49,7 @@ int getline(char **line, size_t *n, FILE *stream) {
 	}
 	else {
 		return (*line == NULL) ? -1 : 0;
-		
+
 	}
 }
 #endif // RUNNING_ON_WINDOWS

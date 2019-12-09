@@ -51,16 +51,12 @@ void handleLine(Params *params, rChar *regex_string, const char *line)
 	}
 
 	if (isFlagOn(&params->n)) {
-		addCounter(&params->n, 1); //check if starting from 0 or 1.
-	}
-	if (isFlagOn(&params->b)) {
-		addCounter(&params->b, strlen(line)); //consider changing addCounter
+		addCounter(&params->n, 1);
 	}
 
 	bool got_match = isLineMatch(params, regex_string, line_copy);
 	free(line_copy);
-	if (got_match)
-	{
+	if (got_match) {
 		if (isFlagOn(&params->c)) {
 			addCounter(&params->c, 1);
 			return;
@@ -77,7 +73,10 @@ void handleLine(Params *params, rChar *regex_string, const char *line)
 				printf(":");
 			}
 		}
+		printf("%s", line);
+	}
 
-		printf("%s", line); 
+	if (isFlagOn(&params->b)) { //no need for this if
+		addCounter(&params->b, strlen(line));
 	}
 }

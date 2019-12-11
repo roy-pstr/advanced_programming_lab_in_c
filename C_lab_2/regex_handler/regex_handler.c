@@ -35,7 +35,6 @@ void printrRange(const rRange * rng ) {
 void printrPoint() {
 	printf(".");
 }
-
 void printrChar(const rChar *re_char) {
 	switch (re_char->dataType)
 	{
@@ -65,16 +64,7 @@ void printRegexStr(const rChar *re_char) {
 	printf("\n");
 }
 
-///* free allocated memory in rChar */
-//void freerChar(rChar *re_char) {
-//	if (re_char->dataType == OR) {
-//		free(re_char->data.or.left);
-//		free(re_char->data.or.right);
-//	}
-//}
-
 /* misc */
-
 enum rCharTypes checkType(const char str_ptr) {
 	switch (str_ptr) {
 	case '.':
@@ -117,16 +107,8 @@ void parseOr(const char *or_str, char **left, int *left_len, char **right, int *
 		or_str++;
 	}
 }
-//void parseRange(char *range_str, rRange *re_range) {}
-//void parsePoint(char *point_str, rPoint *re_point) {}
 
 /* putting value in rChar */
-void allocString(char **str_ptr, int len) {
-	if (NULL == (*str_ptr = (char*)malloc(len))) {
-		printf("allocation memory for string - failed!");
-		exit(-1);
-	}
-}
 void putChar(rChar *re_char, const char c) {
 	re_char->dataType = CHAR;
 	re_char->data.c = c;
@@ -142,10 +124,6 @@ void putRange(rChar *re_char, const char start, const char end) {
 }
 void putOr(rChar *re_char, const char *left, int left_len, const char *right, int right_len) {
 	re_char->dataType = OR;
-	/*allocString(&re_char->data.or.left, left_len);
-	allocString(&re_char->data.or.right, right_len);*/
-	/*strcpy_s(re_char->data.or.left, left_len, left);
-	strcpy_s(re_char->data.or.right, right_len, right);*/
 	re_char->data. or .left = left;
 	re_char->data. or .left_len = left_len;
 	re_char->data. or .right = right;

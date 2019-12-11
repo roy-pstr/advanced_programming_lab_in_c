@@ -56,6 +56,7 @@ void handleLine(Params *params, rChar *regex_string, const char *line)
 
 	bool got_match = isLineMatch(params, regex_string, line_copy);
 	free(line_copy);
+
 	if (got_match) {
 		if (isFlagOn(&params->c)) {
 			addCounter(&params->c, 1);

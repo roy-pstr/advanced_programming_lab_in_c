@@ -66,8 +66,8 @@ int main(int argc, char **argv)
 	if (line) {
 		free(line);
 	}
-
 	free(regex_string);
+
 	//Close file:
 	if (is_file_in_use) {
 		fclose(stream);

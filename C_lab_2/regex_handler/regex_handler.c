@@ -169,10 +169,11 @@ void putRegex(rChar * re_str, char * str) {
 	while (*str != '\0') {
 		switch (checkType(*str)) {
 		case CHAR:
-			if (*str == '\\' && (*str != '\n')){ /* and what if we have a backslash we want to keep???? */
+			if (*str == '\\'){ 
 				str++;
+				if (*str == 'n') { putChar(re_str, '\n'); break; } /* fix this!!! */
 			}
-			putChar(re_str, *str);
+			putChar(re_str, *str); 
 			break;
 		case POINT:
 			putPoint(re_str);

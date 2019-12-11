@@ -33,7 +33,7 @@ void parseParams(int argc, char **argv, Params *params)
 			onFlag(&params->A);
 			i++;
 			assert(isDigits(argv[i]));
-			addCounter(&params->A, atoi(argv[i]));
+			setArgument(&params->A, atoi(argv[i]));
 		}
 		else if (STRINGS_ARE_EQUAL(argv[i], "-b")) {
 			onFlag(&params->b);

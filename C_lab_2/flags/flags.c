@@ -16,14 +16,23 @@ bool isFlagOn(Flag *flag)
 	return (flag->is_on);
 }
 
-void initializeFlag(Flag *flag)
-{
-	flag->counter = 0;
-	offFlag(flag);
-}
-
 void addCounter(Flag *flag, int value)
 {
-	assert(isFlagOn(flag));
 	flag->counter += value;
+}
+
+void setCounter(Flag *flag, int value)
+{
+	flag->counter = value;
+}
+
+void setArgument(Flag *flag, int value)
+{
+	flag->argument = value;
+}
+
+void initializeFlag(Flag *flag)
+{
+	setCounter(flag, 0);
+	offFlag(flag);
 }

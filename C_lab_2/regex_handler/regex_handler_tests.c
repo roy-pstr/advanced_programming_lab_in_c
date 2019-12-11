@@ -61,11 +61,54 @@ bool parsingTestWithBackslash() {
 	return isRegexStrEqual(regex, ref_regex);
 }
 
+bool regexMatchTest() {
+	int len;
+	rChar regex;
+	char temp_chars[MAX_TEST_STRING_LEN] = "a\n*.[(\\";
+	char temp_line[MAX_TEST_STRING_LEN] = "[a,n] (doron|roy)";
+	putChar(&regex, 'a');
+	if (!isRegexMatch(&regex, &temp_chars[0],&len)) { return false; }
+
+	putChar(&regex, '\n');
+	if (!isRegexMatch(&regex, &temp_chars[1], &len)) { return false; }
+
+	putChar(&regex, '*');
+	if (!isRegexMatch(&regex, &temp_chars[2], &len)) { return false; }
+
+	putChar(&regex, '.');
+	if (!isRegexMatch(&regex, &temp_chars[3], &len)) { return false; }
+
+	putChar(&regex, '[');
+	if (!isRegexMatch(&regex, &temp_chars[4], &len)) { return false; }
+
+	putChar(&regex, '(');
+	if (!isRegexMatch(&regex, &temp_chars[5], &len)) { return false; }
+
+	putChar(&regex, '\\');
+	if (!isRegexMatch(&regex, &temp_chars[6], &len)) { return false; }
+	if (len != 1) { return false; }
+
+	putRange(&regex, 'a', 'n');
+	if (!isRegexMatch(&regex, &temp_line[0], &len)) { return false; }
+	if (len != 5) { return false; }
+
+	putOr(&regex, "doron", 5, "roy", 3);
+	if (!isRegexMatch(&regex, &temp_line[6], &len)) { return false; }
+	if (len!=11) { return false; }
+
+	putPoint(&regex);
+	if (!isRegexMatch(&regex, &temp_chars[0], &len)) { return false; }
+
+	putPoint(&regex);
+	if (isRegexMatch(&regex, &temp_chars[7], &len)) { return false; }
+	return true;
+}
+
 void runRegexHandlerTests() {
 
 	assert(parsingTest());
 	assert(parsingTestWithBackslash());
-
+	assert(regexMatchTest());
 	/* naive tests */
 	printf("naive tests:\n");
 	rChar re_char;

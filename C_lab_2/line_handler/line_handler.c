@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "regex_handler.h"
 #include "line_handler.h"
@@ -9,13 +10,13 @@
 
 bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_ptr)
 {
-	int chars_proceed_in_line;
+	int chars_proceed_in_line=0;
 
 	while (true) {
 		if (endOfRegexStr(regex_string)) {
 			return true;
 		}
-		if (regexCharMatch(params, *regex_string, mid_line_ptr, &chars_proceed_in_line)) {
+		if (isRegexMatch(regex_string, mid_line_ptr, &chars_proceed_in_line)){
 			regex_string++;
 			mid_line_ptr += chars_proceed_in_line;
 		}
@@ -23,7 +24,22 @@ bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_p
 			return false;
 	}
 }
-
+//bool isSubStrAtPlace_rec(Params *params, rChar *regex_string, const char *mid_line_ptr)
+//{
+//	int line_step = 0;
+//
+//	/* stop condition */
+//	if (NULL==regex_string) {
+//		return false;
+//	}
+//	if (endOfRegexStr(regex_string)) {
+//		return true;
+//	}
+//
+//	/* recursive call */
+//	bool ret_val = isSubStrAtPlace_rec(params, regex_string++, mid_line_ptr++);
+//	return ret_val && isRegexMatch(regex_string, mid_line_ptr, &line_step);
+//}
 bool isSubstrInLine(Params *params, rChar *regex_string, const char *line)
 {
 	int line_len = strlen(line);

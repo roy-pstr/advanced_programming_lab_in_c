@@ -24,6 +24,12 @@ enum rCharTypes {
 	RANGE
 };
 
+enum reConastants {
+	RANGE_LENGTH = 5,
+	ASCII_MIN = 33,
+	ASCII_MAX = 126
+};
+
 typedef struct rOr_st {
 	char *left;
 	int left_len;
@@ -61,6 +67,9 @@ void putRegex(rChar * re_str, char * str);
 
 bool isrCharEqual(rChar * left, rChar * right);
 bool isRegexStrEqual(rChar * left, rChar * right);
+
+bool isRegexMatch(rChar * regex, char * str, int * len);
+
 
 
 #endif

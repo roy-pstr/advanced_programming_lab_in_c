@@ -17,7 +17,6 @@ typedef struct Params_st
 	Flag v;
 	Flag x;
 	Flag E;
-
 }Params;
 
 bool paramsHasFile(Params *params);

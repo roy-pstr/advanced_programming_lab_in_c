@@ -26,11 +26,11 @@ To Do:
 int main(int argc, char **argv)
 {
 	////Tests:
-	//runLineHandlerTests();
-	//runInputHandlerTests();
-	//runUtilstests();
-	//runParamsParserTests();
-	//runRegexHandlerTests();
+	runLineHandlerTests();
+	runInputHandlerTests();
+	runUtilstests();
+	runParamsParserTests();
+	runRegexHandlerTests();
 
 	//return 555;
 
@@ -58,8 +58,6 @@ int main(int argc, char **argv)
 	//Handle lines:
 	char *line = NULL;
 	size_t len = 0;
-	//ssize_t nread;
-	//while ((nread=getline(&line,&len,stream))!=-1) {
 	while (getline(&line,&len,stream)!=-1) {
 		handleLine(&params, regex_string, line);
 	}

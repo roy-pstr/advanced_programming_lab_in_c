@@ -4,6 +4,12 @@
 #include <assert.h>
 #include "regex_handler.h"
 
+#define OR_LENGTH(left_len, right_len) (left_len+right_len+3)
+/*
+TODO:	
+	support or regex in shape of (str|)
+	check about the range of point (33-126) ascii
+*/
 bool endOfRegexStr(const rChar *regex_str)
 {
 	return regex_str->dataType == CHAR && regex_str->data.c == '\0';
@@ -165,7 +171,7 @@ void putRegex(rChar * re_str, char * str) {
 	putChar(re_str, '\0');
 }
 
-/* comprasion */
+/* comprasion regex to regex */
 bool isrOrEqual(rChar * left, rChar * right) {
 	if (left->data.or.left_len != right->data.or.left_len)
 		return false;
@@ -196,7 +202,6 @@ bool isrCharEqual(rChar * left, rChar * right) {
 		return false;
 	}
 }
-
 /*naive!*/
 bool isRegexStrEqual(rChar * left, rChar * right) {
 	while (isrCharEqual(left, right)) {
@@ -213,4 +218,33 @@ bool isRegexStrEqual(rChar * left, rChar * right) {
 	}
 	assert(false);
 	return false;
+}
+
+/* comprasion regex char to string */
+bool isOrMatch(rChar * regex, char * str) {
+	return strncmp(regex->data.or.left, str, regex->data.or.left_len)||
+		strncmp(regex->data.or.right, str, regex->data.or.right_len);
+}
+bool isRangeMatch(rChar * regex, char * str) {
+	char temp_rng[RANGE_LENGTH] = { '[',regex->data.rng.start ,',',regex->data.rng.end, ']'};
+	return (strncmp(temp_rng, str, RANGE_LENGTH) == 0);
+}
+bool isRegexMatch(rChar * regex, char * str, int * len) {
+	switch (regex->dataType) {
+	case CHAR:
+		*len = 1;
+		return (regex->data.c == *str);
+	case POINT:
+		*len = 1;
+		return (*str>=ASCII_MIN && *str <= ASCII_MAX);
+	case OR:
+		*len = OR_LENGTH(regex->data.or.left_len, regex->data. or .right_len);
+		return isOrMatch(regex, str);
+	case RANGE:
+		*len = RANGE_LENGTH;
+		return isRangeMatch(regex, str);
+	default:
+		assert(false);
+		return false;
+	}
 }

@@ -43,13 +43,12 @@ bool getNextLine(bool read_from_file, FILE *fp, char **line) {
 int getline(char **line, size_t *n, FILE *stream) {
 	*line = (char *)realloc(*line, MAX_LINE_LENGTH * sizeof(char));
 	assert((*line != NULL));
-	fgets(*line, MAX_LINE_LENGTH, stream);
+	char * ret_val = fgets(*line, MAX_LINE_LENGTH, stream);
 	if (stream == stdin) {
-		return (*line[0] == '\n')?-1:0;
+		return ((*line[0] == '\n') || (ret_val == NULL)) ? -1 : 0;
 	}
 	else {
-		return (*line == NULL) ? -1 : 0;
-
+		return (ret_val == NULL) ? -1 : 0;
 	}
 }
 #endif // RUNNING_ON_WINDOWS

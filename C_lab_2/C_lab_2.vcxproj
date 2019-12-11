@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)utils;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)regex_handler;$(ProjectDir)utils;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)utils;$(IncludePath)</IncludePath>
@@ -144,6 +144,8 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="params_parser\params_parser.c" />
     <ClCompile Include="params_parser\params_parser_tests.c" />
+    <ClCompile Include="regex_handler\regex_handler.c" />
+    <ClCompile Include="regex_handler\regex_handler_tests.c" />
     <ClCompile Include="utils\utils.c" />
     <ClCompile Include="utils\utils_tests.c" />
   </ItemGroup>
@@ -157,9 +159,13 @@
     <ClInclude Include="line_handler\line_handler.h" />
     <ClInclude Include="line_handler\line_handler_tests.h" />
     <ClInclude Include="params_parser\params_parser.h" />
-    <ClInclude Include="params_parser\params_parser_tests.h" />
+    <ClInclude Include="regex_handler\regex_handler.h" />
+    <ClInclude Include="regex_handler\regex_handler_tests.h" />
     <ClInclude Include="utils\utils.h" />
     <ClInclude Include="utils\utils_tests.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test_files\test1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

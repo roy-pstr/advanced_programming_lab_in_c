@@ -1,13 +1,29 @@
 #include <stddef.h>
 #include "utils.h"
 
-bool isStringEmpty(char *str) {
+ void upperCaseChar(char *p_char)
+{
+	if (*p_char >= 'a' && *p_char <= 'z') {
+		*p_char -= ' ';
+	}
+}
+
+ void upperCaseString(char *str)
+ {
+	 while (*str != '\0'){
+		 upperCaseChar(str);
+		 str++;
+	 }
+ }
+
+
+bool isStringEmpty(const char *str) {
 	return (str[0] == '\0');
 }
-bool isStringNewLine(char *str) {
+bool isStringNewLine(const char *str) {
 	return (str[0] == '\n');
 }
-bool isDigits(char *str)
+bool isDigits(const char *str)
 {
 	while (*str != '\0')
 	{

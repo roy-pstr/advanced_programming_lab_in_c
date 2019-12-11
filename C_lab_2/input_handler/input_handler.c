@@ -39,7 +39,20 @@ bool getNextLine(bool read_from_file, FILE *fp, char **line) {
 		return getNextLineFromSTD(line);
 	}
 }
+#ifdef RUNNING_ON_WINDOWS
+int getline(char **line, size_t *n, FILE *stream) {
+	*line = (char *)realloc(*line, MAX_LINE_LENGTH * sizeof(char));
+	assert((*line != NULL));
+	fgets(*line, MAX_LINE_LENGTH, stream);
+	if (stream == stdin) {
+		return (*line[0] == '\n')?-1:0;
+	}
+	else {
+		return (*line == NULL) ? -1 : 0;
 
+	}
+}
+#endif // RUNNING_ON_WINDOWS
 void openFile(FILE** fp, const char *file_path) {
 	*fp = fopen(file_path, "r");
 	assert((*fp != NULL)); 

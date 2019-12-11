@@ -54,6 +54,12 @@
     <ClCompile Include="utils\utils_tests.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="regex_handler\regex_handler_tests.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="regex_handler\regex_handler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="char_comprasion\char_comprasion.h">
@@ -83,14 +89,20 @@
     <ClInclude Include="params_parser\params_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="params_parser\params_parser_tests.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="utils\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\utils_tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="regex_handler\regex_handler_tests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="regex_handler\regex_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test_files\test1.txt" />
   </ItemGroup>
 </Project>

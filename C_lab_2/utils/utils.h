@@ -13,5 +13,7 @@ bool isStringNewLine(const char *str);
 
 bool isDigits(const char *str);
 
+int strlen_(char * str);
+
 #endif
 

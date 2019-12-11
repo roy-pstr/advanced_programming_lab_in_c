@@ -101,6 +101,24 @@ void runTestWithEscapes(const char test_string[][TEST_LINE_MAX_LEN])
 	assert(isLineMatch(&params, regex_str, test_string[7]));
 }
 
+void runTestXFlag(const char test_string[][TEST_LINE_MAX_LEN])
+{
+	Params params;
+	initializeParams(&params);
+	onFlag(&params.x);
+	rChar regex_str[TEST_STR_MAX_LEN];
+
+	putRegex(regex_str, "we dive into the C relm.");
+	assert(isLineMatch(&params, regex_str, test_string[1]));
+
+	putRegex(regex_str, "we dive into the C relm. ");
+	assert(!isLineMatch(&params, regex_str, test_string[1]));
+
+	putRegex(regex_str, " we dive into the C relm.");
+	assert(!isLineMatch(&params, regex_str, test_string[1]));
+}
+
+
 void runLineHandlerTests()
 {
 	const char test_string[][TEST_LINE_MAX_LEN] = {
@@ -118,4 +136,5 @@ void runLineHandlerTests()
 	runBasicTest(test_string);
 	runTestWIthV_Arg(test_string);
 	runTestWithEscapes(test_string);
+	runTestXFlag(test_string);
 }

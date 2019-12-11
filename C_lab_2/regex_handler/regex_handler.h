@@ -24,7 +24,9 @@ enum rCharTypes {
 	RANGE
 };
 
+#define OR_LENGTH(or) (or.left_len+or.right_len+3)
 enum reConastants {
+	CHAR_LENGTH = 1,
 	RANGE_LENGTH = 5,
 	ASCII_MIN = 33,
 	ASCII_MAX = 126
@@ -68,8 +70,8 @@ void putRegex(rChar * re_str, char * str);
 bool isrCharEqual(rChar * left, rChar * right);
 bool isRegexStrEqual(rChar * left, rChar * right);
 
-bool isRegexMatch(rChar * regex, char * str, int * len);
+bool isRegexMatch(rChar * regex, const char * str, int * len);
 
-
+int regexlen(rChar * regex);
 
 #endif

@@ -19,6 +19,8 @@ void initializeFlag(Flag *flag);
 
 void addCounter(Flag *flag, int value);
 
+void setCounter(Flag * flag, int value);
+
 void setArgument(Flag *flag, int value);
 
 #endif

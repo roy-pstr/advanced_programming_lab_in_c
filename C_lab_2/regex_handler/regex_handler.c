@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "regex_handler.h"
 
-#define OR_LENGTH(left_len, right_len) (left_len+right_len+3)
+
 /*
 TODO:	
 	support or regex in shape of (str|)
@@ -88,6 +88,33 @@ enum rCharTypes checkType(const char str_ptr) {
 	}
 }
 
+int rCharSize(rChar *re_char) {
+	switch (re_char->dataType)
+	{
+	case CHAR:
+		return CHAR_LENGTH;
+	case POINT:
+		return CHAR_LENGTH;
+	case OR:
+		return OR_LENGTH(re_char->data.or);
+	case RANGE:
+		return RANGE_LENGTH;
+	default:
+		assert(false);
+		return -1;
+	}
+}
+
+int regexlen(rChar * regex)
+{
+	int len = 0;
+	while (!endOfRegexStr(regex)) {
+		len = len + rCharSize(regex);
+		regex++;
+	}
+	return len;
+}
+
 /* parsing */
 void parseOr(const char *or_str, char **left, int *left_len, char **right, int *right_len){
 	/* validate */
@@ -142,7 +169,7 @@ void putRegex(rChar * re_str, char * str) {
 	while (*str != '\0') {
 		switch (checkType(*str)) {
 		case CHAR:
-			if (*str == '\\'){
+			if (*str == '\\' && (*str != '\n')){ /* and what if we have a backslash we want to keep???? */
 				str++;
 			}
 			putChar(re_str, *str);
@@ -221,15 +248,15 @@ bool isRegexStrEqual(rChar * left, rChar * right) {
 }
 
 /* comprasion regex char to string */
-bool isOrMatch(rChar * regex, char * str) {
+bool isOrMatch(rChar * regex, const char * str) {
 	return strncmp(regex->data.or.left, str, regex->data.or.left_len)||
 		strncmp(regex->data.or.right, str, regex->data.or.right_len);
 }
-bool isRangeMatch(rChar * regex, char * str) {
+bool isRangeMatch(rChar * regex, const char * str) {
 	char temp_rng[RANGE_LENGTH] = { '[',regex->data.rng.start ,',',regex->data.rng.end, ']'};
 	return (strncmp(temp_rng, str, RANGE_LENGTH) == 0);
 }
-bool isRegexMatch(rChar * regex, char * str, int * len) {
+bool isRegexMatch(rChar * regex, const char * str, int * len) {
 	switch (regex->dataType) {
 	case CHAR:
 		*len = 1;
@@ -238,7 +265,7 @@ bool isRegexMatch(rChar * regex, char * str, int * len) {
 		*len = 1;
 		return (*str>=ASCII_MIN && *str <= ASCII_MAX);
 	case OR:
-		*len = OR_LENGTH(regex->data.or.left_len, regex->data. or .right_len);
+		*len = OR_LENGTH(regex->data.or);
 		return isOrMatch(regex, str);
 	case RANGE:
 		*len = RANGE_LENGTH;
@@ -248,3 +275,5 @@ bool isRegexMatch(rChar * regex, char * str, int * len) {
 		return false;
 	}
 }
+
+

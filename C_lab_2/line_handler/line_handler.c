@@ -61,7 +61,16 @@ bool isSubstrInLine(Params *params, rChar *regex_string, const char *line)
 bool isLineMatch(Params *params, rChar *regex_string, const char *line)
 {
 	bool invert_result = isFlagOn(&params->v);
-	return (isSubstrInLine(params, regex_string,line) ^ invert_result);
+	bool match_exact = isFlagOn(&params->x);
+	bool ret_val = false;
+	if (match_exact){
+		ret_val = (regexlen(regex_string) == strlen(line) && 
+					isSubStrAtPlace(params, regex_string, line)		);
+	}
+	else {
+		ret_val = isSubstrInLine(params, regex_string, line);
+	}
+	return (ret_val ^ invert_result);
 }
 
 void handleLine(Params *params, rChar *regex_string, const char *line)

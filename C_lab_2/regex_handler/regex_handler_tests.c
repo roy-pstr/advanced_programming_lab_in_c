@@ -104,11 +104,34 @@ bool regexMatchTest() {
 	return true;
 }
 
+bool regexlenTest() {
+	rChar ref_regex[50];
+	putRange(&ref_regex[0], '0', '9');
+	putChar(&ref_regex[1], ';');
+	putChar(&ref_regex[2], ' ');
+	putPoint(&ref_regex[3]);
+	putChar(&ref_regex[4], ';');
+	putChar(&ref_regex[5], ' ');
+	putChar(&ref_regex[6], 'c');
+	putChar(&ref_regex[7], 'h');
+	putChar(&ref_regex[8], 'a');
+	putChar(&ref_regex[9], 'r');
+	putChar(&ref_regex[10], ';');
+	putChar(&ref_regex[11], ' ');
+	putOr(&ref_regex[12], "str1", 4, "str2", 4);
+	putChar(&ref_regex[13], ';');
+	putChar(&ref_regex[14], '\n');
+	putChar(&ref_regex[15], '\0');
+
+	return (29==regexlen(ref_regex));
+}
+
 void runRegexHandlerTests() {
 
 	assert(parsingTest());
 	assert(parsingTestWithBackslash());
 	assert(regexMatchTest());
+	assert(regexlenTest());
 	/* naive tests */
 	printf("naive tests:\n");
 	rChar re_char;
@@ -157,4 +180,6 @@ regex char: those are just regular char; regex or: (str1|str2);\n";
 regex string tests:\nab\n[0-9]\nA regex range: [0-9]; regex point: .; regex char: those are\
  just regular char; regex or: (str1|str2);\n\nwell done.";
 	printf("%s", console_output);
+	printf("\n");
+	printf("\n");
 }

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "params_parser.h"
 
-#define RUNNING_ON_WINDOWS
+//#define RUNNING_ON_WINDOWS
 
 bool getNextLine(bool read_from_file, FILE *fp, char **line);
 

@@ -5,6 +5,7 @@
 
 typedef struct Flag_st {
 	bool is_on;
+	int argument;
 	int counter;
 	int dynamic_counter;
 }Flag;
@@ -18,5 +19,7 @@ void offFlag(Flag *flag);
 void initializeFlag(Flag *flag);
 
 void addCounter(Flag *flag, int value);
+
+void setArgument(Flag *flag, int value);
 
 #endif

@@ -2,11 +2,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 #include "regex_handler.h"
 #include "line_handler.h"
 #include "flags.h"
 #include "utils.h"
 #include "char_comprasion.h"
+
+
+bool isIt_A_LINE(Params *params)
+{
+	return  (isFlagOn(&params->A)) && (params->A.counter > 0);
+}
 
 bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_ptr)
 {
@@ -65,15 +72,20 @@ void handleLine(Params *params, rChar *regex_string, const char *line)
 	if (isFlagOn(&params->i)) {
 		upperCaseString(line_copy);
 	}
-
 	if (isFlagOn(&params->n)) {
 		addCounter(&params->n, 1);
 	}
-
 	bool got_match = isLineMatch(params, regex_string, line_copy);
 	free(line_copy);
 
-	if (got_match) {
+	if (got_match && isFlagOn(&params->A)) {
+		setCounter(&params->A, params->A.argument);
+	}
+
+	if (got_match || isIt_A_LINE(params)) {
+		if (isIt_A_LINE && !got_match) {
+			addCounter(&params->A, -1);
+		}
 		if (isFlagOn(&params->c)) {
 			addCounter(&params->c, 1);
 			return;
@@ -83,17 +95,17 @@ void handleLine(Params *params, rChar *regex_string, const char *line)
 		}
 		if (isFlagOn(&params->n)) {
 			printf("%d", params->n.counter);
-			if (0) {				//TBR: if it is a -A line
-				printf("-");
+			if (got_match) {
+				printf(":");
 			}
 			else {
-				printf(":");
+				printf("-");
 			}
 		}
 		printf("%s", line);
 	}
 
-	if (isFlagOn(&params->b)) { //no need for this if
+	if (isFlagOn(&params->b)) {
 		addCounter(&params->b, strlen(line));
 	}
 }

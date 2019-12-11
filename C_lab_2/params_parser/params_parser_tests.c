@@ -8,7 +8,9 @@
 
 bool areFlagsEquals(Flag flag1, Flag flag2)
 {
-	return ((flag1.counter == flag2.counter) && (flag1.is_on == flag2.is_on));
+	return ((flag1.counter == flag2.counter) &&
+			(flag1.is_on == flag2.is_on) &&
+			(flag1.argument == flag2.argument));
 }
 
 bool areParamsEqual(Params *params1, Params *params2)
@@ -47,7 +49,7 @@ void printParams(Params *params) //debugging funciton
 		printf("params has no file\n");
 	printf("flags on:\n");
 	if (isFlagOn(&params->A)) {
-		printf("-A, %d\n", params->A.counter);
+		printf("-A, %d\n", params->A.argument);
 	}
 	if (isFlagOn(&params->b)) {
 		printf("-b, %d\n", params->b.counter);
@@ -100,7 +102,7 @@ void ParamsParserTest2()
 	Params expected_params;
 	initializeParams(&expected_params);
 	onFlag(&expected_params.A);
-	addCounter(&expected_params.A, 3);
+	setArgument(&expected_params.A, 3);
 	onFlag(&expected_params.x);
 	expected_params.filename = argv[5];
 	expected_params.sub_str = argv[1];
@@ -119,7 +121,7 @@ void ParamsParserTest3()
 	Params expected_params;
 	initializeParams(&expected_params);
 	onFlag(&expected_params.A);
-	addCounter(&expected_params.A, 32);
+	setArgument(&expected_params.A, 32);
 	onFlag(&expected_params.c);
 	expected_params.sub_str = argv[4];
 

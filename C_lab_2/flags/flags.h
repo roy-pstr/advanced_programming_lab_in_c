@@ -7,7 +7,6 @@ typedef struct Flag_st {
 	bool is_on;
 	int argument;
 	int counter;
-	int dynamic_counter;
 }Flag;
 
 bool isFlagOn(Flag *flag);

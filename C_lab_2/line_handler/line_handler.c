@@ -47,6 +47,7 @@ bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_p
 //	bool ret_val = isSubStrAtPlace_rec(params, regex_string++, mid_line_ptr++);
 //	return ret_val && isRegexMatch(regex_string, mid_line_ptr, &line_step);
 //}
+
 bool isSubstrInLine(Params *params, rChar *regex_string, const char *line)
 {
 	int line_len = strlen(line);

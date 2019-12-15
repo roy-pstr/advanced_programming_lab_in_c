@@ -264,7 +264,7 @@ bool isRegexMatch(rChar * regex, const char * str, int * len) {
 		return (regex->data.c == *str);
 	case POINT:
 		*len = 1;
-		return (*str>=ASCII_MIN && *str <= ASCII_MAX);
+		return (*str!='\0');
 	case OR:
 		*len = OR_LENGTH(regex->data.or);
 		return isOrMatch(regex, str);

@@ -14,25 +14,7 @@ bool isIt_A_LINE(Params *params)
 	return  (isFlagOn(&params->A)) && (params->A.counter > 0);
 }
 
-////[Doron]: delete_me!!
-//bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_ptr)
-//{
-//	int chars_proceed_in_line=0;
-//
-//	while (true) {
-//		if (endOfRegexStr(regex_string)) {
-//			return true;
-//		}
-//		if (isRegexMatch(regex_string, mid_line_ptr, &chars_proceed_in_line)){
-//			regex_string++;
-//			mid_line_ptr += chars_proceed_in_line;
-//		}
-//		else
-//			return false;
-//	}
-//}
-
-bool isSubStrAtPlace_rec(Params *params, rChar *regex, const char *line)
+bool isSubStrAtPlace_rec(rChar *regex, const char *line)
 {
 	/* stop conditions */
 	if (endOfRegexStr(regex))
@@ -49,20 +31,20 @@ bool isSubStrAtPlace_rec(Params *params, rChar *regex, const char *line)
 		if (regex->data.c != *line) {
 			return false;
 		}
-		return isSubStrAtPlace_rec(params, regex + 1, line + 1);
+		return isSubStrAtPlace_rec( regex + 1, line + 1);
 	case POINT:
-		return isSubStrAtPlace_rec(params, regex + 1, line + 1);
+		return isSubStrAtPlace_rec( regex + 1, line + 1);
 	case RANGE:
 		if (!(regex->data.rng.start <= *line && regex->data.rng.end >= *line)){
 			return false;
 		}
-		return isSubStrAtPlace_rec(params, regex + 1, line + 1);
+		return isSubStrAtPlace_rec( regex + 1, line + 1);
 
 	case OR:
 		left_option_match = !strncmp(regex->data. or .left, line, regex->data. or .left_len) &&
-			isSubStrAtPlace_rec(params, regex + 1, line + regex->data. or .left_len);
+			isSubStrAtPlace_rec( regex + 1, line + regex->data. or .left_len);
 		right_option_match = !strncmp(regex->data. or .right, line, regex->data. or .right_len) &&
-			isSubStrAtPlace_rec(params, regex + 1, line + regex->data. or .right_len);
+			isSubStrAtPlace_rec( regex + 1, line + regex->data. or .right_len);
 
 		return left_option_match || right_option_match;
 
@@ -72,65 +54,65 @@ bool isSubStrAtPlace_rec(Params *params, rChar *regex, const char *line)
 	}
 }
 
-bool isSubstrInLine(Params *params, rChar *regex_string, const char *line)
+bool isSubstrInLine(rChar *regex_string, const char *line)
 {
 	int line_len = strlen(line);
 	for (int i = 0; i < line_len; i++)
 	{
-		if (isSubStrAtPlace_rec(params, regex_string, line + i))
+		if (isSubStrAtPlace_rec(regex_string, line + i))
 			return true;
 	}
 	return false;
 }
 
-bool isLineMatch(Params *params, rChar *regex_string, const char *line)
+bool isLineMatch(Params *user_params, rChar *regex_string, const char *line)
 {
-	bool invert_result = isFlagOn(&params->v);
-	bool match_exact = isFlagOn(&params->x);
+	bool invert_result = isFlagOn(&user_params->v);
+	bool match_exact = isFlagOn(&user_params->x);
 	bool ret_val = false;
 	if (match_exact){
 		ret_val = (regexlen(regex_string) == strlen_without_newline(line) && 
-					isSubStrAtPlace_rec(params, regex_string, line)		);
+					isSubStrAtPlace_rec(regex_string, line)		);
 	}
 	else {
-		ret_val = isSubstrInLine(params, regex_string, line);
+		ret_val = isSubstrInLine(regex_string, line);
 	}
 	return (ret_val ^ invert_result);
 }
 
-void handleLine(Params *params, rChar *regex_string, const char *line)
+void handleLine(Params *user_params, rChar *regex_string, const char *line)
 {
 	char *line_copy = (char*)malloc((1 + strlen(line)) * sizeof(char));
 	strcpy(line_copy, line);
 
-	if (isFlagOn(&params->i)) {
+	if (isFlagOn(&user_params->i)) {
 		upperCaseString(line_copy);
 	}
-	if (isFlagOn(&params->n)) {
-		addCounter(&params->n, 1);
+	if (isFlagOn(&user_params->n)) {
+		addCounter(&user_params->n, 1);
 	}
-	bool got_match = isLineMatch(params, regex_string, line_copy);
+	bool got_match = isLineMatch(user_params, regex_string, line_copy);
 	free(line_copy);
 
 
-	if (got_match && isFlagOn(&params->A)) {
-		if (isFlagAEndOfBlock(&params->A)) { printf("--\n"); }
-		setCounter(&params->A, params->A.argument);
+	if (got_match && isFlagOn(&user_params->A)) {
+		if (isFlagAEndOfBlock(&user_params->A)) { printf("--\n"); }
+		setCounter(&user_params->A, user_params->A.argument);
 	}
 
-	if (got_match || isIt_A_LINE(params)) {
-		if (isIt_A_LINE && !got_match) {
-			addCounter(&params->A, -1);
+	if (got_match || isIt_A_LINE(user_params)) {
+		if (isIt_A_LINE(user_params) && !got_match) {
+			addCounter(&user_params->A, -1);
 		}
-		if (isFlagOn(&params->c)) {
-			addCounter(&params->c, 1);
+		if (isFlagOn(&user_params->c)) {
+			addCounter(&user_params->c, 1);
 			return;
 		}
-		if (isFlagOn(&params->b)) {
-			printf("%d:", params->b.counter);
+		if (isFlagOn(&user_params->b)) {
+			printf("%d:", user_params->b.counter);
 		}
-		if (isFlagOn(&params->n)) {
-			printf("%d", params->n.counter);
+		if (isFlagOn(&user_params->n)) {
+			printf("%d", user_params->n.counter);
 			if (got_match) {
 				printf(":");
 			}
@@ -141,7 +123,7 @@ void handleLine(Params *params, rChar *regex_string, const char *line)
 		printf("%s", line);
 	}
 
-	if (isFlagOn(&params->b)) {
-		addCounter(&params->b, strlen(line));
+	if (isFlagOn(&user_params->b)) {
+		addCounter(&user_params->b, strlen(line));
 	}
 }

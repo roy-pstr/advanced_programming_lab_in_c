@@ -1,30 +1,82 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <string.h>
 #include "regex_handler.h"
 #include "regex_handler_tests.h"
 #define MAX_TEST_STRING_LEN 256 
 
+/* comprasion regex to regex */
+bool isrOrEqual(rChar * left, rChar * right) {
+	if (left->data. or .left_len != right->data. or .left_len)
+		return false;
+	if (left->data. or .right_len != right->data. or .right_len)
+		return false;
+	return (!strncmp(left->data. or .left, right->data. or .left, left->data. or .left_len)) &&
+		(!strncmp(left->data. or .right, right->data. or .right, left->data. or .right_len));
+}
+
+bool isrRangeEqual(rChar * left, rChar * right) {
+	return ((left->data.rng.start == right->data.rng.start) && (left->data.rng.end == right->data.rng.end));
+}
+
+bool isrCharEqual(rChar * left, rChar * right) {
+	if (left->dataType != right->dataType) {
+		return false;
+	}
+
+	switch (left->dataType) {
+	case CHAR:
+		return (left->data.c == right->data.c);
+	case POINT:
+		return true;
+	case OR:
+		return isrOrEqual(left, right);
+	case RANGE:
+		return isrRangeEqual(left, right);
+	default:
+		assert(false);
+		return false;
+	}
+}
+/*naive!*/
+bool isRegexStrEqual(rChar * left, rChar * right) {
+	while (isrCharEqual(left, right)) {
+		if (endOfRegexStr(left) || endOfRegexStr(right)) {
+			if ((endOfRegexStr(left) && endOfRegexStr(right))) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		left++;
+		right++;
+	}
+	assert(false);
+	return false;
+}
+
 bool parsingTest() {
 	rChar regex[50], ref_regex[50];
 	char regex_test_str[MAX_TEST_STRING_LEN] = "[0-9]; .; char; (str1|str2);\n";
-	putRange(&ref_regex[0], '0', '9');
-	putChar(&ref_regex[1], ';');
-	putChar(&ref_regex[2], ' ');
-	putPoint(&ref_regex[3]);
-	putChar(&ref_regex[4], ';');
-	putChar(&ref_regex[5], ' ');
-	putChar(&ref_regex[6], 'c');
-	putChar(&ref_regex[7], 'h');
-	putChar(&ref_regex[8], 'a');
-	putChar(&ref_regex[9], 'r');
-	putChar(&ref_regex[10], ';');
-	putChar(&ref_regex[11], ' ');
-	putOr(&ref_regex[12], "str1", 4,"str2",4);
-	putChar(&ref_regex[13], ';');
-	putChar(&ref_regex[14], '\n');
-	putChar(&ref_regex[15], '\0');
-	putRegex(&regex[0], &regex_test_str[0]);
+	setRange(&ref_regex[0], '0', '9');
+	setChar(&ref_regex[1], ';');
+	setChar(&ref_regex[2], ' ');
+	setPoint(&ref_regex[3]);
+	setChar(&ref_regex[4], ';');
+	setChar(&ref_regex[5], ' ');
+	setChar(&ref_regex[6], 'c');
+	setChar(&ref_regex[7], 'h');
+	setChar(&ref_regex[8], 'a');
+	setChar(&ref_regex[9], 'r');
+	setChar(&ref_regex[10], ';');
+	setChar(&ref_regex[11], ' ');
+	setOr(&ref_regex[12], "str1", 4,"str2",4);
+	setChar(&ref_regex[13], ';');
+	setChar(&ref_regex[14], '\n');
+	setChar(&ref_regex[15], '\0');
+	setRegex(&regex[0], &regex_test_str[0]);
 
 	return isRegexStrEqual(regex, ref_regex);
 }
@@ -32,26 +84,26 @@ bool parsingTest() {
 bool parsingTestWithBackslash() {
 	rChar regex[50], ref_regex[50];
 	char regex_test_str[MAX_TEST_STRING_LEN] = "[a-t].(Aba|saBa) bla\\. \\]\\[\\(\\) (str1|str2);\n";
-	putRange(&ref_regex[0], 'a', 't');
-	putPoint(&ref_regex[1]);
-	putOr(&ref_regex[2], "Aba", 3, "saBa", 4);
-	putChar(&ref_regex[3], ' ');
-	putChar(&ref_regex[4], 'b');
-	putChar(&ref_regex[5], 'l');
-	putChar(&ref_regex[6], 'a');
-	putChar(&ref_regex[7], '.');
-	putChar(&ref_regex[8], ' ');
-	putChar(&ref_regex[9], ']');
-	putChar(&ref_regex[10], '[');
-	putChar(&ref_regex[11], '(');
-	putChar(&ref_regex[12], ')');
-	putChar(&ref_regex[13], ' ');
-	putOr(&ref_regex[14], "str1", 4, "str2", 4);
-	putChar(&ref_regex[15], ';');
-	putChar(&ref_regex[16], '\n');
+	setRange(&ref_regex[0], 'a', 't');
+	setPoint(&ref_regex[1]);
+	setOr(&ref_regex[2], "Aba", 3, "saBa", 4);
+	setChar(&ref_regex[3], ' ');
+	setChar(&ref_regex[4], 'b');
+	setChar(&ref_regex[5], 'l');
+	setChar(&ref_regex[6], 'a');
+	setChar(&ref_regex[7], '.');
+	setChar(&ref_regex[8], ' ');
+	setChar(&ref_regex[9], ']');
+	setChar(&ref_regex[10], '[');
+	setChar(&ref_regex[11], '(');
+	setChar(&ref_regex[12], ')');
+	setChar(&ref_regex[13], ' ');
+	setOr(&ref_regex[14], "str1", 4, "str2", 4);
+	setChar(&ref_regex[15], ';');
+	setChar(&ref_regex[16], '\n');
 
-	putChar(&ref_regex[17], '\0');
-	putRegex(&regex[0], &regex_test_str[0]);
+	setChar(&ref_regex[17], '\0');
+	setRegex(&regex[0], &regex_test_str[0]);
 
 	printf("[Doron]: printing ref_regex:\n");
 	printRegexStr(ref_regex);
@@ -61,67 +113,24 @@ bool parsingTestWithBackslash() {
 	return isRegexStrEqual(regex, ref_regex);
 }
 
-bool regexMatchTest() {
-	int len;
-	rChar regex;
-	char temp_chars[MAX_TEST_STRING_LEN] = "a\n*.[(\\";
-	char temp_line[MAX_TEST_STRING_LEN] = "[a,n] (doron|roy)";
-	putChar(&regex, 'a');
-	if (!isRegexMatch(&regex, &temp_chars[0],&len)) { return false; }
-
-	putChar(&regex, '\n');
-	if (!isRegexMatch(&regex, &temp_chars[1], &len)) { return false; }
-
-	putChar(&regex, '*');
-	if (!isRegexMatch(&regex, &temp_chars[2], &len)) { return false; }
-
-	putChar(&regex, '.');
-	if (!isRegexMatch(&regex, &temp_chars[3], &len)) { return false; }
-
-	putChar(&regex, '[');
-	if (!isRegexMatch(&regex, &temp_chars[4], &len)) { return false; }
-
-	putChar(&regex, '(');
-	if (!isRegexMatch(&regex, &temp_chars[5], &len)) { return false; }
-
-	putChar(&regex, '\\');
-	if (!isRegexMatch(&regex, &temp_chars[6], &len)) { return false; }
-	if (len != 1) { return false; }
-
-	putRange(&regex, 'a', 'n');
-	if (!isRegexMatch(&regex, &temp_line[0], &len)) { return false; }
-	if (len != 5) { return false; }
-
-	putOr(&regex, "doron", 5, "roy", 3);
-	if (!isRegexMatch(&regex, &temp_line[6], &len)) { return false; }
-	if (len!=11) { return false; }
-
-	putPoint(&regex);
-	if (!isRegexMatch(&regex, &temp_chars[0], &len)) { return false; }
-
-	putPoint(&regex);
-	if (isRegexMatch(&regex, &temp_chars[7], &len)) { return false; }
-	return true;
-}
-
 bool regexlenTest() {
 	rChar ref_regex[50];
-	putRange(&ref_regex[0], '0', '9');
-	putChar(&ref_regex[1], ';');
-	putChar(&ref_regex[2], ' ');
-	putPoint(&ref_regex[3]);
-	putChar(&ref_regex[4], ';');
-	putChar(&ref_regex[5], ' ');
-	putChar(&ref_regex[6], 'c');
-	putChar(&ref_regex[7], 'h');
-	putChar(&ref_regex[8], 'a');
-	putChar(&ref_regex[9], 'r');
-	putChar(&ref_regex[10], ';');
-	putChar(&ref_regex[11], ' ');
-	putOr(&ref_regex[12], "str1", 4, "str2", 4);
-	putChar(&ref_regex[13], ';');
-	putChar(&ref_regex[14], '\n');
-	putChar(&ref_regex[15], '\0');
+	setRange(&ref_regex[0], '0', '9');
+	setChar(&ref_regex[1], ';');
+	setChar(&ref_regex[2], ' ');
+	setPoint(&ref_regex[3]);
+	setChar(&ref_regex[4], ';');
+	setChar(&ref_regex[5], ' ');
+	setChar(&ref_regex[6], 'c');
+	setChar(&ref_regex[7], 'h');
+	setChar(&ref_regex[8], 'a');
+	setChar(&ref_regex[9], 'r');
+	setChar(&ref_regex[10], ';');
+	setChar(&ref_regex[11], ' ');
+	setOr(&ref_regex[12], "str1", 4, "str2", 4);
+	setChar(&ref_regex[13], ';');
+	setChar(&ref_regex[14], '\n');
+	setChar(&ref_regex[15], '\0');
 
 	return (29==regexlen(ref_regex));
 }
@@ -130,44 +139,44 @@ void runRegexHandlerTests() {
 
 	assert(parsingTest());
 	assert(parsingTestWithBackslash());
-	assert(regexMatchTest());
+	/*assert(regexMatchTest());*/
 	assert(regexlenTest());
 	/* naive tests */
 	printf("naive tests:\n");
 	rChar re_char;
-	putChar(&re_char, 'r');
+	setChar(&re_char, 'r');
 	//putRegex(&re_char, "r");
 	printrChar(&re_char);
 	printf("\n");
-	putPoint(&re_char);
+	setPoint(&re_char);
 	//putRegex(&re_char, ".");
 	printrChar(&re_char);
 	printf("\n");
-	putRange(&re_char, 'a', 'z');
+	setRange(&re_char, 'a', 'z');
 	//putRegex(&re_char, "[a-z]");
 	printrChar(&re_char);
 	printf("\n");
-	putOr(&re_char, "str1", 4, "str2", 4);
+	setOr(&re_char, "str1", 4, "str2", 4);
 	//putRegex(&re_char, "(str1|str2)");
 	printrChar(&re_char);
 
 	/* regex string tests */
 	printf("\n\nregex string tests:\n");
-	putChar(&re_char, '\0');
+	setChar(&re_char, '\0');
 	printRegexStr(&re_char);
 
 	rChar re_str[4];
-	putChar(&re_str[0], 'a');
-	putChar(&re_str[1], 'b');
-	putChar(&re_str[2], '\n');
-	putChar(&re_str[3], '\0');
+	setChar(&re_str[0], 'a');
+	setChar(&re_str[1], 'b');
+	setChar(&re_str[2], '\n');
+	setChar(&re_str[3], '\0');
 	printRegexStr(&re_str[0]);
 
 	/* regex parsing tests */
 	rChar regex[100];
 	char regex_test_str[MAX_TEST_STRING_LEN] = "A regex range: [0-9]; regex point: .; \
 regex char: those are just regular char; regex or: (str1|str2);\n";
-	putRegex(&regex[0], &regex_test_str[0]);
+	setRegex(&regex[0], &regex_test_str[0]);
 	printrChar(&regex[15]);
 	printf("\n");
 	printRegexStr(&regex[0]);

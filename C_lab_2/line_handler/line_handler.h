@@ -15,9 +15,9 @@ typedef struct line_st
 	*/
 }Line;
 
-bool isSubStrAtPlace_rec(Params * params, rChar * regex_string, const char * mid_line_ptr);
+bool isSubStrAtPlace_rec(rChar * regex_string, const char * mid_line_ptr);
 
-bool isSubStrAtPlace(Params * params, rChar * regex_string, const char * mid_line_ptr);
+bool isSubStrAtPlace(rChar * regex_string, const char * mid_line_ptr);
 
 
 bool isLineMatch(Params *params, rChar *regex_string, const char *line);

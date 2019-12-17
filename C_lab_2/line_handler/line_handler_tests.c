@@ -15,29 +15,29 @@ void runBasicTest(const char test_string[][TEST_LINE_MAX_LEN])
 	Params params;
 	initializeParams(&params);
 	rChar regex_str[TEST_STR_MAX_LEN];
-	putRegex(regex_str, "4:0");
+	setRegex(regex_str, "4:0");
 	assert(isLineMatch(&params, regex_str, test_string[0]));
-	putRegex(regex_str, ",");
+	setRegex(regex_str, ",");
 	assert(isLineMatch(&params, regex_str, test_string[0]));
-	putRegex(regex_str, "C relm");
+	setRegex(regex_str, "C relm");
 	assert(isLineMatch(&params, regex_str, test_string[1]));
-	putRegex(regex_str, " StaffCryptographyEngineer ");
+	setRegex(regex_str, " StaffCryptographyEngineer ");
 	assert(isLineMatch(&params, regex_str, test_string[2]));
-	putRegex(regex_str, "chrome");
+	setRegex(regex_str, "chrome");
 	assert(!isLineMatch(&params, regex_str, test_string[2]));
-	putRegex(regex_str, "tested");
+	setRegex(regex_str, "tested");
 	assert(isLineMatch(&params, regex_str, test_string[3]));
-	putRegex(regex_str, "don't");
+	setRegex(regex_str, "don't");
 	assert(isLineMatch(&params, regex_str, test_string[4]));
-	putRegex(regex_str, "dont");
+	setRegex(regex_str, "dont");
 	assert(!isLineMatch(&params, regex_str, test_string[4]));
-	putRegex(regex_str, "I'm not afraid");
+	setRegex(regex_str, "I'm not afraid");
 	assert(isLineMatch(&params, regex_str, test_string[5]));
-	putRegex(regex_str, "to copy from my friend");
+	setRegex(regex_str, "to copy from my friend");
 	assert(isLineMatch(&params, regex_str, test_string[5]));
-	putRegex(regex_str, "I sometimes have bad jokes");
+	setRegex(regex_str, "I sometimes have bad jokes");
 	assert(isLineMatch(&params, regex_str, test_string[6]));
-	putRegex(regex_str, "this");
+	setRegex(regex_str, "this");
 	assert(isLineMatch(&params, regex_str, test_string[7]));
 }
 
@@ -47,29 +47,29 @@ void runTestWIthV_Arg(const char test_string[][TEST_LINE_MAX_LEN])
 	initializeParams(&params);
 	onFlag(&params.v);
 	rChar regex_str[TEST_STR_MAX_LEN];
-	putRegex(regex_str, "4:0");
+	setRegex(regex_str, "4:0");
 	assert(!isLineMatch(&params, regex_str, test_string[0]));
-	putRegex(regex_str, ",");
+	setRegex(regex_str, ",");
 	assert(!isLineMatch(&params, regex_str, test_string[0]));
-	putRegex(regex_str, "C relm");
+	setRegex(regex_str, "C relm");
 	assert(!isLineMatch(&params, regex_str, test_string[1]));
-	putRegex(regex_str, " StaffCryptographyEngineer ");
+	setRegex(regex_str, " StaffCryptographyEngineer ");
 	assert(!isLineMatch(&params, regex_str, test_string[2]));
-	putRegex(regex_str, "chrome");
+	setRegex(regex_str, "chrome");
 	assert(isLineMatch(&params, regex_str, test_string[2]));
-	putRegex(regex_str, "tested");
+	setRegex(regex_str, "tested");
 	assert(!isLineMatch(&params, regex_str, test_string[3]));
-	putRegex(regex_str, "don't");
+	setRegex(regex_str, "don't");
 	assert(!isLineMatch(&params, regex_str, test_string[4]));
-	putRegex(regex_str, "dont");
+	setRegex(regex_str, "dont");
 	assert(isLineMatch(&params, regex_str, test_string[4]));
-	putRegex(regex_str, "I'm not afraid");
+	setRegex(regex_str, "I'm not afraid");
 	assert(!isLineMatch(&params, regex_str, test_string[5]));
-	putRegex(regex_str, "to copy from my friend");
+	setRegex(regex_str, "to copy from my friend");
 	assert(!isLineMatch(&params, regex_str, test_string[5]));
-	putRegex(regex_str, "I sometimes have bad jokes");
+	setRegex(regex_str, "I sometimes have bad jokes");
 	assert(!isLineMatch(&params, regex_str, test_string[6]));
-	putRegex(regex_str, "this");
+	setRegex(regex_str, "this");
 	assert(!isLineMatch(&params, regex_str, test_string[7]));
 }
 
@@ -79,25 +79,25 @@ void runTestWithEscapes(const char test_string[][TEST_LINE_MAX_LEN])
 	initializeParams(&params);
 	onFlag(&params.E);
 	rChar regex_str[TEST_STR_MAX_LEN];
-	putRegex(regex_str, "\\[4:00\\]");
+	setRegex(regex_str, "\\[4:00\\]");
 	assert(isLineMatch(&params, regex_str, test_string[0]));
-	putRegex(regex_str, "\\[");
+	setRegex(regex_str, "\\[");
 	assert(isLineMatch(&params, regex_str, test_string[0]));
-	putRegex(regex_str, "\\[3");
+	setRegex(regex_str, "\\[3");
 	assert(!isLineMatch(&params, regex_str, test_string[0]));
-	putRegex(regex_str, "C relm\\.");
+	setRegex(regex_str, "C relm\\.");
 	assert(isLineMatch(&params, regex_str, test_string[1]));
-	putRegex(regex_str, "Chrome");
+	setRegex(regex_str, "Chrome");
 	assert(isLineMatch(&params, regex_str, test_string[2]));
-	putRegex(regex_str, "\\.");
+	setRegex(regex_str, "\\.");
 	assert(!isLineMatch(&params, regex_str, test_string[3]));
-	putRegex(regex_str, "I'm not afraid");
+	setRegex(regex_str, "I'm not afraid");
 	assert(isLineMatch(&params, regex_str, test_string[5]));
-	putRegex(regex_str, "I sometimes have bad jokes\\.\\.\\.");
+	setRegex(regex_str, "I sometimes have bad jokes\\.\\.\\.");
 	assert(isLineMatch(&params, regex_str, test_string[6]));
-	putRegex(regex_str, "I sometimes have bad jokes\\.\\.\\.\\.");
+	setRegex(regex_str, "I sometimes have bad jokes\\.\\.\\.\\.");
 	assert(!isLineMatch(&params, regex_str, test_string[6]));
-	putRegex(regex_str, "\\(!\\)");
+	setRegex(regex_str, "\\(!\\)");
 	assert(isLineMatch(&params, regex_str, test_string[7]));
 }
 
@@ -108,13 +108,13 @@ void runTestXFlag(const char test_string[][TEST_LINE_MAX_LEN])
 	onFlag(&params.x);
 	rChar regex_str[TEST_STR_MAX_LEN];
 
-	putRegex(regex_str, "we dive into the C relm.");
+	setRegex(regex_str, "we dive into the C relm.");
 	assert(isLineMatch(&params, regex_str, test_string[1]));
 
-	putRegex(regex_str, "we dive into the C relm. ");
+	setRegex(regex_str, "we dive into the C relm. ");
 	assert(!isLineMatch(&params, regex_str, test_string[1]));
 
-	putRegex(regex_str, " we dive into the C relm.");
+	setRegex(regex_str, " we dive into the C relm.");
 	assert(!isLineMatch(&params, regex_str, test_string[1]));
 }
 

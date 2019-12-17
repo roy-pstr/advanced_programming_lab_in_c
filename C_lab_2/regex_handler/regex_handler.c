@@ -4,12 +4,6 @@
 #include <assert.h>
 #include "regex_handler.h"
 
-
-/*
-TODO:	
-	support or regex in shape of (str|)
-	check about the range of point (33-126) ascii
-*/
 bool endOfRegexStr(const rChar *regex_str)
 {
 	return regex_str->dataType == CHAR && regex_str->data.c == '\0';
@@ -17,7 +11,7 @@ bool endOfRegexStr(const rChar *regex_str)
 
 /* printing rChar */
 void printrOr(const rOr *or) {
-	char *left, *right;
+	const char *left, *right;
 	int i;
 	left = or->left;
 	right = or->right;
@@ -73,7 +67,6 @@ void printRegexStr(const rChar *re_char) {
 	printf("\n");
 }
 
-
 /* misc */
 enum rCharTypes checkType(const char str_ptr) {
 	switch (str_ptr) {
@@ -119,9 +112,8 @@ int regexlen(rChar * regex)
 	return len;
 }
 
-
 /* parsing */
-void parseOr(const char *or_str, char **left, int *left_len, char **right, int *right_len){
+void parseOr(char *or_str, char **left, int *left_len, char **right, int *right_len){
 	/* validate */
 	if (*or_str != '(') {
 		return;
@@ -147,23 +139,23 @@ void parseOr(const char *or_str, char **left, int *left_len, char **right, int *
 }
 
 /* putting value in rChar */
-void putChar(rChar *re_char, const char c) {
+void setChar(rChar *re_char, const char c) {
 	re_char->dataType = CHAR;
 	re_char->data.c = c;
 }
 
-void putPoint(rChar *re_char) {
+void setPoint(rChar *re_char) {
 	re_char->dataType = POINT;
 	re_char->data.p = true;
 }
 
-void putRange(rChar *re_char, const char start, const char end) {
+void setRange(rChar *re_char, const char start, const char end) {
 	re_char->dataType = RANGE;
 	re_char->data.rng.start = start;
 	re_char->data.rng.end = end;
 }
 
-void putOr(rChar *re_char, const char *left, int left_len, const char *right, int right_len) {
+void setOr(rChar *re_char, const char *left, int left_len, const char *right, int right_len) {
 	re_char->dataType = OR;
 	re_char->data. or .left = left;
 	re_char->data. or .left_len = left_len;
@@ -171,7 +163,7 @@ void putOr(rChar *re_char, const char *left, int left_len, const char *right, in
 	re_char->data. or .right_len = right_len;
 }
 
-void putRegex(rChar * re_str, char * str) {
+void setRegex(rChar * re_str, char * str) {
 	char *left=NULL, *right = NULL, *end, *start;
 	int left_len=0, right_len=0;
 	while (*str != '\0') {
@@ -180,20 +172,20 @@ void putRegex(rChar * re_str, char * str) {
 			if (*str == '\\'){ 
 				str++;
 			}
-			putChar(re_str, *str); 
+			setChar(re_str, *str); 
 			break;
 		case POINT:
-			putPoint(re_str);
+			setPoint(re_str);
 			break;
 		case OR:
 			parseOr(str, &left, &left_len, &right, &right_len);
-			putOr(re_str, left, left_len, right, right_len);
+			setOr(re_str, left, left_len, right, right_len);
 			str += left_len+ right_len +2; //jump to )
 			break;
 		case RANGE:
 			start = str + 1;
 			end = str + 3;
-			putRange(re_str, *start, *end);
+			setRange(re_str, *start, *end);
 			str += 4; //jump to ]
 			break;
 		default:
@@ -203,92 +195,6 @@ void putRegex(rChar * re_str, char * str) {
 		str++;
 		re_str++;
 	}
-	putChar(re_str, '\0');
+	setChar(re_str, '\0');
 }
-
-
-/* comprasion regex to regex */
-bool isrOrEqual(rChar * left, rChar * right) {
-	if (left->data.or.left_len != right->data.or.left_len)
-		return false;
-	if (left->data.or.right_len != right->data.or.right_len)
-		return false;
-	return (!strncmp(left->data.or.left, right->data.or.left, left->data.or.left_len)) &&
-		   (!strncmp(left->data.or.right, right->data.or.right, left->data.or.right_len));
-}
-
-bool isrRangeEqual(rChar * left, rChar * right) {
-	return ((left->data.rng.start == right->data.rng.start) && (left->data.rng.end == right->data.rng.end));
-}
-
-bool isrCharEqual(rChar * left, rChar * right) {
-	if (left->dataType != right->dataType) {
-		return false;
-	}
-
-	switch (left->dataType) {
-	case CHAR:
-		return (left->data.c == right->data.c);
-	case POINT:
-		return true;
-	case OR:
-		return isrOrEqual(left, right);
-	case RANGE:
-		return isrRangeEqual(left, right);
-	default:
-		assert(false);
-		return false;
-	}
-}
-/*naive!*/
-bool isRegexStrEqual(rChar * left, rChar * right) {
-	while (isrCharEqual(left, right)) {
-		if (endOfRegexStr(left) || endOfRegexStr(right)) {
-			if ((endOfRegexStr(left) && endOfRegexStr(right))) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		left++;
-		right++;
-	}
-	assert(false);
-	return false;
-}
-
-
-/* comprasion regex char to string */ //[Doron: tests???]
-bool isOrMatch(rChar * regex, const char * str) {
-	return (strncmp(regex->data.or.left, str, regex->data.or.left_len))||
-		(strncmp(regex->data.or.right, str, regex->data.or.right_len));
-}
-
-bool isRangeMatch(rChar * regex, const char * str) {
-		char temp_rng[RANGE_LENGTH] = { '[',regex->data.rng.start ,',',regex->data.rng.end, ']' };
-		return (strncmp(temp_rng, str, RANGE_LENGTH) == 0);
-}
-
-bool isRegexMatch(rChar * regex, const char * str, int * len) {
-	switch (regex->dataType) {
-	case CHAR:
-		*len = 1;
-		return (regex->data.c == *str);
-	case POINT:
-		*len = 1;
-		return (*str != '\0');
-	case OR:
-		*len = OR_LENGTH(regex->data. or );
-		return isOrMatch(regex, str);
-	case RANGE:
-		*len = RANGE_LENGTH;
-		return isRangeMatch(regex, str);
-	default:
-		assert(false);
-		return false;
-	}
-}
-
-
 

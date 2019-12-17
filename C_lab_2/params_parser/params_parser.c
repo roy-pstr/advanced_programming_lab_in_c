@@ -5,6 +5,9 @@
 #include "flags.h"
 #include "utils.h"
 
+bool isFlagAEndOfBlock(Flag *A_flag) {
+	return (A_flag->counter == 0);
+}
 bool paramsHasFile(Params *params)
 {
 	return (params->filename != NULL);
@@ -34,6 +37,7 @@ void parseParams(int argc, char **argv, Params *params)
 			i++;
 			assert(isDigits(argv[i]));
 			setArgument(&params->A, atoi(argv[i]));
+			setCounter(&params->A, A_FLAG_COUNTER_INIT);
 		}
 		else if (STRINGS_ARE_EQUAL(argv[i], "-b")) {
 			onFlag(&params->b);

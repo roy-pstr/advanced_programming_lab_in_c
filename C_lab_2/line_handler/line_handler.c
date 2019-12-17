@@ -8,34 +8,33 @@
 #include "line_handler.h"
 #include "flags.h"
 #include "utils.h"
-#include "char_comprasion.h"
 
 bool isIt_A_LINE(Params *params)
 {
 	return  (isFlagOn(&params->A)) && (params->A.counter > 0);
 }
 
-//[Doron]: delete_me!!
-bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_ptr)
-{
-	int chars_proceed_in_line=0;
-
-	while (true) {
-		if (endOfRegexStr(regex_string)) {
-			return true;
-		}
-		if (isRegexMatch(regex_string, mid_line_ptr, &chars_proceed_in_line)){
-			regex_string++;
-			mid_line_ptr += chars_proceed_in_line;
-		}
-		else
-			return false;
-	}
-}
+////[Doron]: delete_me!!
+//bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_ptr)
+//{
+//	int chars_proceed_in_line=0;
+//
+//	while (true) {
+//		if (endOfRegexStr(regex_string)) {
+//			return true;
+//		}
+//		if (isRegexMatch(regex_string, mid_line_ptr, &chars_proceed_in_line)){
+//			regex_string++;
+//			mid_line_ptr += chars_proceed_in_line;
+//		}
+//		else
+//			return false;
+//	}
+//}
 
 bool isSubStrAtPlace_rec(Params *params, rChar *regex, const char *line)
 {
-	/* stop condition */
+	/* stop conditions */
 	if (endOfRegexStr(regex))
 		return true;
 
@@ -57,7 +56,7 @@ bool isSubStrAtPlace_rec(Params *params, rChar *regex, const char *line)
 		if (!(regex->data.rng.start <= *line && regex->data.rng.end >= *line)){
 			return false;
 		}
-		return isSubStrAtPlace_rec(params, regex + 1, line + RANGE_LENGTH);
+		return isSubStrAtPlace_rec(params, regex + 1, line + 1);
 
 	case OR:
 		left_option_match = !strncmp(regex->data. or .left, line, regex->data. or .left_len) &&
@@ -113,7 +112,9 @@ void handleLine(Params *params, rChar *regex_string, const char *line)
 	bool got_match = isLineMatch(params, regex_string, line_copy);
 	free(line_copy);
 
+
 	if (got_match && isFlagOn(&params->A)) {
+		if (isFlagAEndOfBlock(&params->A)) { printf("--\n"); }
 		setCounter(&params->A, params->A.argument);
 	}
 

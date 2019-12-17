@@ -174,13 +174,11 @@ void putOr(rChar *re_char, const char *left, int left_len, const char *right, in
 void putRegex(rChar * re_str, char * str) {
 	char *left=NULL, *right = NULL, *end, *start;
 	int left_len=0, right_len=0;
-
 	while (*str != '\0') {
 		switch (checkType(*str)) {
 		case CHAR:
 			if (*str == '\\'){ 
 				str++;
-				if (*str == 'n') { putChar(re_str, '\n'); break; } /* fix this!!! */
 			}
 			putChar(re_str, *str); 
 			break;

@@ -42,12 +42,6 @@
     <ClCompile Include="flags\flags_tests.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="char_comprasion\char_comprasion.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="char_comprasion\char_comprasion_tests.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="utils\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -62,12 +56,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="char_comprasion\char_comprasion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="char_comprasion\char_comprasion_tests.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="flags\flags.h">
       <Filter>Header Files</Filter>
     </ClInclude>

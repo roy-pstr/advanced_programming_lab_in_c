@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "flags.h"
-
+#define A_FLAG_COUNTER_INIT -1
 typedef struct Params_st
 {
 	char *sub_str;
@@ -18,6 +18,8 @@ typedef struct Params_st
 	Flag x;
 	Flag E;
 }Params;
+
+bool isFlagAEndOfBlock(Flag * A_flag);
 
 bool paramsHasFile(Params *params);
 void initializeParams(Params *params);

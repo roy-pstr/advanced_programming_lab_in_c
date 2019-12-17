@@ -103,6 +103,7 @@ void ParamsParserTest2()
 	initializeParams(&expected_params);
 	onFlag(&expected_params.A);
 	setArgument(&expected_params.A, 3);
+	setCounter(&expected_params.A, A_FLAG_COUNTER_INIT);
 	onFlag(&expected_params.x);
 	expected_params.filename = argv[5];
 	expected_params.sub_str = argv[1];
@@ -122,6 +123,7 @@ void ParamsParserTest3()
 	initializeParams(&expected_params);
 	onFlag(&expected_params.A);
 	setArgument(&expected_params.A, 32);
+	setCounter(&expected_params.A, A_FLAG_COUNTER_INIT);
 	onFlag(&expected_params.c);
 	expected_params.sub_str = argv[4];
 

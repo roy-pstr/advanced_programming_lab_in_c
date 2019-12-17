@@ -22,6 +22,8 @@ To Do:
 -	change line hander functions:
 		- make line a struct with correct parameters
 		- consider not to pass params as an argument
+-	recursive implimentation for islinematch
+-	discuss the edge case of \n in end of line (check strlen_without_newline in utils and putRegax CHAR case)
 */
 int main(int argc, char **argv)
 {

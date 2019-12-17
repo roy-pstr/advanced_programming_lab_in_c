@@ -2,9 +2,9 @@
 #include "char_comprasion.h"
 #include "flags.h"
 
+//[Doron]: this modul is dead :)
 bool regexCharMatch(Params* params, rChar regex_char, char *line_ptr, int *chars_proceed_in_line)
 {
-	//TBD: recursive
 	*chars_proceed_in_line = 0;
 	switch (regex_char.dataType)
 	{

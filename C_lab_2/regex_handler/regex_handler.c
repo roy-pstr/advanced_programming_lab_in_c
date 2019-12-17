@@ -35,12 +35,15 @@ void printrOr(const rOr *or) {
 	}
 	printf(")");
 }
+
 void printrRange(const rRange * rng ) {
 	printf("[%c-%c]", rng->start, rng->end);
 }
+
 void printrPoint() {
 	printf(".");
 }
+
 void printrChar(const rChar *re_char) {
 	switch (re_char->dataType)
 	{
@@ -69,6 +72,7 @@ void printRegexStr(const rChar *re_char) {
 	}
 	printf("\n");
 }
+
 
 /* misc */
 enum rCharTypes checkType(const char str_ptr) {
@@ -115,6 +119,7 @@ int regexlen(rChar * regex)
 	return len;
 }
 
+
 /* parsing */
 void parseOr(const char *or_str, char **left, int *left_len, char **right, int *right_len){
 	/* validate */
@@ -146,15 +151,18 @@ void putChar(rChar *re_char, const char c) {
 	re_char->dataType = CHAR;
 	re_char->data.c = c;
 }
+
 void putPoint(rChar *re_char) {
 	re_char->dataType = POINT;
 	re_char->data.p = true;
 }
+
 void putRange(rChar *re_char, const char start, const char end) {
 	re_char->dataType = RANGE;
 	re_char->data.rng.start = start;
 	re_char->data.rng.end = end;
 }
+
 void putOr(rChar *re_char, const char *left, int left_len, const char *right, int right_len) {
 	re_char->dataType = OR;
 	re_char->data. or .left = left;
@@ -162,6 +170,7 @@ void putOr(rChar *re_char, const char *left, int left_len, const char *right, in
 	re_char->data. or .right = right;
 	re_char->data. or .right_len = right_len;
 }
+
 void putRegex(rChar * re_str, char * str) {
 	char *left=NULL, *right = NULL, *end, *start;
 	int left_len=0, right_len=0;
@@ -199,6 +208,7 @@ void putRegex(rChar * re_str, char * str) {
 	putChar(re_str, '\0');
 }
 
+
 /* comprasion regex to regex */
 bool isrOrEqual(rChar * left, rChar * right) {
 	if (left->data.or.left_len != right->data.or.left_len)
@@ -208,9 +218,11 @@ bool isrOrEqual(rChar * left, rChar * right) {
 	return (!strncmp(left->data.or.left, right->data.or.left, left->data.or.left_len)) &&
 		   (!strncmp(left->data.or.right, right->data.or.right, left->data.or.right_len));
 }
+
 bool isrRangeEqual(rChar * left, rChar * right) {
 	return ((left->data.rng.start == right->data.rng.start) && (left->data.rng.end == right->data.rng.end));
 }
+
 bool isrCharEqual(rChar * left, rChar * right) {
 	if (left->dataType != right->dataType) {
 		return false;
@@ -248,15 +260,18 @@ bool isRegexStrEqual(rChar * left, rChar * right) {
 	return false;
 }
 
-/* comprasion regex char to string */
+
+/* comprasion regex char to string */ //[Doron: tests???]
 bool isOrMatch(rChar * regex, const char * str) {
-	return strncmp(regex->data.or.left, str, regex->data.or.left_len)||
-		strncmp(regex->data.or.right, str, regex->data.or.right_len);
+	return (strncmp(regex->data.or.left, str, regex->data.or.left_len))||
+		(strncmp(regex->data.or.right, str, regex->data.or.right_len));
 }
+
 bool isRangeMatch(rChar * regex, const char * str) {
-	char temp_rng[RANGE_LENGTH] = { '[',regex->data.rng.start ,',',regex->data.rng.end, ']'};
-	return (strncmp(temp_rng, str, RANGE_LENGTH) == 0);
+		char temp_rng[RANGE_LENGTH] = { '[',regex->data.rng.start ,',',regex->data.rng.end, ']' };
+		return (strncmp(temp_rng, str, RANGE_LENGTH) == 0);
 }
+
 bool isRegexMatch(rChar * regex, const char * str, int * len) {
 	switch (regex->dataType) {
 	case CHAR:
@@ -264,9 +279,9 @@ bool isRegexMatch(rChar * regex, const char * str, int * len) {
 		return (regex->data.c == *str);
 	case POINT:
 		*len = 1;
-		return (*str>=ASCII_MIN && *str <= ASCII_MAX);
+		return (*str != '\0');
 	case OR:
-		*len = OR_LENGTH(regex->data.or);
+		*len = OR_LENGTH(regex->data. or );
 		return isOrMatch(regex, str);
 	case RANGE:
 		*len = RANGE_LENGTH;
@@ -276,5 +291,6 @@ bool isRegexMatch(rChar * regex, const char * str, int * len) {
 		return false;
 	}
 }
+
 
 

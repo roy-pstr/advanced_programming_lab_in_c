@@ -72,6 +72,8 @@ bool isRegexStrEqual(rChar * left, rChar * right);
 
 bool isRegexMatch(rChar * regex, const char * str, int * len);
 
+bool isRangeMatch(rChar * regex, const char * str);
+
 int regexlen(rChar * regex);
 
 #endif

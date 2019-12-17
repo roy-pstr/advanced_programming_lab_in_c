@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <string.h>
 #include "utils.h"
 
  void upperCaseChar(char *p_char)
@@ -16,13 +17,14 @@
 	 }
  }
 
-
 bool isStringEmpty(const char *str) {
 	return (str[0] == '\0');
 }
+
 bool isStringNewLine(const char *str) {
 	return (str[0] == '\n');
 }
+
 bool isDigits(const char *str)
 {
 	while (*str != '\0')
@@ -34,7 +36,8 @@ bool isDigits(const char *str)
 	return true;
 }
 
-int strlen_without_newline(char *str) {
+int strlen_without_newline(const char *str)
+{
 	int len = strlen(str);
 	return (str[len-1] == '\n') ? (len - 1) : len;
 }

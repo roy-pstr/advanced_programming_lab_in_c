@@ -25,14 +25,15 @@ To Do:
 */
 int main(int argc, char **argv)
 {
-	////Tests:
+	//Tests:
+	char a;
 	runLineHandlerTests();
 	runInputHandlerTests();
 	runUtilstests();
 	runParamsParserTests();
 	runRegexHandlerTests();
 
-	//return 555;
+	return 555;
 
 	////Arguments handling:
 	Params params;

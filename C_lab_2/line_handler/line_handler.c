@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include <stdlib.h>
 #include "regex_handler.h"
 #include "line_handler.h"
@@ -9,12 +10,12 @@
 #include "utils.h"
 #include "char_comprasion.h"
 
-
 bool isIt_A_LINE(Params *params)
 {
 	return  (isFlagOn(&params->A)) && (params->A.counter > 0);
 }
 
+//[Doron]: delete_me!!
 bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_ptr)
 {
 	int chars_proceed_in_line=0;
@@ -31,28 +32,53 @@ bool isSubStrAtPlace(Params *params, rChar *regex_string, const char *mid_line_p
 			return false;
 	}
 }
-//bool isSubStrAtPlace_rec(Params *params, rChar *regex_string, const char *mid_line_ptr)
-//{
-//	int line_step = 0;
-//
-//	/* stop condition */
-//	if (NULL==regex_string) {
-//		return false;
-//	}
-//	if (endOfRegexStr(regex_string)) {
-//		return true;
-//	}
-//
-//	/* recursive call */
-//	bool ret_val = isSubStrAtPlace_rec(params, regex_string++, mid_line_ptr++);
-//	return ret_val && isRegexMatch(regex_string, mid_line_ptr, &line_step);
-//}
+
+bool isSubStrAtPlace_rec(Params *params, rChar *regex, const char *line)
+{
+	/* stop condition */
+	if (endOfRegexStr(regex))
+		return true;
+
+	if (*line == '\0'){
+		return false;
+	}
+
+	bool left_option_match, right_option_match;
+
+	switch (regex->dataType) {
+	case CHAR:
+		if (regex->data.c != *line) {
+			return false;
+		}
+		return isSubStrAtPlace_rec(params, regex + 1, line + 1);
+	case POINT:
+		return isSubStrAtPlace_rec(params, regex + 1, line + 1);
+	case RANGE:
+		if (!(regex->data.rng.start <= *line && regex->data.rng.end >= *line)){
+			return false;
+		}
+		return isSubStrAtPlace_rec(params, regex + 1, line + RANGE_LENGTH);
+
+	case OR:
+		left_option_match = !strncmp(regex->data. or .left, line, regex->data. or .left_len) &&
+			isSubStrAtPlace_rec(params, regex + 1, line + regex->data. or .left_len);
+		right_option_match = !strncmp(regex->data. or .right, line, regex->data. or .right_len) &&
+			isSubStrAtPlace_rec(params, regex + 1, line + regex->data. or .right_len);
+
+		return left_option_match || right_option_match;
+
+	default:
+		assert(false);
+		return false;
+	}
+}
+
 bool isSubstrInLine(Params *params, rChar *regex_string, const char *line)
 {
 	int line_len = strlen(line);
 	for (int i = 0; i < line_len; i++)
 	{
-		if (isSubStrAtPlace(params, regex_string, line + i))
+		if (isSubStrAtPlace_rec(params, regex_string, line + i))
 			return true;
 	}
 	return false;
@@ -65,7 +91,7 @@ bool isLineMatch(Params *params, rChar *regex_string, const char *line)
 	bool ret_val = false;
 	if (match_exact){
 		ret_val = (regexlen(regex_string) == strlen_without_newline(line) && 
-					isSubStrAtPlace(params, regex_string, line)		);
+					isSubStrAtPlace_rec(params, regex_string, line)		);
 	}
 	else {
 		ret_val = isSubstrInLine(params, regex_string, line);

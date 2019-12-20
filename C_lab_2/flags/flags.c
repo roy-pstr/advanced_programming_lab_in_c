@@ -36,3 +36,8 @@ void initializeFlag(Flag *flag)
 	setCounter(flag, 0);
 	offFlag(flag);
 }
+
+bool isFlagAEndOfBlock(Flag *A_flag)
+{
+	return (A_flag->counter == 0);
+}

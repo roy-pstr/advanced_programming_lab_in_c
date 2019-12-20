@@ -3,6 +3,8 @@
 
 #include <stdbool.h>
 
+#define A_FLAG_COUNTER_INIT -1 
+
 typedef struct Flag_st {
 	bool is_on;
 	int argument;
@@ -22,5 +24,7 @@ void addCounter(Flag *flag, int value);
 void setCounter(Flag * flag, int value);
 
 void setArgument(Flag *flag, int value);
+
+bool isFlagAEndOfBlock(Flag *A_flag);
 
 #endif

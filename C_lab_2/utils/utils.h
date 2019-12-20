@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 
@@ -10,11 +11,9 @@ int strlen_without_newline(const char *str);
 
 void upperCaseString(char *str);
 
-bool isStringEmpty(const char *str);
-
-bool isStringNewLine(const char *str);
-
 bool isDigits(const char *str);
+
+void openFile(FILE** fp, const char *file_path, const char *mode);
 
 #endif
 

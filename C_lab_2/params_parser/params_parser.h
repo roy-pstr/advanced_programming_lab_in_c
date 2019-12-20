@@ -1,10 +1,9 @@
 #ifndef PARAMS_PARSER_H
 #define PARAMS_PARSER_H
 
-#include <stdio.h>
 #include <stdbool.h>
 #include "flags.h"
-#define A_FLAG_COUNTER_INIT -1
+
 typedef struct Params_st
 {
 	char *sub_str;
@@ -19,11 +18,12 @@ typedef struct Params_st
 	Flag E;
 }Params;
 
-bool isFlagAEndOfBlock(Flag * A_flag);
-
 bool paramsHasFile(Params *params);
-void initializeParams(Params *params);
+
 void parseParams(int argc, char **argv, Params *params);
+
+/*	Decleration for tests:	*/
+void initializeParams(Params *params);
 
 #endif
 

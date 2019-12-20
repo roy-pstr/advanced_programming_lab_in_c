@@ -1,5 +1,4 @@
-#include <stddef.h>
-#include <string.h>
+#include <assert.h>
 #include "utils.h"
 
  void upperCaseChar(char *p_char)
@@ -17,14 +16,6 @@
 	 }
  }
 
-bool isStringEmpty(const char *str) {
-	return (str[0] == '\0');
-}
-
-bool isStringNewLine(const char *str) {
-	return (str[0] == '\n');
-}
-
 bool isDigits(const char *str)
 {
 	while (*str != '\0')
@@ -40,4 +31,9 @@ int strlen_without_newline(const char *str)
 {
 	int len = strlen(str);
 	return (str[len-1] == '\n') ? (len - 1) : len;
+}
+
+void openFile(FILE** fp, const char *file_path, const char *mode) {
+	*fp = fopen(file_path, mode);
+	assert((*fp != NULL));
 }

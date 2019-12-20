@@ -21,34 +21,13 @@
     <ClCompile Include="params_parser\params_parser.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="params_parser\params_parser_tests.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="line_handler\line_handler.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="line_handler\line_handler_tests.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="input_handler\input_handler.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="input_handler\input_handler_tests.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="flags\flags.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="flags\flags_tests.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="utils\utils.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="utils\utils_tests.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="regex_handler\regex_handler_tests.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="regex_handler\regex_handler.c">
@@ -59,31 +38,13 @@
     <ClInclude Include="flags\flags.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="flags\flags_tests.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="input_handler\input_handler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="input_handler\input_handler_tests.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="line_handler\line_handler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="line_handler\line_handler_tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="params_parser\params_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utils\utils_tests.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="regex_handler\regex_handler_tests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="regex_handler\regex_handler.h">

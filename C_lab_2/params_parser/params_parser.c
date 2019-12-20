@@ -1,13 +1,8 @@
-#include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
 #include "params_parser.h"
-#include "flags.h"
 #include "utils.h"
 
-bool isFlagAEndOfBlock(Flag *A_flag) {
-	return (A_flag->counter == 0);
-}
 bool paramsHasFile(Params *params)
 {
 	return (params->filename != NULL);

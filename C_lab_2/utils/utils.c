@@ -27,7 +27,7 @@ bool isDigits(const char *str)
 	return true;
 }
 
-int strlen_without_newline(const char *str)
+int strlenWithoutNewline(const char *str)
 {
 	int len = strlen(str);
 	return (str[len-1] == '\n') ? (len - 1) : len;

@@ -1,8 +1,8 @@
+#define _GNU_SOURCE
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <sys/types.h>
 #include "line_handler.h"
 #include "params_parser.h"
 #include "utils.h"

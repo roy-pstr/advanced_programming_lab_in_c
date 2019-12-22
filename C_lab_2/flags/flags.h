@@ -3,13 +3,13 @@
 
 #include <stdbool.h>
 
-#define A_FLAG_COUNTER_INIT -1 
+#define A_FLAG_COUNTER_INIT -1
 
 typedef struct Flag_st {
-	bool is_on;
-	int argument;
-	int counter;
-}Flag;
+  bool is_on;
+  int argument;
+  int counter;
+} Flag;
 
 bool isFlagOn(Flag *flag);
 
@@ -21,7 +21,7 @@ void initializeFlag(Flag *flag);
 
 void addCounter(Flag *flag, int value);
 
-void setCounter(Flag * flag, int value);
+void setCounter(Flag *flag, int value);
 
 void setArgument(Flag *flag, int value);
 

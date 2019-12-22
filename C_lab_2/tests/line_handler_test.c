@@ -118,7 +118,7 @@ void runTestXFlag(const char test_string[][TEST_LINE_MAX_LEN])
 }
 
 
-void main()
+int main()
 {
 	const char test_string[][TEST_LINE_MAX_LEN] = {
    "Every sunday at [4:00] PM,",
@@ -136,4 +136,5 @@ void main()
 	runTestWIthV_Arg(test_string);
 	runTestWithEscapes(test_string);
 	runTestXFlag(test_string);
+	return 0;
 }

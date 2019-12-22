@@ -203,9 +203,10 @@ bool regexlenTest()
 	return (29 == regexlen(ref_regex));
 }
 
-void main()
+int main()
 {
 	assert(parsingTest());
 	assert(parsingTestWithBackslash());
 	assert(regexlenTest());
+	return 0;
 }

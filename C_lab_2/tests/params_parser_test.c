@@ -138,11 +138,12 @@ void ParamsParserTest3()
 	assert(areParamsEqual(&params, &expected_params));
 }
 
-void main()
+int main()
 {
 	ParamsParserTest1();
 	ParamsParserTest2();
 	ParamsParserTest3();
+	return 0;
 }
 
 

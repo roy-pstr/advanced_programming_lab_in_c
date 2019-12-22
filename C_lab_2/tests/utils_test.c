@@ -30,10 +30,11 @@ void testUpperCaseString()
 	assert(STRINGS_ARE_EQUAL(str2, "BLA BLA BLI"));
 }
 
-void main()
+int main()
 {
 	testIsDigits();
 	testStrLenWithoutNetLine();
 	testUpperCaseString();
+	return 0;
 }
 

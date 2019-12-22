@@ -69,7 +69,7 @@ bool isLineMatch(Params *user_params, rChar *regex_string, const char *line)
 	bool match_exact = isFlagOn(&user_params->x);
 	bool ret_val = false;
 	if (match_exact) {
-		ret_val = (regexlen(regex_string) == strlen_without_newline(line) &&
+		ret_val = (regexlen(regex_string) == strlenWithoutNewline(line) &&
 			isSubStrAtPlace_rec(regex_string, line));
 	}
 	else {

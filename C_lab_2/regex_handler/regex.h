@@ -43,7 +43,7 @@ typedef struct rChar_st {
 
 bool endOfRegexStr(const rChar *regex_str);
 void setRegex(rChar * re_str, char * str);
-int regexlen(rChar * regex);
+unsigned int regexlen(rChar * regex);
 
 /*	Decleration for tests:	*/
 void setChar(rChar *re_char, const char c);

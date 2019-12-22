@@ -7,7 +7,7 @@
 
 #define STRINGS_ARE_EQUAL( Str1, Str2 ) ( strcmp( (Str1), (Str2) ) == 0 )
 
-int strlenWithoutNewline(const char *str);
+unsigned int strlenWithoutNewline(const char *str);
 
 void upperCaseString(char *str);
 

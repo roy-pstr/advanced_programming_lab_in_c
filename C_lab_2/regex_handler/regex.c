@@ -71,9 +71,9 @@ bool endOfRegexStr(const rChar *regex_str)
 	return regex_str->dataType == CHAR && regex_str->data.c == '\0';
 }
 
-int regexlen(rChar * regex)
+unsigned int regexlen(rChar * regex)
 {
-	int len = 0;
+	unsigned int len = 0;
 	while (!endOfRegexStr(regex)) {
 		len = len + rCharSize(regex);
 		regex++;

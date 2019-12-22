@@ -4,9 +4,11 @@
 #include <string.h>
 #include "regex_handler.h"
 #include "regex_handler_tests.h"
+
 #define MAX_TEST_STRING_LEN 256 
 
-bool isrOrEqual(rChar * left, rChar * right) {
+bool isrOrEqual(rChar * left, rChar * right)
+{
 	if (left->data. or .left_len != right->data. or .left_len)
 		return false;
 	if (left->data. or .right_len != right->data. or .right_len)
@@ -14,10 +16,14 @@ bool isrOrEqual(rChar * left, rChar * right) {
 	return (!strncmp(left->data. or .left, right->data. or .left, left->data. or .left_len)) &&
 		(!strncmp(left->data. or .right, right->data. or .right, left->data. or .right_len));
 }
-bool isrRangeEqual(rChar * left, rChar * right) {
+
+bool isrRangeEqual(rChar * left, rChar * right)
+{
 	return ((left->data.rng.start == right->data.rng.start) && (left->data.rng.end == right->data.rng.end));
 }
-bool isrCharEqual(rChar * left, rChar * right) {
+
+bool isrCharEqual(rChar * left, rChar * right)
+{
 	if (left->dataType != right->dataType) {
 		return false;
 	}
@@ -36,7 +42,9 @@ bool isrCharEqual(rChar * left, rChar * right) {
 		return false;
 	}
 }
-bool isRegexStrEqual(rChar * left, rChar * right) {
+
+bool isRegexStrEqual(rChar * left, rChar * right)
+{
 	while (isrCharEqual(left, right)) {
 		if (endOfRegexStr(left) || endOfRegexStr(right)) {
 			if ((endOfRegexStr(left) && endOfRegexStr(right))) {
@@ -53,7 +61,8 @@ bool isRegexStrEqual(rChar * left, rChar * right) {
 	return false;
 }
 
-void printrOr(const rOr * or ) {
+void printrOr(const rOr * or )
+{
 	const char *left, *right;
 	int i;
 	left = or ->left;
@@ -72,13 +81,19 @@ void printrOr(const rOr * or ) {
 	}
 	printf(")");
 }
-void printrRange(const rRange * rng) {
+
+void printrRange(const rRange * rng)
+{
 	printf("[%c-%c]", rng->start, rng->end);
 }
-void printrPoint() {
+
+void printrPoint()
+{
 	printf(".");
 }
-void printrChar(const rChar *re_char) {
+
+void printrChar(const rChar *re_char)
+{
 	switch (re_char->dataType)
 	{
 	case CHAR:
@@ -98,7 +113,9 @@ void printrChar(const rChar *re_char) {
 		break;
 	}
 }
-void printRegexStr(const rChar *re_char) {
+
+void printRegexStr(const rChar *re_char)
+{
 	while (!endOfRegexStr(re_char)) {
 		printrChar(re_char);
 		re_char++;
@@ -106,7 +123,8 @@ void printRegexStr(const rChar *re_char) {
 	printf("\n");
 }
 
-bool parsingTest() {
+bool parsingTest()
+{
 	rChar regex[50], ref_regex[50];
 	char regex_test_str[MAX_TEST_STRING_LEN] = "[0-9]; .; char; (str1|str2);\n";
 	setRange(&ref_regex[0], '0', '9');
@@ -129,7 +147,9 @@ bool parsingTest() {
 
 	return isRegexStrEqual(regex, ref_regex);
 }
-bool parsingTestWithBackslash() {
+
+bool parsingTestWithBackslash() 
+{
 	rChar regex[50], ref_regex[50];
 	char regex_test_str[MAX_TEST_STRING_LEN] = "[a-t].(Aba|saBa) bla\\. \\]\\[\\(\\) (str1|str2);\n";
 	setRange(&ref_regex[0], 'a', 't');
@@ -153,14 +173,11 @@ bool parsingTestWithBackslash() {
 	setChar(&ref_regex[17], '\0');
 	setRegex(&regex[0], &regex_test_str[0]);
 
-	printf("[Doron]: printing ref_regex:\n");
-	printRegexStr(ref_regex);
-	printf("[Doron]: printing regex:\n");
-	printRegexStr(regex);
-
 	return isRegexStrEqual(regex, ref_regex);
 }
-bool regexlenTest() {
+
+bool regexlenTest()
+{
 	rChar ref_regex[50];
 	setRange(&ref_regex[0], '0', '9');
 	setChar(&ref_regex[1], ';');
@@ -179,61 +196,12 @@ bool regexlenTest() {
 	setChar(&ref_regex[14], '\n');
 	setChar(&ref_regex[15], '\0');
 
-	return (29==regexlen(ref_regex));
+	return (29 == regexlen(ref_regex));
 }
-int main() {
 
+int main()
+{
 	assert(parsingTest());
 	assert(parsingTestWithBackslash());
 	assert(regexlenTest());
-	/* naive tests */
-	printf("naive tests:\n");
-	rChar re_char;
-	setChar(&re_char, 'r');
-	//putRegex(&re_char, "r");
-	printrChar(&re_char);
-	printf("\n");
-	setPoint(&re_char);
-	//putRegex(&re_char, ".");
-	printrChar(&re_char);
-	printf("\n");
-	setRange(&re_char, 'a', 'z');
-	//putRegex(&re_char, "[a-z]");
-	printrChar(&re_char);
-	printf("\n");
-	setOr(&re_char, "str1", 4, "str2", 4);
-	//putRegex(&re_char, "(str1|str2)");
-	printrChar(&re_char);
-
-	/* regex string tests */
-	printf("\n\nregex string tests:\n");
-	setChar(&re_char, '\0');
-	printRegexStr(&re_char);
-
-	rChar re_str[4];
-	setChar(&re_str[0], 'a');
-	setChar(&re_str[1], 'b');
-	setChar(&re_str[2], '\n');
-	setChar(&re_str[3], '\0');
-	printRegexStr(&re_str[0]);
-
-	/* regex parsing tests */
-	rChar regex[100];
-	char regex_test_str[MAX_TEST_STRING_LEN] = "A regex range: [0-9]; regex point: .; \
-regex char: those are just regular char; regex or: (str1|str2);\n";
-	setRegex(&regex[0], &regex_test_str[0]);
-	printrChar(&regex[15]);
-	printf("\n");
-	printRegexStr(&regex[0]);
-
-	printf("\n");
-	printf("well done.");
-
-	printf("\n\n!!! The console output above should match the reference below !!!\n\n");
-	char console_output[MAX_TEST_STRING_LEN] = "naive tests:\nr\n.\n[a-z]\n(str1|str2)\n\n\
-regex string tests:\nab\n[0-9]\nA regex range: [0-9]; regex point: .; regex char: those are\
- just regular char; regex or: (str1|str2);\n\nwell done.";
-	printf("%s", console_output);
-	printf("\n");
-	printf("\n");
 }

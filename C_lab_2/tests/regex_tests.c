@@ -2,16 +2,21 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <string.h>
-#include "regex_.h"
+#include "regex.h"
 
 #define MAX_TEST_STRING_LEN 256 
 
 bool isrOrEqual(rChar * left, rChar * right)
 {
 	if (left->data. or .left_len != right->data. or .left_len)
+	{
 		return false;
+	}
+		
 	if (left->data. or .right_len != right->data. or .right_len)
+	{
 		return false;
+	}
 	return (!strncmp(left->data. or .left, right->data. or .left, left->data. or .left_len)) &&
 		(!strncmp(left->data. or .right, right->data. or .right, left->data. or .right_len));
 }

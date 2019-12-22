@@ -22,8 +22,9 @@ bool areParamsEqual(Params *params1, Params *params2)
 		are_file_names_equal = true;
 	}
 	else
+	{
 		are_file_names_equal = false;
-
+	}
 	return (
 		(are_file_names_equal) &&
 		(areFlagsEquals(params1->A, params2->A)) &&
@@ -43,9 +44,13 @@ void printParams(Params *params) //debugging funciton
 	printf("@@@ Printing Params@@@\n");
 	printf("sub_str = %s\n", params->sub_str);
 	if (paramsHasFile(params))
+	{
 		printf("filename = %s\n", params->filename);
+	}
 	else
+	{
 		printf("params has no file\n");
+	}
 	printf("flags on:\n");
 	if (isFlagOn(&params->A)) {
 		printf("-A, %d\n", params->A.argument);

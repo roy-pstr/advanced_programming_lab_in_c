@@ -16,7 +16,9 @@ bool isIt_A_LINE(Params *params)
 bool isSubStrAtPlace_rec(rChar *regex, const char *line)
 {
 	if (endOfRegexStr(regex))
+	{
 		return true;
+	}
 
 	if (*line == '\0') {
 		return false;
@@ -57,8 +59,9 @@ bool isSubstrInLine(rChar *regex_string, const char *line)
 	int line_len = strlen(line);
 	for (int i = 0; i < line_len; i++)
 	{
-		if (isSubStrAtPlace_rec(regex_string, line + i))
+		if (isSubStrAtPlace_rec(regex_string, line + i)){
 			return true;
+		}
 	}
 	return false;
 }

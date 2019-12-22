@@ -137,14 +137,14 @@
     <ClCompile Include="line_handler\line_handler.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="params_parser\params_parser.c" />
-    <ClCompile Include="regex_handler\regex_handler.c" />
+    <ClCompile Include="regex_handler\regex.c" />
     <ClCompile Include="utils\utils.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="flags\flags.h" />
     <ClInclude Include="line_handler\line_handler.h" />
     <ClInclude Include="params_parser\params_parser.h" />
-    <ClInclude Include="regex_handler\regex_handler.h" />
+    <ClInclude Include="regex_handler\regex.h" />
     <ClInclude Include="utils\utils.h" />
   </ItemGroup>
   <ItemGroup>

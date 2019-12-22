@@ -7,7 +7,7 @@
 #include "params_parser.h"
 #include "utils.h"
 #include "flags.h"
-#include "regex_handler.h"
+#include "regex.h"
 
 int main(int argc, char **argv)
 {

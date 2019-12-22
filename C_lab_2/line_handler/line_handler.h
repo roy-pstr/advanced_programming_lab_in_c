@@ -2,7 +2,7 @@
 #define LINE_HANDLER_H
 
 #include "params_parser.h"
-#include "regex_handler.h"
+#include "regex.h"
 
 void handleLine(Params *params, rChar *regex_string, const char *line);
 

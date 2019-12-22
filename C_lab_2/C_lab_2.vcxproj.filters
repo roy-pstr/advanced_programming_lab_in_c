@@ -30,7 +30,7 @@
     <ClCompile Include="utils\utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="regex_handler\regex_handler.c">
+    <ClCompile Include="regex_handler\regex.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="utils\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="regex_handler\regex_handler.h">
+    <ClInclude Include="regex_handler\regex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{E331BF34-F2B6-4D91-835F-613820BDA9A1}</ProjectGuid>
-    <RootNamespace>Clab2</RootNamespace>
+    <ProjectGuid>{41F0D701-5708-4378-B9D5-C85190680B0B}</ProjectGuid>
+    <RootNamespace>regexhandlertests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,16 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)regex_handler;$(ProjectDir)utils;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\regex_handler\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)utils;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\regex_handler\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)utils;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\regex_handler\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)flags;$(ProjectDir)line_handler;$(ProjectDir)input_handler;$(ProjectDir)char_comprasion;$(ProjectDir)params_parser;$(ProjectDir)utils;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\regex_handler\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -87,11 +87,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -99,7 +95,6 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,7 +105,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -125,7 +119,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -133,22 +126,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="flags\flags.c" />
-    <ClCompile Include="line_handler\line_handler.c" />
-    <ClCompile Include="main.c" />
-    <ClCompile Include="params_parser\params_parser.c" />
-    <ClCompile Include="regex_handler\regex_handler.c" />
-    <ClCompile Include="utils\utils.c" />
+    <ClCompile Include="..\regex_handler\regex_handler.c" />
+    <ClCompile Include="..\regex_handler\regex_handler_tests.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="flags\flags.h" />
-    <ClInclude Include="line_handler\line_handler.h" />
-    <ClInclude Include="params_parser\params_parser.h" />
-    <ClInclude Include="regex_handler\regex_handler.h" />
-    <ClInclude Include="utils\utils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="test_files\test1.txt" />
+    <ClInclude Include="..\regex_handler\regex_handler.h" />
+    <ClInclude Include="..\regex_handler\regex_handler_tests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

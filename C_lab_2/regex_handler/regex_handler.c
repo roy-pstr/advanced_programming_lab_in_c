@@ -4,70 +4,6 @@
 #include <assert.h>
 #include "regex_handler.h"
 
-bool endOfRegexStr(const rChar *regex_str)
-{
-	return regex_str->dataType == CHAR && regex_str->data.c == '\0';
-}
-
-/* printing rChar */
-void printrOr(const rOr *or) {
-	const char *left, *right;
-	int i;
-	left = or->left;
-	right = or->right;
-	printf("(");
-	for (i = 0; i < or->left_len; i++)
-	{
-		printf("%c", *left);
-		left++;
-	}
-	printf("|");
-	for (i = 0; i < or ->right_len; i++)
-	{
-		printf("%c", *right);
-		right++;
-	}
-	printf(")");
-}
-
-void printrRange(const rRange * rng ) {
-	printf("[%c-%c]", rng->start, rng->end);
-}
-
-void printrPoint() {
-	printf(".");
-}
-
-void printrChar(const rChar *re_char) {
-	switch (re_char->dataType)
-	{
-	case CHAR:
-		printf("%c", re_char->data.c);
-		break;
-	case POINT:
-		printrPoint();
-		break;
-	case OR:
-		printrOr(&re_char->data.or);
-		break;
-	case RANGE:
-		printrRange(&re_char->data.rng);
-		break;
-	default:
-		assert(false);
-		break;
-	}
-}
-
-void printRegexStr(const rChar *re_char) {
-	while (!endOfRegexStr(re_char)) {
-		printrChar(re_char);
-		re_char++;
-	}
-	printf("\n");
-}
-
-/* misc */
 enum rCharTypes checkType(const char str_ptr) {
 	switch (str_ptr) {
 	case '.':
@@ -81,10 +17,10 @@ enum rCharTypes checkType(const char str_ptr) {
 		break;
 	default:
 		return CHAR;
+
 		break;
 	}
 }
-
 int rCharSize(rChar *re_char) {
 	switch (re_char->dataType)
 	{
@@ -93,7 +29,7 @@ int rCharSize(rChar *re_char) {
 	case POINT:
 		return CHAR_LENGTH;
 	case OR:
-		return OR_LENGTH(re_char->data.or);
+		return OR_LENGTH(re_char->data. or );
 	case RANGE:
 		return RANGE_LENGTH;
 	default:
@@ -101,7 +37,34 @@ int rCharSize(rChar *re_char) {
 		return -1;
 	}
 }
+void parseOr(char *or_str, char **left, int *left_len, char **right, int *right_len) {
+	if (*or_str != '(') {
+		return;
+	}
 
+	*left_len = 0;
+	or_str++;
+	*left = or_str;
+	while (*or_str != '|') {
+		assert(*or_str != '\0');
+		*left_len += 1;
+		or_str++;
+	}
+
+	*right_len = 0;
+	or_str++;
+	*right = or_str;
+	while (*or_str != ')') {
+		assert(*or_str != '\0');
+		*right_len += 1;
+		or_str++;
+	}
+}
+
+bool endOfRegexStr(const rChar *regex_str)
+{
+	return regex_str->dataType == CHAR && regex_str->data.c == '\0';
+}
 int regexlen(rChar * regex)
 {
 	int len = 0;
@@ -112,49 +75,19 @@ int regexlen(rChar * regex)
 	return len;
 }
 
-/* parsing */
-void parseOr(char *or_str, char **left, int *left_len, char **right, int *right_len){
-	/* validate */
-	if (*or_str != '(') {
-		return;
-	}
-
-	/* search for left length */
-	*left_len = 0;
-	or_str++;
-	*left = or_str;
-	while (*or_str != '|') {
-		*left_len+=1;
-		or_str++;
-	}
-
-	/* search for right length */
-	*right_len = 0;
-	or_str++;
-	*right = or_str;
-	while (*or_str != ')') {
-		*right_len += 1;
-		or_str++;
-	}
-}
-
-/* putting value in rChar */
 void setChar(rChar *re_char, const char c) {
 	re_char->dataType = CHAR;
 	re_char->data.c = c;
 }
-
 void setPoint(rChar *re_char) {
 	re_char->dataType = POINT;
 	re_char->data.p = true;
 }
-
 void setRange(rChar *re_char, const char start, const char end) {
 	re_char->dataType = RANGE;
 	re_char->data.rng.start = start;
 	re_char->data.rng.end = end;
 }
-
 void setOr(rChar *re_char, const char *left, int left_len, const char *right, int right_len) {
 	re_char->dataType = OR;
 	re_char->data. or .left = left;
@@ -162,9 +95,8 @@ void setOr(rChar *re_char, const char *left, int left_len, const char *right, in
 	re_char->data. or .right = right;
 	re_char->data. or .right_len = right_len;
 }
-
 void setRegex(rChar * re_str, char * str) {
-	char *left=NULL, *right = NULL, *end, *start;
+	char *left=NULL, *right = NULL, *end = NULL, *start = NULL;
 	int left_len=0, right_len=0;
 	while (*str != '\0') {
 		switch (checkType(*str)) {
@@ -180,13 +112,13 @@ void setRegex(rChar * re_str, char * str) {
 		case OR:
 			parseOr(str, &left, &left_len, &right, &right_len);
 			setOr(re_str, left, left_len, right, right_len);
-			str += left_len+ right_len +2; //jump to )
+			str += left_len+ right_len + OR_STEP_TO_END;
 			break;
 		case RANGE:
-			start = str + 1;
-			end = str + 3;
+			start = str + RANGE_FIRST_STEP;
+			end = str + RANGE_SECOND_STEP;
 			setRange(re_str, *start, *end);
-			str += 4; //jump to ]
+			str += RANGE_STEP_TO_END;
 			break;
 		default:
 			assert(false);

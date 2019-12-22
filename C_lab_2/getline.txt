@@ -1,0 +1,12 @@
+
+int getline(char **line, size_t *n, FILE *stream) {
+	*line = (char *)realloc(*line, MAX_LINE_LENGTH * sizeof(char));
+	assert((*line != NULL));
+	char * ret_val = fgets(*line, MAX_LINE_LENGTH, stream);
+	if (stream == stdin) {
+		return ((*line[0] == '\n') || (ret_val == NULL)) ? -1 : 0;
+	}
+	else {
+		return (ret_val == NULL) ? -1 : 0;
+	}
+}

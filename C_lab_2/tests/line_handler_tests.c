@@ -1,11 +1,10 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include "line_handler_tests.h"
 #include "line_handler.h"
 #include "params_parser.h"
 #include "flags.h"
-#include "regex_handler.h"
+#include "regex.h"
 
 #define TEST_LINE_MAX_LEN 80
 #define TEST_STR_MAX_LEN  80

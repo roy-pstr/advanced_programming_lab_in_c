@@ -1,5 +1,4 @@
 #include <assert.h>
-#include "params_parser_tests.h"
 #include "params_parser.h"
 #include "utils.h"
 #include "flags.h"

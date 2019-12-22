@@ -1,6 +1,5 @@
-#include "utils_tests.h"
 #include "utils.h"
-#include "assert.h"
+#include <assert.h>
 #include <string.h>
 #include <stdbool.h>
 

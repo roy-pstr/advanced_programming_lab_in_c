@@ -3,8 +3,6 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#define A_FLAG_COUNTER_INIT -1
-
 bool paramsHasFile(Params *params) { return (params->filename != NULL); }
 
 void initializeParams(Params *params)

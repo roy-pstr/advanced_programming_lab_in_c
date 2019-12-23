@@ -4,6 +4,8 @@
 #include "flags.h"
 #include <stdbool.h>
 
+#define A_FLAG_COUNTER_INIT -1
+
 typedef struct Params_st {
   char *sub_str;
   char *filename;

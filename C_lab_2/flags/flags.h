@@ -13,8 +13,6 @@ bool isFlagOn(Flag *flag);
 
 void onFlag(Flag *flag);
 
-void offFlag(Flag *flag);
-
 void initializeFlag(Flag *flag);
 
 void addCounter(Flag *flag, int value);

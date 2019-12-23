@@ -3,8 +3,6 @@
 
 #include <stdbool.h>
 
-#define A_FLAG_COUNTER_INIT -1
-
 typedef struct Flag_st {
   bool is_on;
   int argument;

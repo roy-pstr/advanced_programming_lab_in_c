@@ -4,15 +4,6 @@
 
 enum rCharTypes { CHAR, POINT, OR, RANGE };
 
-enum reConstants {
-  CHAR_LENGTH = 1,
-  RANGE_LENGTH = 5,
-  OR_ADD_TO_STRINGS_LENGTH = 3,
-  OR_STEP_TO_END = 2,
-  RANGE_FIRST_STEP = 1,
-  RANGE_SECOND_STEP = 3,
-  RANGE_STEP_TO_END = 4,
-};
 #define OR_LENGTH(or) (or.left_len + or.right_len + OR_ADD_TO_STRINGS_LENGTH)
 
 typedef struct rOr_st {

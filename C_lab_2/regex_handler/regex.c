@@ -4,6 +4,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define CHAR_LENGTH 1
+#define RANGE_LENGTH 5
+#define OR_ADD_TO_STRINGS_LENGTH 3
+#define OR_STEP_TO_END 2
+#define RANGE_FIRST_STEP 1
+#define RANGE_SECOND_STEP 3
+#define RANGE_STEP_TO_END 4
+
 enum rCharTypes checkType(const char str_ptr)
 {
   switch (str_ptr) {

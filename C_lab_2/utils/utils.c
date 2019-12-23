@@ -1,5 +1,6 @@
 #include "utils.h"
 #include <assert.h>
+#include <ctype.h>
 
 void upperCaseChar(char *p_char)
 {
@@ -19,7 +20,7 @@ void upperCaseString(char *str)
 bool isDigits(const char *str)
 {
   while (*str != '\0') {
-    if (!(*str >= '0' && *str <= '9')) {
+    if (!isdigit(*str)) {
       return false;
     }
     str++;

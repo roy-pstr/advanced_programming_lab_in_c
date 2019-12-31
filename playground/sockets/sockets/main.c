@@ -39,10 +39,9 @@ int main(int argc, char *argv[])
 	//Bind
 	if (bind(socket_desc, (SOCKADDR*)&server, sizeof(server))!=0)
 	{
-		printf("bind failed\n");
+		printf("bind failed: %d\n", WSAGetLastError());
 		return 55555;
 	}
-
 	printf("bind done\n");
 
 	//Listen
@@ -51,9 +50,9 @@ int main(int argc, char *argv[])
 	//Accept and incoming connection
 	puts("Waiting for incoming connections...\n");
 	new_socket = accept(socket_desc, NULL, NULL);
-	if (new_socket != 0)
+	if (new_socket == INVALID_SOCKET)
 	{
-		printf("accept failed\n");
+		printf("accept failed: %d\n", WSAGetLastError());
 		return 55555;
 	}
 

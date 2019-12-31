@@ -2,14 +2,12 @@
 
 #include <stdio.h>
 //#include <sys/socket.h> 
-#include <windows.h>
-#include <winsock2.h>
-#include <WS2tcpip.h>
-#pragma comment(lib,"Ws2_32.lib")
+#include <winsock.h>
+//#include <WS2tcpip.h>
+//#pragma comment(lib,"Ws2_32.lib")
 
 #define LOCAL_HOST "127.0.0.1"
 #define PORT 8888
-#define _T
 
 int main(int argc, char *argv[])
 {
@@ -25,8 +23,7 @@ int main(int argc, char *argv[])
 
 	//Prepare the sockaddr_in structure
 	server.sin_family = AF_INET;
-	InetPton(AF_INET, _T(LOCAL_HOST), &server.sin_addr.s_addr);
-	//server.sin_addr.s_addr = inet_addr(LOCAL_HOST);
+	server.sin_addr.s_addr = inet_addr(LOCAL_HOST);
 	server.sin_port = htons(PORT);
 
 	//Bind

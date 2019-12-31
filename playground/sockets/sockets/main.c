@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	listen(socket_desc, 3);
 
 	//Accept and incoming connection
-	puts("Waiting for incoming connections.../n");
+	puts("Waiting for incoming connections...\n");
 	new_socket = accept(socket_desc, NULL, NULL);
 	if (new_socket != 0)
 	{

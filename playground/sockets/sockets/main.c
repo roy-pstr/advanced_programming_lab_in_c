@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
 		return 5555;
 	}
 
-
 	socket_desc = socket(AF_INET, SOCK_STREAM, 0);
 	if (socket_desc == -1)
 	{
@@ -40,9 +39,11 @@ int main(int argc, char *argv[])
 	//Bind
 	if (bind(socket_desc, (SOCKADDR*)&server, sizeof(server))!=0)
 	{
-		puts("bind failed\n");
+		printf("bind failed\n");
+		return 55555;
 	}
-	puts("bind done\n");
+
+	printf("bind done\n");
 
 	//Listen
 	listen(socket_desc, 3);
@@ -52,9 +53,10 @@ int main(int argc, char *argv[])
 	new_socket = accept(socket_desc, NULL, NULL);
 	if (new_socket != 0)
 	{
-		perror("accept failed\n");
+		printf("accept failed\n");
+		return 55555;
 	}
 
-	puts("Connection accepted\n");
+	printf("Connection accepted\n");
 	return 0;
 }

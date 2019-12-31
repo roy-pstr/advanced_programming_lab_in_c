@@ -14,11 +14,22 @@ int main(int argc, char *argv[])
 	int socket_desc, new_socket;
 	struct sockaddr_in server;
 
-	socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+	WSADATA wsaData;
+	int StartupRes = WSAStartup(MAKEWORD(2, 2), &wsaData);
 
+	if (StartupRes != NO_ERROR)
+	{
+		printf("error %ld at WSAStartup( ), ending program.\n", WSAGetLastError());
+		// Tell the user that we could not find a usable WinSock DLL.                                  
+		return 5555;
+	}
+
+
+	socket_desc = socket(AF_INET, SOCK_STREAM, 0);
 	if (socket_desc == -1)
 	{
 		printf("Could not create socket");
+		return 55555;
 	}
 
 	//Prepare the sockaddr_in structure

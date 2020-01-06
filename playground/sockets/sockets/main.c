@@ -15,6 +15,11 @@
 #define SERVER_PORT_FILENAME "server_port"
 #define HTTP_PORT_FILENAME   "http_port"
 
+#define MIN_PORT 1025
+#define MAX_PORT 63999
+
+#define COMPUTER_NUM 3
+
 //Doron: read about SO_REUSEADDR (last page)
 void initialize_sockaddr(struct sockaddr_in *sockaddr)
 {
@@ -32,27 +37,26 @@ int get_random_int(int min, int max)
 	return random_int + min;
 }
 
-int bind_random_port(int socket_desc, struct sockaddr_in *sockaddr)
+int bind_random_port(int socket, struct sockaddr_in *sockaddr)
 {
 	while (true)
 	{
-		int rand_port_num = get_random_int(1024 + 1, 64000 - 1);
+		int rand_port_num = get_random_int(MIN_PORT, MAX_PORT);
 		printf("Doron: rand_port_num = %d\n", rand_port_num);
 		sockaddr->sin_port = htons(rand_port_num);
-
-		if (0 == bind(socket_desc, (struct sockaddr *)sockaddr, sizeof(*sockaddr)))
+		if (0 == bind(socket, (struct sockaddr *)sockaddr, sizeof(*sockaddr)))
 		{
 			return rand_port_num;
 		}
 	}
 }
 
-void write_port_to_file(const int port_number, const char *file_name)
+void write_port_to_file(int port_number, const char *file_name)
 {
 	FILE *f = NULL;
 	f = fopen(file_name, "w");
 	assert(f);
-	fprintf(f, "%d", port_number);
+	fprintf(f, "%d\n", port_number);
 	fclose(f);
 }
 
@@ -60,30 +64,46 @@ int main(int argc, char *argv[])
 {
 	srand(time(NULL));
 
-	struct sockaddr_in server;								//Doron: struct sockaddr_in? struct sockaddr? 
-
-	int socket_desc = socket(AF_INET, SOCK_STREAM, 0);		//Doron: what does socket_desc mean? , int->SOCKET?
-	//assert(socket_desc != INVALID_SOCKET);				//Doron: -1 -> INVALID_SOCKET
-
-	initialize_sockaddr(&server);
-
-	//Bind
-	int server_port_number = bind_random_port(socket_desc, &server);
-
+	struct sockaddr_in server_address;
+	int server_socket = socket(AF_INET, SOCK_STREAM, 0);		// Doron: int->SOCKET?
+	initialize_sockaddr(&server_address);
+	int server_port_number = bind_random_port(server_socket, &server_address);
 	write_port_to_file(server_port_number, SERVER_PORT_FILENAME);
+	listen(server_socket, COMPUTER_NUM);
 
-	//Listen
-	listen(socket_desc, 3);
+	struct sockaddr_in http_address;
+	int http_socket = socket(AF_INET, SOCK_STREAM, 0);			 // Doron: int->SOCKET?
+	initialize_sockaddr(&http_address);
+	int http_port_number = bind_random_port(http_socket, &http_address);
+	write_port_to_file(http_port_number, HTTP_PORT_FILENAME);
+	listen(http_socket, 1);
+
 
 	//Accept and incoming connection
-	puts("Waiting for incoming connections...\n");
-	int new_socket = accept(socket_desc, NULL, NULL);	// Doron: int->SOCKET?
-	if (new_socket < 0)
+	printf("Waiting for incoming connections...\n");
+	int accepted_server_sockets[COMPUTER_NUM];
+	for (int i = 0; i < COMPUTER_NUM; i++)
+	{
+		accepted_server_sockets[i] = accept(server_socket, NULL, NULL);
+		if (accepted_server_sockets[i] < 0)						 //Doron: this block will be removed
+		{
+			printf("accept failed\n");
+			return ERROR_CODE;
+		}
+		printf("Server connection #%d accepted\n", i+1);
+	}
+
+	int accepted_http_socket = accept(http_socket, NULL, NULL);
+	if (accepted_http_socket < 0)								//Doron: this block will be removed
 	{
 		printf("accept failed\n");
 		return ERROR_CODE;
 	}
-	printf("Connection accepted\n");
+	printf("HTTP connection accepted\n");
+
+
+
+
 
 	//send and recive:
 	char buf[MAX_LEN_FOR_MSG];

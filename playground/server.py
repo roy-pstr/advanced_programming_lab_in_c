@@ -1,10 +1,13 @@
 #!/usr/bin/python2.7/ -tt
 from socket import *
+import sys
+
+#def get_port_number(file_path):
+#    with open(file_path,'r') as f:
+#        return int(f.read().strip())
 
 def get_port_number(file_path):
-    with open(file_path,'r') as f:
-        return int(f.read().strip())
-
+    return int(sys.argv[1])
 
 
 def recv_msg(s):

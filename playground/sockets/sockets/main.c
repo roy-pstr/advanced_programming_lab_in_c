@@ -7,6 +7,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <time.h>
+#include "socket_tools.h"
 
 #define LOCAL_HOST "127.0.0.1"
 #define MAX_LEN_FOR_MSG 100 //Doron: INITIALIZE_BUFFER_SIZE?
@@ -18,7 +19,7 @@
 #define MIN_PORT 1025
 #define MAX_PORT 63999
 
-#define COMPUTER_NUM 3
+#define COMPUTER_NUM 2
 
 //Doron: read about SO_REUSEADDR (last page)
 void initialize_sockaddr(struct sockaddr_in *sockaddr)
@@ -60,6 +61,18 @@ void write_port_to_file(int port_number, const char *file_name)
 	fclose(f);
 }
 
+int acceptHTTPClient(int http_socket) {
+	printf("Waiting for incoming connection (client) ...\n");
+	int accepted_http_socket = accept(http_socket, NULL, NULL);
+	if (accepted_http_socket < 0)								//Doron: this block will be removed
+	{
+		printf("accept failed\n");
+		return ERROR_CODE;
+	}
+	printf("HTTP connection accepted\n");
+	return accepted_http_socket;
+}
+
 int main(int argc, char *argv[])
 {
 	srand(time(NULL));
@@ -80,10 +93,11 @@ int main(int argc, char *argv[])
 
 
 	//Accept and incoming connection
-	printf("Waiting for incoming connections...\n");
+	
 	int accepted_server_sockets[COMPUTER_NUM];
 	for (int i = 0; i < COMPUTER_NUM; i++)
 	{
+		printf("Waiting for incoming connection (server) ...\n");
 		accepted_server_sockets[i] = accept(server_socket, NULL, NULL);
 		if (accepted_server_sockets[i] < 0)						 //Doron: this block will be removed
 		{
@@ -92,30 +106,52 @@ int main(int argc, char *argv[])
 		}
 		printf("Server connection #%d accepted\n", i+1);
 	}
+	
 
-	int accepted_http_socket = accept(http_socket, NULL, NULL);
-	if (accepted_http_socket < 0)								//Doron: this block will be removed
-	{
-		printf("accept failed\n");
-		return ERROR_CODE;
+	///* wait for: connection with client (web browser): */
+	//http_connection = acceptHTTPClient(http_socket);
+
+	///* wait for: Client -> LB */
+	//while (true) {
+	//	ReceiveHTTPRequest(&http_request, http_connection);
+	//}
+	
+	bool exit = false;
+	int http_connection;
+	int curr_server_ind = 0;
+	while (!exit) {
+		curr_server_ind %= COMPUTER_NUM;
+
+		/* wait for: connection with client (web browser): */
+		http_connection = acceptHTTPClient(http_socket);
+
+		/* wait for: Client -> LB; then: LB -> server.py */
+		printf("wait for: Client -> LB; then: LB -> server.py\n");
+		ProcessHTTPRequest(http_connection, accepted_server_sockets[curr_server_ind], true);
+
+		/* wait for: server.py -> LB */
+		printf("wait for: server.py -> LB\n");
+		ProcessHTTPRequest(accepted_server_sockets[curr_server_ind], http_connection, false);
+		/* then: LB->Client */
+		printf("then: LB->Client\n");
+		ProcessAnswer(accepted_server_sockets[curr_server_ind], http_connection, true);
+
+		/* next */
+		curr_server_ind++;
 	}
-	printf("HTTP connection accepted\n");
+	
+	////send and recive:
+	//char buf[MAX_LEN_FOR_MSG];
+	//char msg[MAX_LEN_FOR_MSG] = "from VB";
+	//int len = MAX_LEN_FOR_MSG, bytes_recv, bytes_sent;
 
 
+	//bytes_sent = send(new_socket, msg, MAX_LEN_FOR_MSG, 0);
+	//printf("server sent the following msg: %s, %d bytes length\n", msg, bytes_sent);
 
-
-
-	//send and recive:
-	char buf[MAX_LEN_FOR_MSG];
-	char msg[MAX_LEN_FOR_MSG] = "from VB";
-	int len = MAX_LEN_FOR_MSG, bytes_recv, bytes_sent;
-
-	bytes_sent = send(new_socket, msg, MAX_LEN_FOR_MSG, 0);
-	printf("server sent the following msg: %s, %d bytes length\n", msg, bytes_sent);
-
-	printf("Waiting for client to send something...\n");
-	bytes_recv = recv(new_socket, &buf[0], len, 0);
-	printf("client sent the following msg: %s, %d bytes length\n", buf, bytes_recv);
+	//printf("Waiting for client to send something...\n");
+	//bytes_recv = recv(new_socket, &buf[0], len, 0);
+	//printf("client sent the following msg: %s, %d bytes length\n", buf, bytes_recv);
 	
 	return 0;
 }

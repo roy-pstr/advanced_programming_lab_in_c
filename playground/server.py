@@ -38,8 +38,5 @@ def main():
 
     print"file content:",port_number
 
-
-
-
-
 main()
+

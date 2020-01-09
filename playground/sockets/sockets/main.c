@@ -19,7 +19,7 @@
 #define MIN_PORT 1025
 #define MAX_PORT 63999
 
-#define COMPUTER_NUM 2
+#define COMPUTER_NUM 1
 
 //Doron: read about SO_REUSEADDR (last page)
 void initialize_sockaddr(struct sockaddr_in *sockaddr)
@@ -119,6 +119,7 @@ int main(int argc, char *argv[])
 	bool exit = false;
 	int http_connection;
 	int curr_server_ind = 0;
+	char *p_http_msg = NULL;
 	while (!exit) {
 		curr_server_ind %= COMPUTER_NUM;
 
@@ -127,14 +128,11 @@ int main(int argc, char *argv[])
 
 		/* wait for: Client -> LB; then: LB -> server.py */
 		printf("wait for: Client -> LB; then: LB -> server.py\n");
-		ProcessHTTPRequest(http_connection, accepted_server_sockets[curr_server_ind], true);
+		ProcessHTTPRequest(http_connection, accepted_server_sockets[curr_server_ind], 1);
 
-		/* wait for: server.py -> LB */
-		printf("wait for: server.py -> LB\n");
-		ProcessHTTPRequest(accepted_server_sockets[curr_server_ind], http_connection, false);
-		/* then: LB->Client */
-		printf("then: LB->Client\n");
-		ProcessAnswer(accepted_server_sockets[curr_server_ind], http_connection, true);
+		/* wait for: server.py -> LB then: LB->Client*/
+		printf("wait for: server.py -> LB then: LB->Client\n");
+		ProcessHTTPRequest(accepted_server_sockets[curr_server_ind], http_connection,  2);
 
 		/* next */
 		curr_server_ind++;

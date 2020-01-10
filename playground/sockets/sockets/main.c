@@ -128,6 +128,7 @@ int main(int argc, char *argv[])
 
 		/* wait for: Client -> LB; then: LB -> server.py */
 		printf("wait for: Client -> LB; then: LB -> server.py\n");
+		//ProcessHTTPRequest(http_connection,http_connection , 1);
 		ProcessHTTPRequest(http_connection, accepted_server_sockets[curr_server_ind], 1);
 
 		/* wait for: server.py -> LB then: LB->Client*/

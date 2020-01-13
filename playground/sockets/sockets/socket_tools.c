@@ -44,7 +44,6 @@ bool ProcessHTTPRequest(int from_socket, int to_socket, int end_contdition)
   int msg_len = 0;
   char *http_msg = (char *)malloc(INIT_BUFFER_SIZE);
   while (true) {
-    /* read the next message recived */
     int bytes_recived = recv(from_socket, &(http_msg[msg_len]), (int)INIT_BUFFER_SIZE, 0);
     msg_len += bytes_recived;
 
@@ -53,15 +52,8 @@ bool ProcessHTTPRequest(int from_socket, int to_socket, int end_contdition)
     }
     http_msg = realloc(http_msg, msg_len + INIT_BUFFER_SIZE);
   }
-#ifdef DEBUG
-  printf("LB recived: \n");
-  print_http(http_msg, msg_len);
-#endif
+
   send(to_socket, http_msg, msg_len, 0);
-#ifdef DEBUG
-  printf("LB sent: \n");
-  print_http(http_msg, msg_len);
-#endif
   if (NULL != http_msg) {
     free(http_msg);
   }

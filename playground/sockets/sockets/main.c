@@ -21,6 +21,8 @@
 
 #define COMPUTER_NUM 1
 
+typedef int SOCKET;
+
 //Doron: read about SO_REUSEADDR (last page)
 void initialize_sockaddr(struct sockaddr_in *sockaddr)
 {
@@ -116,12 +118,12 @@ int main(int argc, char *argv[])
 	//	ReceiveHTTPRequest(&http_request, http_connection);
 	//}
 	
-	bool exit = false;
 	int http_connection;
 	int curr_server_ind = 0;
 	char *p_http_msg = NULL;
-	while (!exit) {
+	while (true) {
 		curr_server_ind %= COMPUTER_NUM;
+		printf("Doron: curr_server_ind = %d\n", curr_server_ind);
 
 		/* wait for: connection with client (web browser): */
 		http_connection = acceptHTTPClient(http_socket);

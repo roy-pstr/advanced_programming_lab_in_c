@@ -10,8 +10,6 @@ def recv_msg(s):
         if response.count('\r\n\r\n') == 2:
             return response
 
-
-
 s = socket()
 port = int(sys.argv[1])
 
@@ -21,7 +19,7 @@ s.connect(('localhost', port))
 
 print "connected."
 
-print "sending good message:"
+print "sending good message..."
 s.send("GET /counter HTTP/1\r\n")
 s.send("second line\r\n")
 s.send("last line \r\n\r\n")
@@ -38,7 +36,7 @@ s.connect(('localhost', port))
 print "connected."
 
 
-print "sending bad message:"
+print "sending bad message..."
 s.send("GET MAHALA HTTP/1\r\n")
 s.send("second line\r\n")
 s.send("third line\r\n")

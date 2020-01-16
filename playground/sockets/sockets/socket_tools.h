@@ -6,8 +6,6 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-//#define LOCAL_HOST "127.0.0.1"
-
 bool ProcessHTTPRequest(int from_socket, int to_socket, int end_contdition);
 
 int acceptHTTPClient(int http_socket);

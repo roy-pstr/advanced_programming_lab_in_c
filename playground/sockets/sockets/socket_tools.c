@@ -1,42 +1,19 @@
-#include "socket_tools.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/socket.h>
 
+#include "socket_tools.h"
+#include "utils.h"
+
+#define MIN_PORT 1025
+#define MAX_PORT 63999
 #define INIT_BUFFER_SIZE 16
 
-void print_http(char *msg, int length)
+void print_http_request(char *msg, int length)
 {
   for (int i = 0; i < length; i++) {
     printf("%c", msg[i]);
   }
   printf("\n");
-}
-
-bool isBufferStartsWithStr(const char *buffer, int buffer_size, const char *str)
-{
-  int str_len = strlen(str);
-  for (int i = 0; i < str_len; i++) {
-    if (i >= buffer_size) {
-      return false;
-    }
-    if (str[i] != buffer[i]) {
-      return false;
-    }
-  }
-  return true;
-}
-
-int countSubStrInBuffer(const char *buffer, int buffer_size, const char *str)
-{
-  int counter = 0;
-  for (int i = 0; i < buffer_size; i++) {
-    if (isBufferStartsWithStr(buffer + i, buffer_size - i, str)) {
-      counter++;
-    }
-  }
-  return counter;
 }
 
 bool ProcessHTTPRequest(int from_socket, int to_socket, int end_contdition)
@@ -58,4 +35,27 @@ bool ProcessHTTPRequest(int from_socket, int to_socket, int end_contdition)
     free(http_msg);
   }
   return true;
+}
+
+int acceptHTTPClient(int http_socket)
+{
+  int accepted_http_socket = accept(http_socket, NULL, NULL);
+  return accepted_http_socket;
+}
+
+void initialize_sockaddr(struct sockaddr_in *sockaddr)
+{
+  sockaddr->sin_family = AF_INET;
+  sockaddr->sin_addr.s_addr = INADDR_ANY;
+}
+
+int bind_random_port(int socket, struct sockaddr_in *sockaddr)
+{
+  while (true) {
+    int rand_port_num = get_random_int(MIN_PORT, MAX_PORT);
+    sockaddr->sin_port = htons(rand_port_num);
+    if (0 == bind(socket, (struct sockaddr *)sockaddr, sizeof(*sockaddr))) {
+      return rand_port_num;
+    }
+  }
 }
